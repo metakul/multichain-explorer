@@ -23,8 +23,8 @@ const NavigationMenuDemo = () => {
                                             <path d="M12 0H4V8H12V0Z"></path>
                                             <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path>
                                         </svg>
-                                        <div className="CalloutHeading">Radix Primitives</div>
-                                        <p className="CalloutText">Unstyled, accessible components for React.</p>
+                                        <div className="CalloutHeading">Metakul Primitives</div>
+                                        <p className="CalloutText">Unstyled, Reusable, Secure Smart Contracts {'>>'} Ready to deploy.</p>
                                     </a>
                                 </NavigationMenu.Link>
                             </li>
@@ -32,7 +32,7 @@ const NavigationMenuDemo = () => {
                             <ListItem href="/dashboard" title="Dashboard">
                                 CSS-in-JS with best-in-class developer experience.
                             </ListItem>
-                            <ListItem href="/contracts" title="contracts">
+                            <ListItem href="/contracts" title="Contracts">
                                 Beautiful, thought-out palettes with auto dark mode.
                             </ListItem>
                             <ListItem href="/faucet" title="Faucet">
@@ -45,8 +45,6 @@ const NavigationMenuDemo = () => {
                 <NavigationMenu.Indicator className="NavigationMenuIndicator">
                     <div className="Arrow" />
                 </NavigationMenu.Indicator>
-
-             
 
                 <NavigationMenu.Item>
                     <ConnectWalletButton style={{

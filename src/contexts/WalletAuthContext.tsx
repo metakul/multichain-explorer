@@ -1,5 +1,5 @@
 // AuthContext.js
-import React, { createContext, useContext, useState } from "react";
+import  { createContext, useContext, useState } from "react";
 import { ethers } from "ethers";
 import { Eip1193Provider } from "ethers";
 
@@ -60,6 +60,7 @@ export const WalletAuthProvider = ({ children }:any) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useWalletAuth = () => {
     return useContext(WalletAuthContext);
 };
