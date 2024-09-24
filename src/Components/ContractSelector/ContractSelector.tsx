@@ -14,7 +14,7 @@ interface ContractSelectorProps {
     setSelectedContract: (contract: Contract) => void;
 }
 
-const ContractSelector: React.FC<ContractSelectorProps> = ({ contracts, selectedContract, setSelectedContract }) => {
+const ContractSelector: React.FC<ContractSelectorProps> = ({ contracts, setSelectedContract }) => {
     return (
         <label>
             Select Contract:

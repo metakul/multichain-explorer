@@ -6,7 +6,6 @@ import Contract1 from '../contracts/Contract1.json';
 import { Container } from '@radix-ui/themes';
 import ContractSelector from '../Components/ContractSelector/ContractSelector';
 import ValueInput from '../Components/ContractSelector/InputValue';
-import ConnectWalletButton from '../Components/Buttons/ConnectWalletButton';
 import { Eip1193Provider } from 'ethers';
 
 // interface Contract {
@@ -22,7 +21,7 @@ const contracts: any[] = [
   { name: 'Contract 1', ...Contract1 },
 ];
 
-const App: React.FC = () => {
+const HomePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedContract, setSelectedContract] = useState<any>(contracts[0]);
   const [value, setValue] = useState<number>(0);
@@ -54,7 +53,7 @@ const App: React.FC = () => {
       textAlign: 'center'
     }}>
       <h1>Dynamic Contract Interaction</h1>
-      <ConnectWalletButton />
+      
       <ContractSelector
         contracts={contracts}
         selectedContract={selectedContract}
@@ -70,4 +69,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default HomePage;

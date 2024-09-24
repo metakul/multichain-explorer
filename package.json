@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy":"http://172.29.208.149",
+  "proxy": "http://172.29.208.149",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
@@ -12,6 +12,8 @@
     "test": "node src/Test/main.js"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
     "@radix-ui/themes": "^2.0.3",
     "@reduxjs/toolkit": "^2.1.0",
     "@stitches/react": "^1.2.8",

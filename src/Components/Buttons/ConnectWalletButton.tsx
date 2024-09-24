@@ -1,52 +1,25 @@
-import { useState } from "react";
-import { ethers } from "ethers";
-import { Eip1193Provider } from "ethers";
+import { useWalletAuth } from "../../contexts/WalletAuthContext";
 import "./Button.css";
+import { Button } from "@radix-ui/themes";
 
-function ConnectWalletButton() {
-    // State to store the connection status of the wallet
-    const [connected, setConnected] = useState(false);
-    // State to store the connected wallet address
-    const [walletAddress, setWalletAddress] = useState("");
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ConnectWalletButton({style, className = "", ...props }:any) {
+    const { connected, walletAddress, connectWallet } = useWalletAuth();
 
-    async function connectWallet() {
-        // Check if window.ethereum is available
-        if (typeof window.ethereum !== "undefined") {
-            // If not connected, connect the wallet
-            if (!connected) {
-                try {
-                    // Request account access
-                    await window.ethereum.request({ method: "eth_requestAccounts" });
-
-                    const provider = new ethers.BrowserProvider(window.ethereum as Eip1193Provider);
-                    const signer = await provider.getSigner();
-                    const _walletAddress = await signer.getAddress();
-
-                    setConnected(true);
-                    setWalletAddress(_walletAddress);
-                } catch (error) {
-                    console.error("Error connecting wallet:", error);
-                }
-            } else {
-                // If connected, disconnect the wallet
-                setConnected(false);
-                setWalletAddress("");
-            }
-        } else {
-            alert("Please install MetaMask!");
-        }
-    }
+    const formatAddress = (address: string ) => {
+        if (!address) return "";
+        return `${address.slice(0, 4)}...${address.slice(-3)}`;
+    };
 
     return (
-        <div className="app">
-            <div className="main">
-                <button className="btn" onClick={connectWallet}>
-                    {connected ? "Disconnect Wallet" : "Connect Wallet"}
-                </button>
-                <h3>Address</h3>
-                <h4 className="wal-add">{walletAddress}</h4>
-            </div>
-        </div>
+        <Button
+            className={`btn ${className}`}
+            onClick={connectWallet}
+            style={style}
+            {...props}
+        >
+            {connected ? `${formatAddress(walletAddress)} Disconnect Wallet` : "Connect Wallet"}
+        </Button>
     );
 }
 

@@ -13,7 +13,7 @@ export interface HomePageProps {
 export interface ProtectedPageProps {
   pageTitle: string;
   pageDescription:string;
-  userType:UserType
+  userType?:UserType
 }
 
 
