@@ -1,5 +1,5 @@
-import React from 'react'
-import { ProtectedPageProps } from '../../../interfaces/CompInterfaces';
+// import React from 'react'
+// import { ProtectedPageProps } from '../../../interfaces/CompInterfaces';
 import { useSelector } from 'react-redux'
 import { selectUserType } from '../../../redux/slices/authSlice';
 import { Box } from '@radix-ui/themes'
@@ -11,7 +11,7 @@ import OverView from '../../../Components/Profile/OverView';
 import UserActivity from '../../../Components/Profile/Activity';
 import UserProfile from '../../../Components/Profile/Profile';
 
-const ProfilePage: React.FC<ProtectedPageProps> = () => {
+const ProfilePage= () => {
   const selectedUserType = useSelector(selectUserType)
 
   const tabs = [

@@ -29,13 +29,13 @@ const NavigationMenuDemo = () => {
                                 </NavigationMenu.Link>
                             </li>
 
-                            <ListItem href="https://stitches.dev/" title="Stitches">
+                            <ListItem href="/dashboard" title="Dashboard">
                                 CSS-in-JS with best-in-class developer experience.
                             </ListItem>
-                            <ListItem href="/colors" title="Colors">
+                            <ListItem href="/contracts" title="contracts">
                                 Beautiful, thought-out palettes with auto dark mode.
                             </ListItem>
-                            <ListItem href="https://icons.radix-ui.com/" title="Icons">
+                            <ListItem href="/faucet" title="Faucet">
                                 A crisp set of 15x15 icons, balanced and consistent.
                             </ListItem>
                         </ul>
@@ -46,16 +46,18 @@ const NavigationMenuDemo = () => {
                     <div className="Arrow" />
                 </NavigationMenu.Indicator>
 
-                {/* Connect Wallet Button moved inside the NavigationMenu.List */}
-                <NavigationMenu.Item style={{ marginLeft: 'auto' }}>
+             
+
+                <NavigationMenu.Item>
                     <ConnectWalletButton style={{
-                        position: "relative",  // Use 'relative' to keep it in the flow of the navigation
-                        marginLeft: '20px',    // Add space from the last item
+                        position: "absolute",
+                        right:"10px"
                     }} />
                 </NavigationMenu.Item>
             </NavigationMenu.List>
 
             <div className="ViewportPosition">
+                
                 <NavigationMenu.Viewport className="NavigationMenuViewport" />
             </div>
         </NavigationMenu.Root>
@@ -63,7 +65,7 @@ const NavigationMenuDemo = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ListItem = React.forwardRef(({ className, children, title, ...props }: any, forwardedRef) => (
+const ListItem = React.forwardRef(({ className, children, title, ...props }:any, forwardedRef) => (
     <li>
         <NavigationMenu.Link asChild>
             <a className={classNames('ListItemLink', className)} {...props} ref={forwardedRef}>
