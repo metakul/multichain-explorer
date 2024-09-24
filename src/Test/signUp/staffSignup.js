@@ -1,8 +1,24 @@
+/* eslint-disable no-undef */
 import puppeteer from 'puppeteer';
 
 // Function to generate random phone number
 
 (async () => {
+    let brahmaId;
+    let mobileNo;
+    let mailId
+
+    process.argv.forEach((arg) => {
+        if (arg.startsWith('brahmaId:')) {
+            brahmaId = arg.split(':')[1];
+        }
+        if (arg.startsWith('mobileNo:')) {
+          mobileNo = arg.split(':')[1];
+        }
+        if (arg.startsWith('mailId:')) {
+          mailId = arg.split(':')[1];
+        }
+    });
     const browser = await puppeteer.launch({
         headless: false,
         slowMo: 5,
@@ -17,12 +33,13 @@ import puppeteer from 'puppeteer';
     const staffTypeSelector = '.laboratory input[type="radio"]';
     await page.waitForSelector(staffTypeSelector, { visible: true });
 
-    // Click on the ORGANISATION radio button
+    // Click on the ORGANISATION r9359943998adio button
     await page.click(staffTypeSelector);
 
-    await page.type('#brahmaId', 'B6836858');
-    await page.type('#mobileNo', "9359943998");
+    await page.type('#brahmaId', brahmaId);
+    await page.type('#mobileNo', mobileNo);
     await page.type('#password-signup', 'Anurag@123');
+    await page.type('#mailId', mailId);
 
     await page.type('#confirmPassword', 'Anurag@123');
     await page.type('#department', 'eye');
