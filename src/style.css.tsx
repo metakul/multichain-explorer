@@ -10,6 +10,7 @@ export const Main = styled("div", {
     overflow: "auto",
     minHeight: "100%",
     minWidth: screenWidth + "px",
+    margin:"30px"
 })
 
 
@@ -19,5 +20,6 @@ export const StyledRoot = styled('div', {
     overflow: "hidden",
     marginLeft:"auto",
     marginRight:"auto",
-    backgroundColor: "#37dfdf",
+    margin: "30px"
+
 });
