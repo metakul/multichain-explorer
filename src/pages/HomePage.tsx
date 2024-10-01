@@ -1,45 +1,62 @@
-// src/App.tsx
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import SimpleStorage from '../contracts/SimpleStorage.json';
-import Contract1 from '../contracts/Contract1.json';
 import { Container } from '@radix-ui/themes';
 import ContractSelector from '../Components/ContractSelector/ContractSelector';
-import ValueInput from '../Components/ContractSelector/InputValue';
 import { Eip1193Provider } from 'ethers';
-
-// interface Contract {
-//   name: string;
-//   contractAddress: string;
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   abi: any; // You can define a more specific type for ABI if you have it
-// }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const contracts: any[] = [
-  { name: 'Simple Storage', ...SimpleStorage },
-  { name: 'Contract 1', ...Contract1 },
-];
+import GetContractsRequest from '../Backend/fakeBackend/FakeContracts';
+import { ContractFactory } from 'ethers';
 
 const HomePage: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [selectedContract, setSelectedContract] = useState<any>(contracts[0]);
-  const [value, setValue] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [contracts, setContracts] = useState<any[]>([]);
+  const [selectedContract, setSelectedContract] = useState<any>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  useEffect(() => {
+    const loadContracts = async () => {
+      try {
+        const options = {
+          url: '/contracts',
+          method: 'GET',
+        };
+        const contractData = await GetContractsRequest(options);
+        setContracts(contractData);
+        setSelectedContract(contractData[0]); // Select the first contract by default
+      } catch (error) {
+        console.error('Error loading contracts:', error);
+      }
+    };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    loadContracts();
+  }, []);
+
+  const deployContract = async () => {
+    if (!selectedContract) {
+      console.error('No contract selected.');
+      return;
+    }
+
+    if (!selectedContract.abi || !selectedContract.bytecode) {
+      console.error('Invalid contract data. Ensure ABI and bytecode are set.');
+      return;
+    }
+
     if (typeof window.ethereum !== 'undefined') {
-      const provider = new ethers.BrowserProvider(window.ethereum as Eip1193Provider);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(selectedContract.contractAddress, selectedContract.abi, signer);
-      await contract.set(inputValue);
-      setValue(Number(inputValue)); // Ensure the value is a number
-      setInputValue('');
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum as Eip1193Provider);
+        const signer = await provider.getSigner();
+
+        // Create a ContractFactory
+        const factory = new ContractFactory(selectedContract.abi, selectedContract.bytecode, signer);
+
+        // Deploy the contract
+        const contract = await factory.deploy(); // Pass constructor arguments if required
+
+        console.log('Contract deployed at:', contract);
+      } catch (error) {
+        console.error('Contract deployment failed:', error);
+      }
+    } else {
+      console.error('Ethereum provider not available.');
     }
   };
 
@@ -52,19 +69,18 @@ const HomePage: React.FC = () => {
       height: '100vh',
       textAlign: 'center'
     }}>
-      <h1>Dynamic Contract Interaction</h1>
-      
-      <ContractSelector
-        contracts={contracts}
-        selectedContract={selectedContract}
-        setSelectedContract={setSelectedContract}
-      />
-      <ValueInput
-        value={value}
-        inputValue={inputValue}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-      />
+      <h1>Dynamic Contract Deployment</h1>
+
+      {contracts.length > 0 && (
+        <>
+          <ContractSelector
+            contracts={contracts}
+            selectedContract={selectedContract}
+            setSelectedContract={setSelectedContract}
+          />
+          <button onClick={deployContract}>Deploy Contract</button>
+        </>
+      )}
     </Container>
   );
 };
