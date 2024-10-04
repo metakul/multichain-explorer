@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice"
+import contractsReducer from "./slices/BackendSlices/Blockchain/AllContractsSlice"
 import { useDispatch } from 'react-redux'
 import logger from 'redux-logger'
 const store = configureStore({
   reducer: {
-    auth:authReducer
+    auth:authReducer,
+    contracts:contractsReducer,
   },
   middleware:getDefaultMiddlerware =>
     getDefaultMiddlerware().concat(logger),

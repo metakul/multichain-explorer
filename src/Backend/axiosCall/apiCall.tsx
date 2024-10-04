@@ -20,7 +20,7 @@ const request = async (options: RequestOptions) => {
     });
 
     // Return the parsed response data
-    console.log(response)
+    console.log("response",response)
 
     // todo properly get the api response Data
     return response.data;

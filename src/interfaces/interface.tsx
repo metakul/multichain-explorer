@@ -59,3 +59,20 @@ export interface ApiError {
 export interface CustomError {
   error: string;
 }
+
+
+
+// Blockchain
+
+export interface ContractData {
+  contractName: string;
+  abi: unknown[]; 
+  bytecode: string;
+  constructor: {
+    internalType: string;
+    name: string;
+    type: string;
+  }[];
+  loading:boolean,
+  error:string
+}

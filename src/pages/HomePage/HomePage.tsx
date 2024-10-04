@@ -1,12 +1,13 @@
 // src/App.tsx
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import SimpleStorage from '../contracts/SimpleStorage.json';
-import Contract1 from '../contracts/Contract1.json';
+import SimpleStorage from '../../contracts/SimpleStorage.json';
+import Contract1 from '../../contracts/Contract1.json';
 import { Container } from '@radix-ui/themes';
-import ContractSelector from '../Components/ContractSelector/ContractSelector';
-import ValueInput from '../Components/ContractSelector/InputValue';
+import ContractSelector from '../../Components/ContractSelector/ContractSelector';
+import ValueInput from '../../Components/ContractSelector/InputValue';
 import { Eip1193Provider } from 'ethers';
+import ContractsGrid from './AllContracts';
 
 // interface Contract {
 //   name: string;
@@ -38,7 +39,7 @@ const HomePage: React.FC = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(selectedContract.contractAddress, selectedContract.abi, signer);
       await contract.set(inputValue);
-      setValue(Number(inputValue)); // Ensure the value is a number
+      setValue(Number(inputValue)); 
       setInputValue('');
     }
   };
@@ -48,13 +49,18 @@ const HomePage: React.FC = () => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      textAlign: 'center'
+      alignItems: 'center',    
+      textAlign: 'center',
+      marginTop: "80px",
+      minHeight: "100vh",      
+      padding: "20px",
+      width: "100%",  
     }}>
       <h1>Dynamic Contract Interaction</h1>
       
-      <ContractSelector
+      <ContractsGrid/>
+
+      {/* <ContractSelector
         contracts={contracts}
         selectedContract={selectedContract}
         setSelectedContract={setSelectedContract}
@@ -64,7 +70,7 @@ const HomePage: React.FC = () => {
         inputValue={inputValue}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
-      />
+      /> */}
     </Container>
   );
 };

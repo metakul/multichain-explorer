@@ -1,6 +1,6 @@
 import React from "react";
 import { useRoutes, Navigate } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
 import { Pages } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
