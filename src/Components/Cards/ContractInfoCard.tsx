@@ -2,6 +2,8 @@ import React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Box } from "@radix-ui/themes";
 import { ContractData } from "../../interfaces/interface";
+import { useWalletAuth } from "../../contexts/WalletAuthContext";
+import ConnectWalletButton from "../Buttons/ConnectWalletButton";
 
 
 
@@ -11,12 +13,12 @@ interface ContractInfoProps {
     cardType: "multiple" | "single";
     buttonText: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    handleButtonClick:any
+    handleButtonClick: any
 }
 
 const ContractInfoCard: React.FC<ContractInfoProps> = ({ contractInfo, cardType, buttonText, handleButtonClick }) => {
     const { contractName, abi, bytecode, constructor, loading, error } = contractInfo;
-
+    const { connected } = useWalletAuth()
     // While data is being fetched
     if (loading) {
         return (
@@ -51,7 +53,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({ contractInfo, cardType,
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
 
                 <div className="mb-4">
-                    <h4 className="font-semibold">{contractName}</h4> <br/> 
+                    <h4 className="font-semibold">{contractName}</h4> <br />
                 </div>
 
                 {/* Display constructor */}
@@ -75,14 +77,23 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({ contractInfo, cardType,
 
 
                 {/* Button to be shown based on the condition */}
-                {buttonText && (
+                {buttonText && cardType == "single" ? (
                     <button
                         onClick={() => handleButtonClick()} // Use the prop function
                         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
                     >
-                        {buttonText} {/* Display button text */}
+                        {connected ? buttonText : <ConnectWalletButton /> }
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => handleButtonClick()} // Use the prop function
+                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                    >
+                        {buttonText}
                     </button>
                 )}
+
+                {connected}
 
             </div>
         </div>

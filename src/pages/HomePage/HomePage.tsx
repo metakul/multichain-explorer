@@ -60,7 +60,7 @@ const HomePage: React.FC = () => {
 
       <ContractsGrid />
 
-      <ContractSelector
+      {/* <ContractSelector
         contracts={contracts}
         selectedContract={selectedContract}
         setSelectedContract={setSelectedContract}
@@ -70,7 +70,7 @@ const HomePage: React.FC = () => {
         inputValue={inputValue}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
-      />
+      /> */}
     </Container>
   );
 };

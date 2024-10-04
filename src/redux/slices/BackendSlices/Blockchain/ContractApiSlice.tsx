@@ -17,7 +17,7 @@ export const fetchContractByName = createAsyncThunk(
                 headers: ApiEndpoint.getContractByName.headers,
             });
 
-            const contractData: ContractData = response.data;
+            const contractData: ContractData = response.contract;
 
             const apiSuccess: ApiSuccess = {
                 statusCode: response.status,

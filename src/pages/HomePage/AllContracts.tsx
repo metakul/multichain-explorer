@@ -12,39 +12,36 @@ import { useNavigate } from "react-router-dom";
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();
     const contracts = useSelector(selectAllContracts);
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     // Fetch contracts when the component mounts
     useEffect(() => {
         (dispatch as AppDispatch)(fetchAllContracts());
     }, [dispatch]);
 
-    const navigateUser = (contract: { contractName: any; })=>{
-        navigate(`/page/${contract.contractName}`)
+    const navigateUser = (contract: { contractName: any; }) => {
+        navigate(`/contract/${contract.contractName}`)
     }
     // Render contracts in a grid layout
     return (
 
-            <Grid columns={3} gap={16} rows="repeat(auto-fill, minmax(200px, 1fr))" style={{
-                marginLeft:"auto",
-                marginRight:"auto",
-            }}> {/* Use the Grid component */}
-                {contracts && contracts.length > 0 ? (
-                    contracts.map((contract: any, index: any) => (
-                        <Box
-                            key={index}
-                            style={{
-                                border: "1px solid #ddd",
-                                borderRadius: "8px",
-                                padding: "16px",
-                            }}
-                        >
-                            <ContractInfoCard buttonText="Deploy" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
-                        </Box>
-                    ))
-                ) : (
-                    <Text>No contracts available.</Text>
-                )}
-            </Grid>
+        <Grid columns="2" gap="3" width="auto" rows="repeat(3, 164px)">
+            {contracts && contracts.length > 0 ? (
+                contracts.map((contract: any, index: any) => (
+                    <Box
+                        key={index}
+                        style={{
+                            border: "1px solid #ddd",
+                            borderRadius: "8px",
+                            padding: "16px",
+                        }}
+                    >
+                        <ContractInfoCard buttonText="Deploy" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+                    </Box>
+                ))
+            ) : (
+                <Text>No contracts available.</Text>
+            )}
+        </Grid>
     );
 };
 

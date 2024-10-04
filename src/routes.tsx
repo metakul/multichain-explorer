@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
 import { Pages } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
+import SingleContractPage from "./pages/Projects/Blockchain/[contract]/SingleContractInfo";
 
 const Router: React.FC = () => {
 
@@ -21,6 +22,10 @@ const Router: React.FC = () => {
         {
           path: Pages.PROFILE,
           element:  <ProfilePage />,
+        },
+        {
+          path: Pages.SINGLE_CONTRACT,
+          element: <SingleContractPage />,
         },
       ],
     },

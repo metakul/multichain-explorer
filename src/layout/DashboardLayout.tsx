@@ -6,11 +6,17 @@ import { Box, Container } from "@radix-ui/themes";
 export default function DashboardLayout() {
 
   return (
-    <Box>
+    <>
       <Header />
-      <Container>
-        <Outlet />
-      </Container>
-    </Box>
+      <Box style={{
+        maxWidth: "100vw",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+      }}>
+        <Container>
+          <Outlet />
+        </Container>
+      </Box>
+    </>
   );
 }

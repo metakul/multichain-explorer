@@ -12,7 +12,8 @@ export enum UserType {
 export enum Pages {
   HOME = '/',
   DASHBOARD = '/dashboard/app',
-  PROFILE = '/dashboard/profile'
+  PROFILE = '/dashboard/profile',
+  SINGLE_CONTRACT = '/contract/:contractName',
 }
 
 export enum ProfileTab {

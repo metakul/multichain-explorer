@@ -42,9 +42,10 @@ export const { clearContractState, setCurrentContract } = contractSlice.actions;
 export default contractSlice.reducer;
 
 // Selectors
-export const selectContractName = (state: { contract: ContractData }) => state.contract.contractName;
-export const selectAbi = (state: { contract: ContractData }) => state.contract.abi;
-export const selectBytecode = (state: { contract: ContractData }) => state.contract.bytecode;
-export const selectConstructorParams = (state: { contract: ContractData }) => state.contract.constructor;
-export const selectLoading = (state: { contract: ContractData }) => state.contract.loading;
-export const selectError = (state: { contract: ContractData }) => state.contract.error;
+export const selectContractName = (state: { singleContract: ContractData }) => state.singleContract.contractName;
+export const selectContractDetails = (state: { singleContract: ContractData }) => state.singleContract;
+export const selectAbi = (state: { singleContract: ContractData }) => state.singleContract.abi;
+export const selectBytecode = (state: { singleContract: ContractData }) => state.singleContract.bytecode;
+export const selectConstructorParams = (state: { singleContract: ContractData }) => state.singleContract.constructor;
+export const selectLoading = (state: { singleContract: ContractData }) => state.singleContract.loading;
+export const selectError = (state: { singleContract: ContractData }) => state.singleContract.error;
