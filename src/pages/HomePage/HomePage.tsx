@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(selectedContract.contractAddress, selectedContract.abi, signer);
       await contract.set(inputValue);
-      setValue(Number(inputValue)); 
+      setValue(Number(inputValue));
       setInputValue('');
     }
   };
@@ -49,18 +49,18 @@ const HomePage: React.FC = () => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center',    
+      alignItems: 'center',
       textAlign: 'center',
       marginTop: "80px",
-      minHeight: "100vh",      
+      minHeight: "100vh",
       padding: "20px",
-      width: "100%",  
+      width: "100%",
     }}>
       <h1>Dynamic Contract Interaction</h1>
-      
-      <ContractsGrid/>
 
-      {/* <ContractSelector
+      <ContractsGrid />
+
+      <ContractSelector
         contracts={contracts}
         selectedContract={selectedContract}
         setSelectedContract={setSelectedContract}
@@ -70,7 +70,7 @@ const HomePage: React.FC = () => {
         inputValue={inputValue}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
-      /> */}
+      />
     </Container>
   );
 };
