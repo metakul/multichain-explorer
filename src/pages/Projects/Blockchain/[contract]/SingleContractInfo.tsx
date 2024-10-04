@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom"; // To extract contractName from URL
-import { fetchContractByName } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice"; // Assuming the correct import path
+import { useParams } from "react-router-dom";
+import { fetchContractByName } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import { Box, Text } from "@radix-ui/themes";
 import ContractInfoCard from "../../../../Components/Cards/ContractInfoCard";
+import { ethers } from "ethers";
 
 const SingleContractPage: React.FC = () => {
-    const { contractName } = useParams<{ contractName: string }>(); // Extract contractName from URL
+    const { contractName } = useParams<{ contractName: string }>();
     const dispatch = useDispatch<AppDispatch>();
-
-    const contract = useSelector(selectContractDetails); // Assuming this selector filters based on contractName
+    const contract = useSelector(selectContractDetails);
 
     // Fetch the single contract when the component mounts
     useEffect(() => {
@@ -26,7 +26,31 @@ const SingleContractPage: React.FC = () => {
         return <Text>Loading contract data...</Text>;
     }
 
-    // Render the contract information using ContractInfoCard
+    // Function to deploy contract
+    const deployContract = async (constructorParams: any[]) => {
+        try {
+            if (!window.ethereum) throw new Error("No Ethereum wallet detected");
+
+            // Request wallet connection
+            if (window && window.ethereum && window.ethereum.request){
+
+                await window?.ethereum.request({ method: "eth_requestAccounts" });
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer =await provider.getSigner();
+                
+                // Prepare contract for deployment
+                const factory = new ethers.ContractFactory(contract.abi, contract.bytecode, signer);
+                
+                // Deploy the contract
+                const deployedContract = await factory.deploy(...constructorParams);
+                
+                console.log("Contract deployed at:", deployedContract.getAddress());
+            }
+        } catch (error) {
+            console.error("Deployment error:", error);
+        }
+    };
+
     
     return (
         <Box>
@@ -34,7 +58,7 @@ const SingleContractPage: React.FC = () => {
                 contractInfo={contract}
                 cardType="single"
                 buttonText="Deploy"
-                handleButtonClick={() => console.log("Interact with contract")}
+                handleButtonClick={deployContract} // Pass deploy function
             />
         </Box>
     );

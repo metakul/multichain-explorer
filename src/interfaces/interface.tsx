@@ -1,6 +1,8 @@
+import { Interface } from "ethers";
 import { UserType } from "../DataTypes/enums";
 //pages interface
 import { AxiosRequestConfig } from "axios"
+import { InterfaceAbi } from "ethers";
 
 
 export interface UserData {
@@ -60,13 +62,11 @@ export interface CustomError {
   error: string;
 }
 
-
-
 // Blockchain
 
 export interface ContractData {
   contractName: string;
-  abi: unknown[]; 
+  abi: Interface | InterfaceAbi; 
   bytecode: string;
   constructor: {
     internalType: string;

@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ContractData } from "../../../../interfaces/interface";
+import { InterfaceAbi } from "ethers";
+import { Interface } from "ethers";
 
 // Initial state of the contract slice
 
 const initialState: ContractData = {
     contractName: "",
-    abi: [],
+    abi:[] as string[],
     bytecode: "",
     constructor: [],
     loading: false,
