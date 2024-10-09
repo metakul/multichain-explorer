@@ -2,11 +2,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Text } from "@radix-ui/themes";
-import { selectAllContracts } from "../../redux/slices/BackendSlices/Blockchain/AllContractsSlice"; // Assuming the correct import path
-import ContractInfoCard from "../../Components/Cards/ContractCard/ContractInfoCard";
-import { fetchAllContracts } from "../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
-import { AppDispatch } from "../../redux/store";
-import Grid from "../../Components/Grid";
+import { selectAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice"; // Assuming the correct import path
+import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
+import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
+import { AppDispatch } from "../../../../redux/store";
+import Grid from "../../../../Components/Grid";
 import { useNavigate } from "react-router-dom";
 
 const ContractsGrid: React.FC = () => {

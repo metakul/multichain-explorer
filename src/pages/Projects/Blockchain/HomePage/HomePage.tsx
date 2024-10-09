@@ -7,7 +7,7 @@ import ContractsGrid from './AllContracts';
 
 
 
-const HomePage: React.FC = () => {
+const ContractHomePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (
     <Container style={{
@@ -28,4 +28,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default ContractHomePage;

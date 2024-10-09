@@ -2,17 +2,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchContractByName } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
+import { fetchContractByName, saveNewContract } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import { Box, Text } from "@radix-ui/themes";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
+import { useWalletAuth } from "../../../../contexts/WalletAuthContext";
 
 const SingleContractPage: React.FC = () => {
     const { contractName } = useParams<{ contractName: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
+
+    const {  walletAddress  } = useWalletAuth();
 
     // Fetch the single contract when the component mounts
     useEffect(() => {
@@ -44,7 +47,11 @@ const SingleContractPage: React.FC = () => {
                 // Deploy the contract
                 const deployedContract = await factory.deploy(...constructorParams);
                 
+                const deployedAddress =await deployedContract.getAddress();
+
                 console.log("Contract deployed at:", deployedContract.getAddress());
+
+                (dispatch as AppDispatch)(saveNewContract({ contractName, deployedAddress, walletAddress}));
             }
         } catch (error) {
             console.error("Deployment error:", error);

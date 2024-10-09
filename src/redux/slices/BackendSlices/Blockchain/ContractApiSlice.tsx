@@ -5,6 +5,7 @@ import request from '../../../../Backend/axiosCall/apiCall';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { setCurrentContract } from './ContractSlice';
 import { setAllContract } from './AllContractsSlice';
+import { addNewDeployedContract, setMyContract } from './MyContractSlice';
 
 // Async thunk to fetch contract by name
 export const fetchContractByName = createAsyncThunk(
@@ -57,6 +58,75 @@ export const fetchAllContracts = createAsyncThunk(
             };
 
             dispatch(setAllContract(contractList))
+            
+
+            return apiSuccess.data; // Returning contract list data
+        } catch (error) {
+            const castedError = error as ApiError;
+            console.error(ErrorType.UNKNOWN_ERROR, error);
+            return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
+        }
+    }
+);
+export const getMyContracts = createAsyncThunk(
+    'contracts/fetchAll',
+    async (_, { rejectWithValue, dispatch }) => {
+        try {
+          
+            const response = await request({
+                url: ApiEndpoint.getMyContracts.url,
+                method: ApiEndpoint.getMyContracts.method,
+                headers: ApiEndpoint.getMyContracts.headers,
+            });
+
+            const contractList: ContractData[] = response.contracts;
+
+            const apiSuccess: ApiSuccess = {
+                statusCode: response.status,
+                message: 'Contracts fetched successfully',
+                data: contractList,
+            };
+
+            dispatch(setMyContract(contractList))
+            
+
+            return apiSuccess.data; // Returning contract list data
+        } catch (error) {
+            const castedError = error as ApiError;
+            console.error(ErrorType.UNKNOWN_ERROR, error);
+            return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
+        }
+    }
+);
+
+
+export const saveNewContract = createAsyncThunk(
+    'contracts/fetchAll',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async ({ contractName, contractAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
+        try {
+            console.log("fetching all contracts");
+            
+            const response = await request({
+                url: ApiEndpoint.saveContract.url,
+                method: ApiEndpoint.saveContract.method,
+                headers: ApiEndpoint.saveContract.headers,
+                data:{
+                    contractName,
+                    contractAddress,
+                    walletAddress
+                }
+            });
+
+            const savedContractInfo: ContractData = response.contracts;
+
+            const apiSuccess: ApiSuccess = {
+                statusCode: response.status,
+                message: 'Contract saved successfully',
+                data: savedContractInfo,
+            };
+
+            dispatch(addNewDeployedContract(savedContractInfo))
             
 
             return apiSuccess.data; // Returning contract list data

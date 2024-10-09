@@ -1,4 +1,4 @@
-import MyContracts from "../../Components/AllContracts";
+import MyContracts from "../../Components/MyContracts";
 import ConnectWalletButton from "../../Components/Buttons/ConnectWalletButton";
 import { useWalletAuth } from "../../contexts/WalletAuthContext";
 
