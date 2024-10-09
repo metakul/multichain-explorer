@@ -1,35 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Label } from "@radix-ui/react-label";
 import { TextFieldInput } from "@radix-ui/themes";
 
 interface ConstructorInputFormProps {
     constructorParams: { name: string; type: string }[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructorInputs: any[];
+    constructorInputs: string[];
     handleInputChange: (index: number, value: string) => void;
+    inputErrors: string[]; // Accept input errors as props
 }
 
 const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
     constructorParams,
     constructorInputs,
     handleInputChange,
+    inputErrors,
 }) => {
-    const [localErrors, setLocalErrors] = useState<string[]>([]); // Local error state
-
-    const handleChange = (index: number, value: string) => {
-        // Simple validation: Check if the input is empty
-        const updatedErrors = [...localErrors];
-        if (value.trim() === "") {
-            updatedErrors[index] = `The ${constructorParams[index].name} field cannot be empty.`;
-        } else {
-            updatedErrors[index] = "";
-        }
-        setLocalErrors(updatedErrors); // Update local error state
-
-        // Send data back to parent component
-        handleInputChange(index, value);
-    };
-
     // If no constructor parameters are available
     if (!constructorParams || constructorParams.length === 0) {
         return <p>No constructor parameters available.</p>;
@@ -37,22 +22,23 @@ const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
 
     return (
         <div>
-            <span >Constructor Parameters:</span>
+            <span>Constructor Parameters:</span>
             <ul>
                 {constructorParams.map((param, index) => (
-                    <li key={index} >
-                        <Label>
+                    <li key={index}>
+                        <Label htmlFor={`param-${index}`}>
                             Param {index + 1}: {param.name} ({param.type})
                         </Label>
                         <TextFieldInput
-                            type="text"
+                            id={`param-${index}`}
+                            type={param.type === "number" ? "number" : "text"} // Dynamic input type
                             placeholder={`Enter value for ${param.name}`}
                             value={constructorInputs[index] || ""}
-                            onChange={(e) => handleChange(index, e.target.value)}
+                            onChange={(e) => handleInputChange(index, e.target.value)}
                         />
-                        {localErrors[index] && (
-                            <Label >
-                                {localErrors[index]}
+                        {inputErrors[index] && ( // Display error from props
+                            <Label style={{ color: 'red' }}>
+                                {inputErrors[index]}
                             </Label>
                         )}
                     </li>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Box } from "@radix-ui/themes";
@@ -25,13 +24,49 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     const { connected } = useWalletAuth();
 
     // State to manage constructor inputs
-    const [constructorInputs, setConstructorInputs] = useState<any[]>([]);
+    const [constructorInputs, setConstructorInputs] = useState<string[]>(constructor.map(() => "")); // Initialize inputs
+    const [inputErrors, setInputErrors] = useState<string[]>([]); // State for input errors
 
     // Handle input change
     const handleInputChange = (index: number, value: string) => {
         const updatedInputs = [...constructorInputs];
         updatedInputs[index] = value;
         setConstructorInputs(updatedInputs);
+
+        // Clear the error for the specific input if it was previously set
+        if (inputErrors[index]) {
+            setInputErrors((prevErrors) => {
+                const updatedErrors = [...prevErrors];
+                updatedErrors[index] = "";
+                return updatedErrors;
+            });
+        }
+    };
+
+    // Handle button click
+    const handleClick = () => {
+        // Initialize errors array with empty strings
+        const errors = Array(constructorInputs.length).fill("");
+
+        console.log("init error", errors);
+        
+        // Validate inputs
+        constructorInputs.forEach((input, index) => {
+            if (input.trim() === "") {
+                errors[index] = `The ${constructor[index].name} field cannot be empty.`;
+            }
+        });
+
+        console.log(errors);
+        
+        // Set errors if any are found
+        if (errors.some((error) => error !== "")) {
+            setInputErrors(errors);
+            return; // Do not proceed if there are errors
+        }
+
+        // Call the parent function if no errors
+        handleButtonClick(constructorInputs);
     };
 
     // While data is being fetched
@@ -51,10 +86,8 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
                         <AlertDialog.Description>
                             {error}
                         </AlertDialog.Description>
-                        <AlertDialog.Action >
-                            <button >
-                                OK
-                            </button>
+                        <AlertDialog.Action>
+                            <button>OK</button>
                         </AlertDialog.Action>
                     </AlertDialog.Content>
                 </AlertDialog.Portal>
@@ -64,8 +97,9 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
 
     return (
         <div>
-            <div >
-                <h4 >{contractName}</h4> <br />
+            <div>
+                <h4>{contractName}</h4>
+                <br />
             </div>
 
             {cardType === "single" && (
@@ -73,20 +107,17 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
                     constructorParams={constructor || []}
                     constructorInputs={constructorInputs}
                     handleInputChange={handleInputChange}
+                    inputErrors={inputErrors} // Pass errors to the child component
                 />
             )}
 
             {/* Button */}
             {buttonText && cardType === "single" ? (
-                <button
-                    onClick={() => handleButtonClick(constructorInputs)} // Pass input values
-                >
-                    {connected ? buttonText : <ConnectWalletButton />}
-                </button>
+                <>
+                { !connected ? <ConnectWalletButton /> : <button onClick={handleClick}>  {buttonText} </button>}
+                </>
             ) : (
-                <button
-                    onClick={() => handleButtonClick(constructorInputs)} // Pass input values
-                >
+                <button onClick={handleClick}>
                     {buttonText}
                 </button>
             )}
