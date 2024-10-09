@@ -18,7 +18,14 @@ function ConnectWalletButton({style, className = "", ...props }:any) {
             style={style}
             {...props}
         >
-            {connected ? `${formatAddress(walletAddress)} Disconnect Wallet` : "Connect Wallet"}
+            {connected ? (
+                <>
+                {formatAddress(walletAddress)} Disconnect Wallet
+             
+                </>
+            ) :
+            
+            ("Connect Wallet")}
         </Button>
     );
 }

@@ -11,6 +11,7 @@ interface ContractInfoProps {
     contractInfo: ContractData;
     cardType: "multiple" | "single";
     buttonText: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleButtonClick: (constructorParams: any) => void;
 }
 

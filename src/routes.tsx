@@ -5,9 +5,9 @@ import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
 import { Pages } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contract]/SingleContractInfo";
+import Web3ProfilePage from "./pages/ProfilePage";
 
 const Router: React.FC = () => {
-
 
   const routes = useRoutes([
 
@@ -26,6 +26,10 @@ const Router: React.FC = () => {
         {
           path: Pages.SINGLE_CONTRACT,
           element: <SingleContractPage />,
+        },
+        {
+          path: Pages.WEB3_PROFILE,
+          element: <Web3ProfilePage />,
         },
       ],
     },

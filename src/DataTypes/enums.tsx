@@ -14,6 +14,7 @@ export enum Pages {
   DASHBOARD = '/dashboard/app',
   PROFILE = '/dashboard/profile',
   SINGLE_CONTRACT = '/contract/:contractName',
+  WEB3_PROFILE = '/web3/profile/',
 }
 
 export enum ProfileTab {

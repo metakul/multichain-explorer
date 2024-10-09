@@ -1,8 +1,8 @@
 import React from 'react';
 import { VerificationProps } from '../../interfaces/CompInterfaces';
 import { Container } from '@radix-ui/themes';
-import CustomHeading from '../../Components/Typogrpahy/Text/Heading';
-import DataGrid from '../../Components/DataGrid';
+import CustomHeading from '../Typogrpahy/Text/Heading';
+import DataGrid from '../DataGrid';
 import { GridApiProps } from '../../interfaces/Api/getGridData';
 import { userMockData } from '../../MockData';
 
