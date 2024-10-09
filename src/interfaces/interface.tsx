@@ -1,8 +1,7 @@
-import { Interface } from "ethers";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserType } from "../DataTypes/enums";
 //pages interface
 import { AxiosRequestConfig } from "axios"
-import { InterfaceAbi } from "ethers";
 
 
 export interface UserData {
@@ -66,7 +65,7 @@ export interface CustomError {
 
 export interface ContractData {
   contractName: string;
-  abi: Interface | InterfaceAbi; 
+  abi:any;
   bytecode: string;
   constructor: {
     internalType: string;

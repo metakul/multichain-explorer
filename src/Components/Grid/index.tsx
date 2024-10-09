@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-
 // Define the Grid component
 const Grid = ({ columns = 3, gap = 3, rows, children, style }:any) => {
     // Define grid styles based on props

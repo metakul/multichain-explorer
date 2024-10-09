@@ -1,5 +1,4 @@
 import React from 'react';
-import AnimatedDialog from '../../../Dialog/AnimatedDialog';
 import { UserType } from '../../../../DataTypes/enums';
 
 interface SignUpFormProps {

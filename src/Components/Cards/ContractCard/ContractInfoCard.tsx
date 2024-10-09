@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Box } from "@radix-ui/themes";
 import { ContractData } from "../../../interfaces/interface";
@@ -24,8 +24,18 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     const { connected } = useWalletAuth();
 
     // State to manage constructor inputs
-    const [constructorInputs, setConstructorInputs] = useState<string[]>(constructor.map(() => "")); // Initialize inputs
+    const [constructorInputs, setConstructorInputs] = useState<string[]>([]);
     const [inputErrors, setInputErrors] = useState<string[]>([]); // State for input errors
+
+
+
+    // Effect to set constructor inputs based on the constructor array
+    useEffect(() => {
+        // Update the constructor inputs when the constructor changes
+        setConstructorInputs(constructor.map(() => ""));
+        setInputErrors(Array(constructor.length).fill("")); // Reset input errors based on new constructor length
+    }, [constructor]); // Dependency array to re-run the effect when constructor changes
+
 
     // Handle input change
     const handleInputChange = (index: number, value: string) => {
@@ -49,7 +59,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
         const errors = Array(constructorInputs.length).fill("");
 
         console.log("init error", errors);
-        
+
         // Validate inputs
         constructorInputs.forEach((input, index) => {
             if (input.trim() === "") {
@@ -58,7 +68,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
         });
 
         console.log(errors);
-        
+
         // Set errors if any are found
         if (errors.some((error) => error !== "")) {
             setInputErrors(errors);
@@ -114,10 +124,10 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
             {/* Button */}
             {buttonText && cardType === "single" ? (
                 <>
-                { !connected ? <ConnectWalletButton /> : <button onClick={handleClick}>  {buttonText} </button>}
+                    {!connected ? <ConnectWalletButton /> : <button onClick={handleClick}>  {buttonText} </button>}
                 </>
             ) : (
-                <button onClick={handleClick}>
+                <button onClick={handleButtonClick}>
                     {buttonText}
                 </button>
             )}
