@@ -7,10 +7,10 @@ const CustomDialog: React.FC<CustomDialogProps> = ({ className,triggerButtonText
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-      <Button className={className}>{userType} {triggerButtonText}</Button>
+      <Button >{userType} {triggerButtonText}</Button>
       </Dialog.Trigger>
 
-      <Dialog.Content className='custom-dailog'>
+      <Dialog.Content className={className} >
         <Dialog.Title>{title}</Dialog.Title>
         {description && <Dialog.Description>{description}: {userType}</Dialog.Description>}
         <Inset side="x" my="5">

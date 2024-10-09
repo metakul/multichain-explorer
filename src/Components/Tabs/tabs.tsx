@@ -13,13 +13,13 @@ const CustomTab: React.FC<CustomTabProps> = ({ tabs }) => {
         <Tabs.Root defaultValue={firstTabValue}>
         <Tabs.List >
             {tabs.map(({ label, value }) => (
-              <Tabs.Trigger key={label} value={label} className='w-1/4 h-12 bg-orange border flex justify-center items-center '>
+              <Tabs.Trigger key={label} value={label}>
                 <span>{value}</span>
               </Tabs.Trigger>
             ))}
           </Tabs.List>
           {tabs.map(({ content, label }) => (
-            <Tabs.Content className='w-full' key={label} value={label}>
+            <Tabs.Content key={label} value={label}>
               {content}
             </Tabs.Content>
           ))}

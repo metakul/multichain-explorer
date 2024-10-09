@@ -6,7 +6,7 @@ import { fetchContractByName } from "../../../../redux/slices/BackendSlices/Bloc
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import { Box, Text } from "@radix-ui/themes";
-import ContractInfoCard from "../../../../Components/Cards/ContractInfoCard";
+import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
 
 const SingleContractPage: React.FC = () => {

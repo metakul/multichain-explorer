@@ -13,7 +13,7 @@ function ConnectWalletButton({style, className = "", ...props }:any) {
 
     return (
         <Button
-            className={`btn ${className}`}
+            className={`${className}`}
             onClick={connectWallet}
             style={style}
             {...props}
