@@ -10,21 +10,23 @@ interface CustomTableProps {
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({ columns, data }) => {
+  console.log(columns,data);
+  
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
           {columns.map((column, index) => (
-            <Table.ColumnHeaderCell key={index}>{column}</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell style={{ padding: "10px" }} key={index}>{column}</Table.ColumnHeaderCell>
           ))}
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {data.map((row, rowIndex) => (
-          <Table.Row key={rowIndex}>
+          <Table.Row key={rowIndex} >
             {columns.map((column, columnIndex) => (
-              <Table.Cell key={columnIndex}>{row[column]}</Table.Cell>
+              <Table.Cell key={columnIndex} style={{ padding: "10px 25px" }}>{row[column]}</Table.Cell>
             ))}
           </Table.Row>
         ))}

@@ -1,3 +1,4 @@
+import MyContracts from "../../Components/AllContracts";
 import ConnectWalletButton from "../../Components/Buttons/ConnectWalletButton";
 import { useWalletAuth } from "../../contexts/WalletAuthContext";
 
@@ -12,6 +13,7 @@ function Web3ProfilePage() {
       ) : (
         <div>
           My deployed Contracts
+            <MyContracts pageTitle="" userType="Owner" />
         </div>
       )}
     </>

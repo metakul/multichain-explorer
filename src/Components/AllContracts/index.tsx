@@ -6,16 +6,16 @@ import DataGrid from '../DataGrid';
 import { GridApiProps } from '../../interfaces/Api/getGridData';
 import { userMockData } from '../../MockData';
 
-const VerificationPage: React.FC<VerificationProps> = (props) => {
+const MyContracts: React.FC<VerificationProps> = (props) => {
  
   const columns = ['Full Name', 'Email', 'Group']; 
 
   // todo: choose VerificationData to update based on permission
   
   const renderUserRow = (user: GridApiProps) => ({
-    fullName: user.fullName,
-    email: user.email,
-    group: user.group,
+    'Full Name': user.fullName,
+    'Email': user.email,
+    'Group': user.group,      
   });
   
   return (
@@ -26,4 +26,4 @@ const VerificationPage: React.FC<VerificationProps> = (props) => {
   );
 };
 
-export default VerificationPage;
+export default MyContracts;
