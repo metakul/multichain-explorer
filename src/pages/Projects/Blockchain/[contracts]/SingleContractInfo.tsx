@@ -11,13 +11,15 @@ import { ethers } from "ethers";
 import { useWalletAuth } from "../../../../contexts/WalletAuthContext";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
 import { ContractType } from "../../../../DataTypes/enums";
+import ContractFunctionsForm from "../../../../Components/Contracts/InteractWithContract";
+import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
-    const { contractName } = useParams<{ contractName: string }>();
+    const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?:string }>();
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
 
-    const {  walletAddress  } = useWalletAuth();
+    const { walletAddress, connected } = useWalletAuth();
 
     // Fetch the single contract when the component mounts
     useEffect(() => {
@@ -37,12 +39,12 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
             if (!window.ethereum) throw new Error("No Ethereum wallet detected");
 
             // Request wallet connection
-            if (window && window.ethereum && window.ethereum.request){
+            if (window && window.ethereum && window.ethereum.request) {
 
                 await window?.ethereum.request({ method: "eth_requestAccounts" });
                 const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer =await provider.getSigner();
-                
+                const signer = await provider.getSigner();
+
                 // Prepare contract for deployment
                 const factory = new ethers.ContractFactory(contract.abi, contract.bytecode as any, signer);
                 
@@ -50,7 +52,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                 const deployedContract = await factory.deploy(...constructorParams);
 
                 // Wait for the deployment to finish and get the address
-                await deployedContract.getAddress().then((deployedAddress)=>{
+                await deployedContract.getAddress().then((deployedAddress) => {
                     // Dispatch the action with the resolved contract address
                     dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
 
@@ -63,29 +65,37 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
         }
     };
 
-    const viewOnExplorer = async () =>{
-        console.log("Opening Explorer for contract", contractName);
-        
+    const viewOnExplorer = async () => {
+        console.log("Opening Explorer for contract", deployedAddress);
     }
-    
+
     return (
         <Box>
-            {props.contractType == ContractType.Interact ? (
-                <ContractInfoCard
-                    contractType={ContractType.Interact}
-                    contractInfo={contract}
-                    cardType="single"
-                    buttonText="View On Explorer"
-                    handleButtonClick={viewOnExplorer} // Pass deploy function
-                />
-            ):(
-                    <ContractInfoCard
-                        contractType={ContractType.Deploy}
-                        contractInfo={contract}
-                        cardType="single"
-                        buttonText="Deploy"
-                        handleButtonClick={deployContract} // Pass deploy function
-                    />
+            {!connected ? (
+                <ConnectWalletButton />
+            ) : (
+                <>
+                    {props.contractType == ContractType.Deploy ? (
+                        <ContractInfoCard
+                            contractType={ContractType.Deploy}
+                            contractInfo={contract}
+                            cardType="single"
+                            buttonText="Deploy"
+                            handleButtonClick={deployContract} // Pass deploy function
+                        />
+                    ) : (
+                        <>
+                            <ContractInfoCard
+                                contractType={ContractType.Interact}
+                                contractInfo={contract}
+                                cardType="single"
+                                buttonText="View On Explorer"
+                                handleButtonClick={viewOnExplorer} // Pass deploy function
+                            />
+                                    <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
+                        </>
+                    )}
+                </>
             )}
         </Box>
     );

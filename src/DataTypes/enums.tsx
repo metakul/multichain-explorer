@@ -19,7 +19,7 @@ export enum PROJECTS {
   CONTRACTS_HOME = '/web3/contracts',
   SINGLE_CONTRACT = '/web3/contract/:contractName',
   WEB3_PROFILE = '/web3/profile/',
-  DEPLOYED_CONTRACT = '/web3/profile/contract/:contractName',
+  DEPLOYED_CONTRACT = '/web3/profile/contract/:contractName/:deployedAddress',
 }
 
 export enum ProfileTab {

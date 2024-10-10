@@ -24,9 +24,12 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
     (dispatch as AppDispatch)(getMyContracts(walletAddress));
   }, [dispatch]);
 
-  const navigateUser = (contract: { contractName: any }) => {
-    // Use template string to replace :contractName with the actual contract name
-    const path = PROJECTS.DEPLOYED_CONTRACT.replace(':contractName', contract.contractName);
+  const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
+    // Replace :contractName in the path with the actual contract name
+    const path = PROJECTS.DEPLOYED_CONTRACT
+      .replace(':contractName', contract.contractName)
+      .replace(':deployedAddress', contract.deployedAddress); // Include deployedAddress in the URL
+
     navigate(path);
   };
   return (

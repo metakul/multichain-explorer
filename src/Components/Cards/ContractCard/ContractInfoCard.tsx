@@ -31,7 +31,6 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     const { connected } = useWalletAuth();
 
     // State to manage constructor inputs
-    // State to manage constructor inputs
     const [constructorInputs, setConstructorInputs] = useState<string[]>([]);
     const [inputErrors, setInputErrors] = useState<string[]>([]); // State for input errors
 
@@ -122,9 +121,9 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
                 />
             )}
 
-            {buttonText && cardType === "single" ? (
+            {buttonText && cardType === "single" && contractType === ContractType.Deploy ? (
                 connected ? (
-                    <button onClick={handleButtonClick}>{buttonText}</button>
+                    <button onClick={handleClick}>{buttonText}</button>
                 ) : (
                     <ConnectWalletButton />
                 )

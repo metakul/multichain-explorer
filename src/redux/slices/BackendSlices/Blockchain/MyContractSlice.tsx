@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ContractData, DeployedContract } from "../../../../interfaces/interface";
+import { DeployedContract } from "../../../../interfaces/interface";
 
 // Initial state of the contracts slice
 interface ContractsState {
@@ -38,6 +38,6 @@ export const { setMyContract, addNewDeployedContract } = contractsSlice.actions;
 export default contractsSlice.reducer;
 
 // Selectors
-export const selectMyContracts = (state: { deployedContracts: { contracts: ContractData[] } }) => state.deployedContracts.contracts;
+export const selectMyContracts = (state: { deployedContracts: { contracts: DeployedContract[] } }) => state.deployedContracts.contracts;
 export const selectContractsLoading = (state: { deployedContracts: { loading: boolean } }) => state.deployedContracts.loading;
 export const selectContractsError = (state: { deployedContracts: { error: string } }) => state.deployedContracts.error;
