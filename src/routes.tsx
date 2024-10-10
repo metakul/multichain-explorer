@@ -1,12 +1,13 @@
 import React from "react";
 import { useRoutes, Navigate } from "react-router-dom";
 import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
-import { ContractType, Pages, PROJECTS } from "./DataTypes/enums";
+import { ContractType, EXPLORER, Pages, PROJECTS } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contracts]/SingleContractInfo";
 import Web3ProfilePage from "./pages/Projects/Blockchain/ProfilePage";
 import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
 import Dashboard from "./pages/Dashbaord";
+import Explorer from "./pages/Projects/Explorer";
 
 const Router: React.FC = () => {
 
@@ -39,6 +40,10 @@ const Router: React.FC = () => {
         {
           path: PROJECTS.WEB3_PROFILE,
           element: <Web3ProfilePage />,
+        },
+        {
+          path: EXPLORER.EXPLORER_HOME,
+          element: <Explorer />,
         },
       ],
     },

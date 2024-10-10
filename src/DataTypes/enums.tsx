@@ -22,6 +22,9 @@ export enum PROJECTS {
   DEPLOYED_CONTRACT = '/web3/profile/contract/:contractName/:deployedAddress',
 }
 
+export enum EXPLORER {
+  EXPLORER_HOME="/explorer"
+}
 export enum ProfileTab {
   tabTitle1="OverView",
   tabTitle2="Profile",
