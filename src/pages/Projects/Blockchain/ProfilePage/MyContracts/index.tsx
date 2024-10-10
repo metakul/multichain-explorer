@@ -34,15 +34,6 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   };
   return (
       <Container style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        marginTop: "80px",
-        minHeight: "100vh",
-        padding: "20px",
-        width: "100%",
       }}>
       <CustomHeading placeholder={props.pageTitle} />
       <Grid columns="3" gap="3" width="auto" rows="repeat(3, 164px)">

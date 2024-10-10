@@ -9,9 +9,13 @@ export default function DashboardLayout() {
     <>
       <Header />
       <Box style={{
-        maxWidth: "100vw",
-        paddingLeft: "10px",
-        paddingRight: "10px",
+      marginTop:"100px",
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
+      flexDirection:"row",
+      marginLeft:"auto",
+      marginRight:"auto"
       }}>
         <Container>
           <Outlet />
