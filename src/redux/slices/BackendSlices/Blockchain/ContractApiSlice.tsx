@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiError, ContractData, ApiSuccess } from '../../../../interfaces/interface';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
@@ -30,7 +31,6 @@ export const fetchContractByName = createAsyncThunk(
             return apiSuccess.data; // Returning contract data to be handled by the slice
         } catch (error) {
             const castedError = error as ApiError;
-            console.error(ErrorType.UNKNOWN_ERROR, error);
             return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
         }
     }
@@ -41,7 +41,6 @@ export const fetchAllContracts = createAsyncThunk(
     'contracts/fetchAll',
     async (_, { rejectWithValue, dispatch }) => {
         try {
-            console.log("fetching all contracts");
             
             const response = await request({
                 url: ApiEndpoint.getAllContracts.url,
@@ -63,20 +62,20 @@ export const fetchAllContracts = createAsyncThunk(
             return apiSuccess.data; // Returning contract list data
         } catch (error) {
             const castedError = error as ApiError;
-            console.error(ErrorType.UNKNOWN_ERROR, error);
             return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
         }
     }
 );
 export const getMyContracts = createAsyncThunk(
     'contracts/fetchAll',
-    async (_, { rejectWithValue, dispatch }) => {
+    async (walletAddress:any, { rejectWithValue, dispatch }) => {
         try {
           
             const response = await request({
-                url: ApiEndpoint.getMyContracts.url,
+                url: `${ApiEndpoint.getMyContracts.url}/?walletAddress=${walletAddress}`,
                 method: ApiEndpoint.getMyContracts.method,
                 headers: ApiEndpoint.getMyContracts.headers,
+                data: {walletAddress}
             });
 
             const contractList: ContractData[] = response.contracts;
@@ -93,7 +92,6 @@ export const getMyContracts = createAsyncThunk(
             return apiSuccess.data; // Returning contract list data
         } catch (error) {
             const castedError = error as ApiError;
-            console.error(ErrorType.UNKNOWN_ERROR, error);
             return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
         }
     }
@@ -103,17 +101,15 @@ export const getMyContracts = createAsyncThunk(
 export const saveNewContract = createAsyncThunk(
     'contracts/fetchAll',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async ({ contractName, contractAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
+    async ({ contractName, deployedAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
         try {
-            console.log("fetching all contracts");
-            
             const response = await request({
                 url: ApiEndpoint.saveContract.url,
                 method: ApiEndpoint.saveContract.method,
                 headers: ApiEndpoint.saveContract.headers,
                 data:{
                     contractName,
-                    contractAddress,
+                    deployedAddress,
                     walletAddress
                 }
             });
@@ -132,7 +128,6 @@ export const saveNewContract = createAsyncThunk(
             return apiSuccess.data; // Returning contract list data
         } catch (error) {
             const castedError = error as ApiError;
-            console.error(ErrorType.UNKNOWN_ERROR, error);
             return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
         }
     }

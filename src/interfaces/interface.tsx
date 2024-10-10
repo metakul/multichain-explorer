@@ -65,13 +65,17 @@ export interface CustomError {
 
 export interface ContractData {
   contractName: string;
-  abi:any;
-  bytecode: string;
-  constructor: {
-    internalType: string;
-    name: string;
-    type: string;
-  }[];
+  abi?:any;
+  bytecode?: string;
+  constructor:any;
   loading:boolean,
   error:string
+}
+
+export interface DeployedContract {
+  deployedAddress:string;
+  contractName: string;
+  walletAddress:string
+  loading: boolean,
+  error: string;
 }

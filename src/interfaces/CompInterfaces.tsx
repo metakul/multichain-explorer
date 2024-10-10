@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { UserType } from '../DataTypes/enums';
+import { ContractType, UserType } from '../DataTypes/enums';
 
 
 export interface Layoutprops {
@@ -83,4 +83,8 @@ export interface UserActivityProps {
 export interface UserProfileProps {
   value?: string;
   children?: ReactNode;
+}
+
+export interface SingleContractProps {
+  contractType: ContractType;
 }

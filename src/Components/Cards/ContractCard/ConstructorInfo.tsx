@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Label } from "@radix-ui/react-label";
 import { TextFieldInput } from "@radix-ui/themes";
 
 interface ConstructorInputFormProps {
-    constructorParams: { name: string; type: string }[];
+    constructorParams:any;
     constructorInputs: string[];
     handleInputChange: (index: number, value: string) => void;
     inputErrors: string[]; // Accept input errors as props
@@ -17,14 +18,14 @@ const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
 }) => {
     // If no constructor parameters are available
     if (!constructorParams || constructorParams.length === 0) {
-        return <p>No constructor parameters available.</p>;
+        return <p>No constructor parameters Required To deploy.</p>;
     }
 
     return (
         <div>
             <span>Constructor Parameters:</span>
             <ul>
-                {constructorParams.map((param, index) => (
+                {constructorParams.map((param:any, index:number) => (
                     <li key={index}>
                         <Label htmlFor={`param-${index}`}>
                             Param {index + 1}: {param.name} ({param.type})

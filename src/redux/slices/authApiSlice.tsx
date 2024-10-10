@@ -30,7 +30,6 @@ export const loginUser = createAsyncThunk(
         return apiSuccess;
     } catch (error) {
       const castedError = error as ApiError
-      console.error(ErrorType.UNKNOWN_ERROR, error);
       throw rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
     }
   }
@@ -64,7 +63,6 @@ export const loginVerifyUser = createAsyncThunk(
     
     } catch (error) {
       const castedError = error as ApiError
-      console.error(ErrorType.UNKNOWN_ERROR, error);
       return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
     }
   }
@@ -93,7 +91,6 @@ export const resendOtpLogin = createAsyncThunk(
       }
     } catch (error) {
       const castedError = error as ApiError
-      console.error(ErrorType.RESEND_OTP_ERROR, error);
       return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
     }
   }

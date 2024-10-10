@@ -1,29 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
-import { VerificationProps } from '../../interfaces/CompInterfaces';
+import { VerificationProps } from '../../../../../interfaces/CompInterfaces';
 import { Box, Container, Text } from '@radix-ui/themes';
-import CustomHeading from '../Typogrpahy/Text/Heading';
-import Grid from "../../Components/Grid";
+import CustomHeading from '../../../../../Components/Typogrpahy/Text/Heading';
+import Grid from "../../../../../Components/Grid";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMyContracts } from '../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
-import { AppDispatch } from '../../redux/store';
-import { getMyContracts } from '../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
-import ContractInfoCard from '../Cards/ContractCard/ContractInfoCard';
+import { selectMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
+import { AppDispatch } from '../../../../../redux/store';
+import { getMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
+import ContractInfoCard from '../../../../../Components/Cards/ContractCard/ContractInfoCard';
 import { useNavigate } from 'react-router-dom';
+import { useWalletAuth } from '../../../../../contexts/WalletAuthContext';
+import { ContractType, PROJECTS } from '../../../../../DataTypes/enums';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
 
   const myContracts = useSelector(selectMyContracts)
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const { walletAddress } =useWalletAuth()
 
   useEffect(() => {
-    (dispatch as AppDispatch)(getMyContracts());
+    (dispatch as AppDispatch)(getMyContracts(walletAddress));
   }, [dispatch]);
 
-  const navigateUser = (contract: { contractName: any; }) => {
-    navigate(`/profile/contract/${contract.contractName}`)
-  }
+  const navigateUser = (contract: { contractName: any }) => {
+    // Use template string to replace :contractName with the actual contract name
+    const path = PROJECTS.DEPLOYED_CONTRACT.replace(':contractName', contract.contractName);
+    navigate(path);
+  };
   return (
       <Container style={{
         display: 'flex',
@@ -48,7 +53,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              <ContractInfoCard buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
             </Box>
           ))
         ) : (

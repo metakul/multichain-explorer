@@ -8,6 +8,7 @@ import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockc
 import { AppDispatch } from "../../../../redux/store";
 import Grid from "../../../../Components/Grid";
 import { useNavigate } from "react-router-dom";
+import { ContractType, PROJECTS } from "../../../../DataTypes/enums";
 
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();
@@ -18,9 +19,11 @@ const ContractsGrid: React.FC = () => {
         (dispatch as AppDispatch)(fetchAllContracts());
     }, [dispatch]);
 
-    const navigateUser = (contract: { contractName: any; }) => {
-        navigate(`/contract/${contract.contractName}`)
-    }
+    const navigateUser = (contract: { contractName: any }) => {
+        // Use template string to replace :contractName with the actual contract name
+        const path = PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName);
+        navigate(path);
+    };
     // Render contracts in a grid layout
     return (
 
@@ -35,7 +38,7 @@ const ContractsGrid: React.FC = () => {
                             padding: "16px",
                         }}
                     >
-                        <ContractInfoCard buttonText="Deploy" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+                        <ContractInfoCard contractType={ContractType.Deploy} buttonText="Deploy" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
                     </Box>
                 ))
             ) : (

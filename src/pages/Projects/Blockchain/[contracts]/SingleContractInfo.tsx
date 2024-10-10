@@ -9,8 +9,10 @@ import { Box, Text } from "@radix-ui/themes";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
 import { useWalletAuth } from "../../../../contexts/WalletAuthContext";
+import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
+import { ContractType } from "../../../../DataTypes/enums";
 
-const SingleContractPage: React.FC = () => {
+const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     const { contractName } = useParams<{ contractName: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
@@ -42,31 +44,49 @@ const SingleContractPage: React.FC = () => {
                 const signer =await provider.getSigner();
                 
                 // Prepare contract for deployment
-                const factory = new ethers.ContractFactory(contract.abi, contract.bytecode, signer);
+                const factory = new ethers.ContractFactory(contract.abi, contract.bytecode as any, signer);
                 
                 // Deploy the contract
                 const deployedContract = await factory.deploy(...constructorParams);
+
+                // Wait for the deployment to finish and get the address
+                await deployedContract.getAddress().then((deployedAddress)=>{
+                    // Dispatch the action with the resolved contract address
+                    dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
+
+                })
+
                 
-                const deployedAddress =await deployedContract.getAddress();
-
-                console.log("Contract deployed at:", deployedContract.getAddress());
-
-                (dispatch as AppDispatch)(saveNewContract({ contractName, deployedAddress, walletAddress}));
             }
         } catch (error) {
             console.error("Deployment error:", error);
         }
     };
 
+    const viewOnExplorer = async () =>{
+        console.log("Opening Explorer for contract", contractName);
+        
+    }
     
     return (
         <Box>
-            <ContractInfoCard
-                contractInfo={contract}
-                cardType="single"
-                buttonText="Deploy"
-                handleButtonClick={deployContract} // Pass deploy function
-            />
+            {props.contractType == ContractType.Interact ? (
+                <ContractInfoCard
+                    contractType={ContractType.Interact}
+                    contractInfo={contract}
+                    cardType="single"
+                    buttonText="View On Explorer"
+                    handleButtonClick={viewOnExplorer} // Pass deploy function
+                />
+            ):(
+                    <ContractInfoCard
+                        contractType={ContractType.Deploy}
+                        contractInfo={contract}
+                        cardType="single"
+                        buttonText="Deploy"
+                        handleButtonClick={deployContract} // Pass deploy function
+                    />
+            )}
         </Box>
     );
 };
