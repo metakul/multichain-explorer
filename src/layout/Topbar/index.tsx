@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { CaretDownIcon } from '@radix-ui/react-icons';
 import './style.css';
 import ConnectWalletButton from '../../Components/Buttons/ConnectWalletButton';
-import { Pages, PROJECTS } from '../../DataTypes/enums';
+import { EXPLORER, Pages, PROJECTS } from '../../DataTypes/enums';
 import { useWalletAuth } from '../../contexts/WalletAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@radix-ui/themes';
@@ -39,11 +39,11 @@ const NavigationMenuDemo = () => {
                             <ListItem onClick={() => navigate(Pages.HOME)} title="Dashboard">
                                 CSS-in-JS with best-in-class developer experience.
                             </ListItem>
-                            <ListItem onClick={() => navigate(PROJECTS.SINGLE_CONTRACT)} title="Contracts">
+                            <ListItem onClick={() => navigate(PROJECTS.CONTRACTS_HOME)} title="Contracts">
                                 Beautiful, thought-out palettes with auto dark mode.
                             </ListItem>
-                            <ListItem href="/faucet" title="Faucet">
-                                A crisp set of 15x15 icons, balanced and consistent.
+                            <ListItem onClick={() => navigate(EXPLORER.EXPLORER_HOME)} title="Explorer">
+                               A local BLockchain Explorer to view trx, addresses, etc
                             </ListItem>
                         </ul>
                     </NavigationMenu.Content>

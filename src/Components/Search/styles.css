@@ -1,0 +1,11 @@
+/* styles.css */
+
+.inTxn {
+    color: green; /* Example color for incoming transactions */
+    font-weight: bold;
+}
+
+.outTxn {
+    color: red; /* Example color for outgoing transactions */
+    font-weight: bold;
+}
