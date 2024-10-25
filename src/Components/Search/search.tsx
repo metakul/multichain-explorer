@@ -33,7 +33,7 @@ export default function Search() {
                     display:"flex"
                 }}>
                     <TextField.Root>
-                        <TextField.Input
+                        <TextField.Root
                             type="text"
                             placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
                             required

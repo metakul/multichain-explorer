@@ -6,7 +6,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   label,
   placeholder,
   value,
-  type,
+  // type,
   onChange,
   className,
   children,
@@ -15,9 +15,9 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     <>
       <TextField.Root>
         {label && <label>{label}</label>}
-        <TextField.Input
+        <TextField.Root
           className={className}
-          type={type}
+          // type={type}
           placeholder={placeholder}
           value={value}
           onInput={(e) => onChange && onChange((e.target as HTMLInputElement).value)}
