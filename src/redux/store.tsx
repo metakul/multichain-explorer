@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice"
 import contractsSlice from "./slices/BackendSlices/Blockchain/AllContractsSlice"
 import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
+import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
 import { useDispatch } from 'react-redux'
 import logger from 'redux-logger'
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
     auth:authReducer,
     contracts:contractsSlice,
     singleContract:singleContract,
-    deployedContracts: deployedContracts
+    deployedContracts: deployedContracts,
+    explorerSearchResult:explorerSlice
   },
   middleware:getDefaultMiddlerware =>
     getDefaultMiddlerware().concat(logger),

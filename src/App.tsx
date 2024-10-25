@@ -5,14 +5,16 @@ import Router from './routes';
 import store from "./redux/store"
 import { Provider } from 'react-redux';
 import { WalletAuthProvider } from './contexts/WalletAuthContext';
+import { RpcProvider } from './contexts/RpcProviderContext';
 function App() {
   return (
     <Provider store={store}>
       <WalletAuthProvider>
-
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <RpcProvider>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </RpcProvider>
       </WalletAuthProvider>
     </Provider>
   );

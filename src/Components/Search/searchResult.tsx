@@ -4,12 +4,12 @@ import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "rea
 import { Container, Heading, Table, Text } from "@radix-ui/themes";
 import "./styles.css";
 
-export default function SearchResults(props: { result: { result: { hash: string | any[]; decoded_call: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; block_number: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; block_timestamp: any; from_address: string; to_address: string | any[]; value: number; gas_price: number; }[]; searchInput: string; }; }) {
+export default function SearchResults(props: { result: { hash: string | any[]; decoded_call: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; block_number: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; block_timestamp: any; from_address: string; to_address: string | any[]; value: number; gas_price: number; }[]; searchInput: string; }) {
     return (
         <Container>
             <Heading >
                 Latest 25 from a total of{" "}
-                <span>{props.result.result.length}</span>
+                <span>{props.result.length}</span>
                 transactions
             </Heading>
             <Table.Root variant="surface">
@@ -27,7 +27,7 @@ export default function SearchResults(props: { result: { result: { hash: string 
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {props.result.result.map((txn: { hash: string | any[]; decoded_call: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; block_number: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; block_timestamp: any; from_address: string; to_address: string | any[]; value: number; gas_price: number; }) => {
+                    {props.result.map((txn: { hash: string | any[]; decoded_call: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; block_number: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; block_timestamp: any; from_address: string; to_address: string | any[]; value: number; gas_price: number; }) => {
                         return (
                             <Table.Row >
                                 <Table.Cell>{txn.hash.slice(0, 16)}...</Table.Cell>
@@ -42,13 +42,13 @@ export default function SearchResults(props: { result: { result: { hash: string 
                                 <Table.Cell>
                                     <Text
                                         className={txn.from_address.toLowerCase() !==
-                                            props.result.searchInput.toLowerCase()
+                                            props.searchInput.toLowerCase()
                                             ? "inTxn" // Updated to use class names
                                             : "outTxn"
                                         }
                                     >
                                         {txn.from_address.toLowerCase() !==
-                                            props.result.searchInput.toLowerCase()
+                                            props.searchInput.toLowerCase()
                                             ? "IN"
                                             : "OUT"}
                                     </Text>

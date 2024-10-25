@@ -46,4 +46,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   getAllContracts: { url: '/backendApi/getContracts', method: 'GET', headers: { 'Content-Type': 'application/json'}},
   getMyContracts: { url: '/backendApi/getMyContracts', method: 'GET', headers: { 'Content-Type': 'application/json'}},
   saveContract: { url: '/backendApi/saveDeployedContract', method: 'POST', headers: { 'Content-Type': 'application/json'}},
+  
+  //explorer
+  explorerSearch: { url: '/backendApi/transaction', method: 'GET', headers: { 'Content-Type': 'application/json'}},
 };

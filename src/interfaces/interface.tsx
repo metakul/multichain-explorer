@@ -79,3 +79,23 @@ export interface DeployedContract {
   loading: boolean,
   error: string;
 }
+
+export interface ExplorerResult {
+  hash: string; // Transaction hash
+  decoded_call: {
+    label: string | number | boolean | React.ReactElement | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; // Decoded method or label
+  };
+  block_number: string | number | boolean | React.ReactElement | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; // Block number of the transaction
+  block_timestamp: string; // Timestamp of the block in which the transaction occurred
+  from_address: string; // Address from which the transaction originated
+  to_address: string; // Address to which the transaction was sent
+  value: number; // Value of the transaction in ETH
+  gas_price: number; // Gas price for the transaction
+}
+
+export interface SearchResultsProps {
+  result: {
+    result: ExplorerResult[]; 
+    searchInput: string;
+  };
+}

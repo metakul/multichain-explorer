@@ -1,27 +1,30 @@
 import { SetStateAction, useState } from "react";
-import axios from "axios";
 import { Container, TextField } from "@radix-ui/themes";
 import SearchResults from "./searchResult";
 import SubmitButton from "../Buttons/SubmitButton";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { fetchSearchResult } from "../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice";
+import { selectMySearchResult } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
 
 export default function Search() {
-    const [showResult, setShowResult] = useState(false);
-    const [result, setResult] = useState([]);
-    const [searchInput, setSearchInput] = useState("");
 
+    const dispatch = useDispatch<AppDispatch>();
+    const SearchResult = useSelector(selectMySearchResult);
+
+    const [showResult, setShowResult] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    
     const changeHandler = (e: { target: { value: SetStateAction<string> } }) => {
         setSearchInput(e.target.value);
     };
 
     const handleSearch = async () => {
-        setShowResult(true);
-
-        const response = await axios.get("http://localhost:5001/address", {
-            params: { address: searchInput },
-        });
-
-        setResult(response.data.result);
+        dispatch(fetchSearchResult({searchInput, setShowResult}));
     };
+
+    console.log("SearchResult", SearchResult);
+    
 
     return (
         <div>
@@ -57,7 +60,7 @@ export default function Search() {
                     </SubmitButton>
                 </div>
             </Container>
-            {showResult && <SearchResults result={{ result, searchInput }} />}
+            {showResult && <SearchResults result={{ SearchResult, searchInput }} />}
         </div>
     );
 }

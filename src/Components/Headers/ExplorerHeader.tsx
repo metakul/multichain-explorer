@@ -5,7 +5,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 
 
 export default function Header() {
-    const [ethPrice, setEthPrice] = useState("");
+    const [ethPrice, setEthPrice] = useState("2347");
 
     //todo move to backend call
 
