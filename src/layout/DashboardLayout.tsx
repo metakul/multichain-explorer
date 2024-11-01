@@ -12,10 +12,6 @@ export default function DashboardLayout() {
       <RpcComponent/>
       <Box style={{
       marginTop:"100px",
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-      flexDirection:"row",
       marginLeft:"auto",
       marginRight:"auto"
       }}>

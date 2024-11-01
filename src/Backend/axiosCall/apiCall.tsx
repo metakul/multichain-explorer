@@ -1,35 +1,62 @@
-import axios, {  AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import { ApiEndpoint } from '../../DataTypes/enums';
 import { RequestOptions } from '../../interfaces/interface';
 
+// import Cookies from 'js-cookie';
+// const chatGptApiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
-const request = async (options: RequestOptions) => {
+const Request = async ({ url, method, slug, data, headers }: RequestOptions) => {
+  // const storedAccessToken = Cookies.get('access');  // Retrieve stored access token
+  const endpoint = ApiEndpoint[url];
+  console.log(method);
+  
+  if (!endpoint) {
+    console.log(headers);
+    throw new Error(`Invalid API endpoint: ${url}`);
+  }
+
+  let fullUrl = endpoint.url;
+  if (slug) {
+    fullUrl += `${slug}`;  // Append additional slug to URL if provided
+  }
+
+
+  const axiosConfig: AxiosRequestConfig = {
+    method: endpoint.method,
+    url: fullUrl,
+    headers: {
+      ...endpoint.headers,
+      // Use the appropriate Authorization header based on the endpoint type
+      // Authorization: endpoint.isChatGpt ? `Bearer ${chatGptApiKey}` : endpoint.withAuth ? `Bearer ${storedAccessToken}` : undefined
+    },
+  };
+
+  // Check and set appropriate data for non-GET requests
+  if (endpoint.method !== 'GET') {
+    axiosConfig.data = data;
+  }
+
   try {
-    // Serialize data before sending
-    if (options.data && typeof options.data !== 'string') {
-      options.data = JSON.stringify(options.data);
-      options.headers = {
-        ...options.headers,
-        'Content-Type': 'application/json',
-      };
+    const response = await axios(axiosConfig);
+
+    // Log response data for debugging
+    console.log("Response Data:", response.data);
+
+    // Handle unsuccessful response
+    if (response.status < 200 || response.status >= 300) {
+      const errorText = response.data?.error || response.data?.message  || "Unexpected error occurred.";
+      throw new Error(errorText);
     }
 
-    // Make the HTTP request using axios
-    const response: AxiosResponse = await axios({
-      ...options,
-      url: options.url,
-    });
+      console.log(response);
+      
 
-    // Return the parsed response data
-    console.log("response",response)
-
-    // todo properly get the api response Data
-    return response.data;
-    
+    return response.data;  // Return the response data for further processing
   } catch (error) {
-    // Handle errors gracefully, providing more informative messages if possible
-    console.error(`API request error: ${error}`);
-    throw error;
+
+    console.error("Request error:", error);
+    throw error;  // Re-throw the error for further handling
   }
 };
 
-export default request;
+export default Request;

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// RpcProviderContext.ts
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { ethers } from "ethers";
-import { Eip1193Provider } from "ethers";
 import { networks, NetworkType } from "../DataTypes/enums";
 
-// Define the type for the context value
 interface RpcContextType {
     networkName: NetworkType;
     connected: boolean;
@@ -12,76 +12,80 @@ interface RpcContextType {
     connectToRpc: (customNetworkName: NetworkType, customRpcUrl?: string) => Promise<void>;
 }
 
-// Create a default context value
 const defaultRpcContextValue: RpcContextType = {
-    networkName: "polygon",
+    networkName: "Polygon",
     connected: false,
     rpcUrl: "",
     provider: null,
     connectToRpc: async () => { },
 };
 
-// Create the context with the default value
 const RpcContext = createContext<RpcContextType>(defaultRpcContextValue);
 const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 
-console.log(RPC_ENDPOINT);
-
-// Provider component
-interface RpcProviderProps {
-    children: ReactNode;
-}
-
-export const RpcProvider = ({ children }: RpcProviderProps) => {
-    const [connected, setConnected] = useState<boolean>(false);
-    const [rpcUrl, setRpcUrl] = useState<string>(RPC_ENDPOINT);
-    const [networkName, setNetworkName] = useState<NetworkType>("polygon");
+export const RpcProvider = ({ children }: { children: ReactNode }) => {
+    const [connected, setConnected] = useState(false);
+    const [rpcUrl, setRpcUrl] = useState(RPC_ENDPOINT);
+    const [networkName, setNetworkName] = useState<NetworkType>("Polygon");
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
 
-    // Define connectToRpc function
     const connectToRpc = async (customNetworkName: NetworkType, customRpcUrl?: string) => {
         try {
-            if (customRpcUrl) {
-                // Use the custom RPC URL
-                const customProvider = new ethers.JsonRpcProvider(customRpcUrl);
-                setProvider(customProvider);
-                setRpcUrl(customRpcUrl);
-                setConnected(true);
-                setNetworkName(customNetworkName);
-            } else {
-                // Default to Polygon's network or MetaMask provider
-                const defaultProvider = window.ethereum
-                    ? new ethers.BrowserProvider(window.ethereum as Eip1193Provider)
-                    : null;
+            // Create a new provider using the custom RPC URL if provided
+            const customProvider = customRpcUrl ? new ethers.JsonRpcProvider(customRpcUrl) : undefined;
 
-                if (defaultProvider) {
-                    try {
-                        // Attempt to switch to the Polygon network
-                        await window.ethereum.request({
-                            method: "wallet_switchEthereumChain",
-                            params: [{ chainId: networks[customNetworkName].chainId }],
-                        });
-                    } catch (switchError) {
-                        // If network isn't added, add it
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if (customProvider) {
+                // Attempt to switch the network in MetaMask
+                if (window.ethereum) {
+                    await window.ethereum.request({
+                        method: "wallet_switchEthereumChain",
+                        params: [{ chainId: networks[customNetworkName].chainId }],
+                    }).catch(async (switchError: any) => {
                         if ((switchError as any).code === 4902) {
+                            // If the network isn't available in MetaMask, add it
                             await window.ethereum.request({
                                 method: "wallet_addEthereumChain",
-                                params: [
-                                    {
-                                        ...networks[customNetworkName],
-                                    },
-                                ],
+                                params: [{
+                                    ...networks[customNetworkName],
+                                    rpcUrls: [customRpcUrl], // Update the RPC URLs to include the custom one
+                                }],
                             });
-                        } else {
-                            throw switchError; // Re-throw if it's a different error
-                        }
-                    }
+                        } else throw switchError;
+                    });
+                } else {
+                    console.warn("No provider found. Please install MetaMask or provide a valid RPC URL.");
+                    setConnected(false);
+                    return;
+                }
+
+                // Set the provider and network details
+                setProvider(customProvider);
+                setRpcUrl(customRpcUrl);
+                setNetworkName(customNetworkName);
+                setConnected(true);
+                console.log(`Connected to custom RPC URL: ${customRpcUrl} on ${customNetworkName}`);
+            } else {
+                // Fallback: switch using MetaMask without a custom RPC URL
+                if (window.ethereum) {
+                    const defaultProvider = new ethers.BrowserProvider(window.ethereum );
+                    await window.ethereum.request({
+                        method: "wallet_switchEthereumChain",
+                        params: [{ chainId: networks[customNetworkName].chainId }],
+                    }).catch(async (switchError: any) => {
+                        if ((switchError as any).code === 4902) {
+                            // Add the network if not available
+                            await window.ethereum.request({
+                                method: "wallet_addEthereumChain",
+                                params: [{ ...networks[customNetworkName] }],
+                            });
+                        } else throw switchError;
+                    });
 
                     setProvider(defaultProvider);
-                    setRpcUrl(RPC_ENDPOINT);
+                    setRpcUrl(networks[customNetworkName].rpcUrls[0]);
+                    setNetworkName(customNetworkName);
                     setConnected(true);
-                    setNetworkName("polygon");
+                    console.log(`Switched to ${customNetworkName} using MetaMask.`);
                 } else {
                     console.warn("No provider found. Please install MetaMask or provide a valid RPC URL.");
                     setConnected(false);
@@ -93,10 +97,10 @@ export const RpcProvider = ({ children }: RpcProviderProps) => {
         }
     };
 
-    // Use effect to call connectToRpc whenever networkName or rpcUrl changes
+
     useEffect(() => {
         connectToRpc(networkName);
-    }, [networkName, rpcUrl]); // Dependencies ensure connectToRpc runs whenever networkName or rpcUrl changes
+    }, [networkName]);
 
     return (
         <RpcContext.Provider value={{ networkName, connected, rpcUrl, provider, connectToRpc }}>
@@ -105,7 +109,5 @@ export const RpcProvider = ({ children }: RpcProviderProps) => {
     );
 };
 
-// Hook to use the RPC context
-export const useRpc = () => {
-    return useContext(RpcContext);
-};
+// eslint-disable-next-line react-refresh/only-export-components
+export const useRpc = () => useContext(RpcContext);

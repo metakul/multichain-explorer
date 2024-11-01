@@ -4,28 +4,35 @@ import { ApiError,  ApiSuccess, ExplorerResult } from '../../../../interfaces/in
 import { ApiEndpoint } from '../../../../DataTypes/enums';
 import request from '../../../../Backend/axiosCall/apiCall';
 import { ErrorType } from '../../../../DataTypes/errors';
-import { setMySearchResult } from './ExplorerResultSlice';
+import { addNewSearchResult } from './ExplorerResultSlice';
 
 // Async thunk to fetch searchResult by name
 export const fetchSearchResult = createAsyncThunk(
     'searchResult/fetchByTrxHash',
-    async ({ searchInput, setShowResult }: any, { rejectWithValue, dispatch }) => {
+    async ({ searchInput, setShowResult, rpcUrl }: any, { rejectWithValue, dispatch }) => {
 
         try {
+            console.log(rpcUrl);
             const response = await request({
-                url: `${ApiEndpoint.explorerSearch.url}/${searchInput}`,
+                url: "explorerSearch",
+                slug: `/${searchInput}`,
                 method: ApiEndpoint.explorerSearch.method,
+                data:{
+                    providerUrl: rpcUrl
+                },
                 headers: ApiEndpoint.explorerSearch.headers,
             });
+            
+            console.log("response", response);
 
-            const searchResultData: ExplorerResult[] = response.searchResult;
-
+            const searchResultData: ExplorerResult = response;
+            
+            dispatch(addNewSearchResult(searchResultData))
             const apiSuccess: ApiSuccess = {
-                statusCode: response.status,
+                statusCode: 200,
                 message: 'Search Result fetched successfully',
                 data: searchResultData,
             };
-            dispatch(setMySearchResult(searchResultData))
             setShowResult(true)
 
             return apiSuccess.data; 

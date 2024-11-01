@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Header from '../../../Components/Headers/ExplorerHeader.js';
+// import Header from '../../../Components/Headers/ExplorerHeader.js';
 // import HeroSection from "../components/heroSection.js";
 import Search from '../../../Components/Search/search.js';
 
@@ -9,10 +9,12 @@ import Search from '../../../Components/Search/search.js';
 const Explorer: React.FC = () => {
   return (
     <div>
-      <h3>The Ethereum Blockchain Explorer</h3>
+      <h3 style={{
+        textAlign:"left",
+      }} >The Blockchain Explorer</h3>
 
       <section >
-        <Header />
+        {/* <Header /> */}
         <Search />
         {/* <HeroSection /> */}
       </section>

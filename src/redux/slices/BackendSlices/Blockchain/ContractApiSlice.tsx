@@ -10,11 +10,12 @@ import { addNewDeployedContract, setMyContract } from './MyContractSlice';
 
 // Async thunk to fetch contract by name
 export const fetchContractByName = createAsyncThunk(
-    'contract/fetchByName',
+    'contract/getContractByName',
     async (contractName: string, { rejectWithValue, dispatch }) => {
         try {
             const response = await request({
-                url: `${ApiEndpoint.getContractByName.url}?contractName=${contractName}`,
+                url: `getContractByName`,
+                slug:`contractName = ${ contractName }`,
                 method: ApiEndpoint.getContractByName.method,
                 headers: ApiEndpoint.getContractByName.headers,
             });
@@ -38,12 +39,12 @@ export const fetchContractByName = createAsyncThunk(
 
 // Async thunk to fetch all contracts
 export const fetchAllContracts = createAsyncThunk(
-    'contracts/fetchAll',
+    'contracts/getAllContracts',
     async (_, { rejectWithValue, dispatch }) => {
         try {
             
             const response = await request({
-                url: ApiEndpoint.getAllContracts.url,
+                url: ApiEndpoint.getAllContracts,
                 method: ApiEndpoint.getAllContracts.method,
                 headers: ApiEndpoint.getAllContracts.headers,
             });
@@ -67,15 +68,15 @@ export const fetchAllContracts = createAsyncThunk(
     }
 );
 export const getMyContracts = createAsyncThunk(
-    'contracts/fetchAll',
+    'contracts/getMyContracts',
     async (walletAddress:any, { rejectWithValue, dispatch }) => {
         try {
           
             const response = await request({
-                url: `${ApiEndpoint.getMyContracts.url}/?walletAddress=${walletAddress}`,
+                url: `${ApiEndpoint.getMyContracts}/?walletAddress=${walletAddress}`,
                 method: ApiEndpoint.getMyContracts.method,
                 headers: ApiEndpoint.getMyContracts.headers,
-                data: {walletAddress}
+                data: {walletAddress},
             });
 
             const contractList: ContractData[] = response.contracts;
@@ -99,19 +100,19 @@ export const getMyContracts = createAsyncThunk(
 
 
 export const saveNewContract = createAsyncThunk(
-    'contracts/fetchAll',
+    'contracts/saveNew',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async ({ contractName, deployedAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
         try {
             const response = await request({
-                url: ApiEndpoint.saveContract.url,
+                url: ApiEndpoint.saveContract,
                 method: ApiEndpoint.saveContract.method,
                 headers: ApiEndpoint.saveContract.headers,
                 data:{
                     contractName,
                     deployedAddress,
                     walletAddress
-                }
+                },
             });
 
             const savedContractInfo: ContractData = response.contracts;

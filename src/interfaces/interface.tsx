@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserType } from "../DataTypes/enums";
 //pages interface
-import { AxiosRequestConfig } from "axios"
-
 
 export interface UserData {
   userId: string;
@@ -37,10 +35,11 @@ export interface AuthState {
 
 // api request
 export interface RequestOptions {
-  method: AxiosRequestConfig['method'];
-  url: string;
-  data?: unknown; // todo Allow any data type initially  // $MAJOR
-  headers?: AxiosRequestConfig['headers'];
+  url:any;
+  method:any;
+  slug?: string;
+  data?: object;
+  headers?: any;
 }
 
 // api response success
@@ -81,16 +80,16 @@ export interface DeployedContract {
 }
 
 export interface ExplorerResult {
-  hash: string; // Transaction hash
-  decoded_call: {
-    label: string | number | boolean | React.ReactElement | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; // Decoded method or label
-  };
-  block_number: string | number | boolean | React.ReactElement | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; // Block number of the transaction
-  block_timestamp: string; // Timestamp of the block in which the transaction occurred
-  from_address: string; // Address from which the transaction originated
-  to_address: string; // Address to which the transaction was sent
+  hash: string;
+  blockHash: string;
+  blockNumber: string;
+  chainId: string;
+  from:string,
+  to:string,
+  gas:string,
+  gasPrice: string,
+  input: string
   value: number; // Value of the transaction in ETH
-  gas_price: number; // Gas price for the transaction
 }
 
 export interface SearchResultsProps {
@@ -98,4 +97,20 @@ export interface SearchResultsProps {
     result: ExplorerResult[]; 
     searchInput: string;
   };
+}
+
+
+// network interface
+
+export interface NativeCurrency {
+  name: string;
+  symbol: string;
+  decimals: number;
+}
+export interface NetworkConfig {
+  chainId: string;
+  chainName: string;
+  nativeCurrency: NativeCurrency;
+  rpcUrls: string[];
+  blockExplorerUrls: string[];
 }
