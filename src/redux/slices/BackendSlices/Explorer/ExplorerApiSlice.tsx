@@ -9,7 +9,7 @@ import { addNewSearchResult } from './ExplorerResultSlice';
 // Async thunk to fetch searchResult by name
 export const fetchSearchResult = createAsyncThunk(
     'searchResult/fetchByTrxHash',
-    async ({ searchInput, setShowResult, rpcUrl }: any, { rejectWithValue, dispatch }) => {
+    async ({ searchInput, rpcUrl }: any, { rejectWithValue, dispatch }) => {
 
         try {
             console.log(rpcUrl);
@@ -33,7 +33,6 @@ export const fetchSearchResult = createAsyncThunk(
                 message: 'Search Result fetched successfully',
                 data: searchResultData,
             };
-            setShowResult(true)
 
             return apiSuccess.data; 
         } catch (error) {

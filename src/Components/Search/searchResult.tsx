@@ -1,8 +1,6 @@
-
 import { useSelector } from "react-redux";
 import { Container, Heading, Table } from "@radix-ui/themes";
-import { selectTransactionBySearchInput } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
-import "./styles.css";
+import { selectTransactionBySearchInput, selectSearchResultLoading, selectSearchResultError } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
 import { ExplorerResult } from "../../interfaces/interface";
 
 interface SearchResultsProps {
@@ -11,9 +9,19 @@ interface SearchResultsProps {
 
 export default function SearchResults({ searchInput }: SearchResultsProps) {
     const transaction: ExplorerResult | undefined = useSelector(selectTransactionBySearchInput(searchInput));
+    const loading = useSelector(selectSearchResultLoading);
+    const error = useSelector(selectSearchResultError);
+
+    if (loading) {
+        return <Container>Loading search results...</Container>;
+    }
+
+    if (error) {
+        return <Container>{error}</Container>;
+    }
 
     if (!transaction) {
-        return <Container>No transaction found with the given trxId.</Container>;
+        return <Container>No transaction found with the given transaction ID.</Container>;
     }
 
     return (
@@ -34,12 +42,8 @@ export default function SearchResults({ searchInput }: SearchResultsProps) {
                     <Table.Row key={transaction.hash}>
                         <Table.Cell>{transaction.hash.slice(0, 16)}...</Table.Cell>
                         <Table.Cell>{transaction.blockNumber}</Table.Cell>
-                        <Table.Cell>
-                            {transaction.from.slice(0, 8)}...{transaction.from.slice(-8)}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {transaction.to.slice(0, 8)}...{transaction.to.slice(-8)}
-                        </Table.Cell>
+                        <Table.Cell>{transaction.from.slice(0, 8)}...{transaction.from.slice(-8)}</Table.Cell>
+                        <Table.Cell>{transaction.to.slice(0, 8)}...{transaction.to.slice(-8)}</Table.Cell>
                         <Table.Cell>{(transaction.value / 10 ** 18).toFixed(5)} ETH</Table.Cell>
                         <Table.Cell>{(parseFloat(transaction.gasPrice) / 10 ** 18).toFixed(12)}</Table.Cell>
                     </Table.Row>
