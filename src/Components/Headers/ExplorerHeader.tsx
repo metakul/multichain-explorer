@@ -19,13 +19,17 @@ export default function Header() {
 
     return (
         <Box>
-            <Avatar.Root >
-                <Avatar.Image
-                    width={100} height={50}
-                    src="/logo.svg"
-                    alt="Colm Tuite"
-                />
-            </Avatar.Root>
+            <h3 style={{
+                textAlign: "left",
+            }} >The Blockchain Explorer
+                <Avatar.Root >
+                    <Avatar.Image
+                        width={100} height={50}
+                        src="/logo.svg"
+                        alt="Colm Tuite"
+                    />
+                </Avatar.Root>
+            </h3>
             <Box display='block'>
                 <Heading size="6">
                     ETH Price: <span style={{ color: 'blue' }}>${Number(ethPrice).toFixed(2)}</span>

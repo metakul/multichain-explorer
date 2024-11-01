@@ -11,7 +11,7 @@ export default function DashboardLayout() {
       <Header />
       <RpcComponent/>
       <Box style={{
-      marginTop:"100px",
+      marginTop:"80px",
       marginLeft:"auto",
       marginRight:"auto"
       }}>
