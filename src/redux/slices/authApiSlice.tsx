@@ -3,15 +3,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setCredentials, setLoginTrxId } from './authSlice';
 import { ApiError,  VerifyLoginData, ResendOtpData, UserData } from '../../interfaces/interface';
 import { ApiEndpoint } from '../../DataTypes/enums';
-import request from '../../Backend/axiosCall/apiCall';
 import { ApiSuccess } from '../../interfaces/interface';
 import { ErrorType } from '../../DataTypes/errors';
+import Request from '../../Backend/axiosCall/apiCall';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ userId, password, userType }: UserData, { rejectWithValue,dispatch }) => {
     try {
-      const response = await request({
+      const response = await Request({
         url: `${ApiEndpoint.LOGIN.url}`,
         method: ApiEndpoint.LOGIN.method,
         data: { userId, password, userType },
@@ -40,7 +40,7 @@ export const loginVerifyUser = createAsyncThunk(
   'auth/login/verifyOtp',
   async ({ trxId, otp }: VerifyLoginData, { rejectWithValue, dispatch }) => {
     try {
-      const response = await request({
+      const response = await Request({
         url: `${ApiEndpoint.LOGINVERIFY.url}?trxId=${trxId}`,
         method: ApiEndpoint.LOGINVERIFY.method,
         data: { otp },
@@ -73,7 +73,7 @@ export const resendOtpLogin = createAsyncThunk(
   'auth/login/resentOtp',
   async ({ trxId }: ResendOtpData, { rejectWithValue }) => {
     try {
-      const response = await request({
+      const response = await Request({
         url: `${ApiEndpoint.RESENDLOGINOTP.url}?trxId=${trxId}`,
         method: ApiEndpoint.RESENDLOGINOTP.method,
         headers: ApiEndpoint.RESENDLOGINOTP.headers

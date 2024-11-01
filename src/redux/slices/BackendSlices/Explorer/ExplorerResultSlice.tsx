@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExplorerResult } from "../../../../interfaces/interface";
+import { fetchSearchResult } from "./ExplorerApiSlice";
 
 // Initial state of the searchResult slice
 interface SearchResultState {
@@ -39,6 +40,21 @@ const searchResultSlice = createSlice({
             state.searchResult = state.searchResult.filter(result => result.hash === hashToFilter);
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchSearchResult.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchSearchResult.fulfilled, (state, ) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(fetchSearchResult.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
+    }
 });
 
 export const { setMySearchResult, addNewSearchResult, filterSearchResultByHash } = searchResultSlice.actions;

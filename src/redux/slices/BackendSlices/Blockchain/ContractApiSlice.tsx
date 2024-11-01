@@ -2,22 +2,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiError, ContractData, ApiSuccess } from '../../../../interfaces/interface';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
-import request from '../../../../Backend/axiosCall/apiCall';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { setCurrentContract } from './ContractSlice';
 import { setAllContract } from './AllContractsSlice';
 import { addNewDeployedContract, setMyContract } from './MyContractSlice';
+import Request from '../../../../Backend/axiosCall/apiCall';
 
 // Async thunk to fetch contract by name
 export const fetchContractByName = createAsyncThunk(
     'contract/getContractByName',
     async (contractName: string, { rejectWithValue, dispatch }) => {
         try {
-            const response = await request({
+            const response = await Request({
                 url: `getContractByName`,
-                slug:`contractName = ${ contractName }`,
                 method: ApiEndpoint.getContractByName.method,
+                slug:`?contractName=${contractName}`,
                 headers: ApiEndpoint.getContractByName.headers,
+                data:{}
             });
 
             const contractData: ContractData = response.contract;
@@ -42,9 +43,10 @@ export const fetchAllContracts = createAsyncThunk(
     'contracts/getAllContracts',
     async (_, { rejectWithValue, dispatch }) => {
         try {
+            console.log("Fetching");
             
-            const response = await request({
-                url: ApiEndpoint.getAllContracts,
+            const response = await Request({
+                url: "getAllContracts",
                 method: ApiEndpoint.getAllContracts.method,
                 headers: ApiEndpoint.getAllContracts.headers,
             });
@@ -59,7 +61,6 @@ export const fetchAllContracts = createAsyncThunk(
 
             dispatch(setAllContract(contractList))
             
-
             return apiSuccess.data; // Returning contract list data
         } catch (error) {
             const castedError = error as ApiError;
@@ -72,8 +73,9 @@ export const getMyContracts = createAsyncThunk(
     async (walletAddress:any, { rejectWithValue, dispatch }) => {
         try {
           
-            const response = await request({
-                url: `${ApiEndpoint.getMyContracts}/?walletAddress=${walletAddress}`,
+            const response = await Request({
+                url: `getMyContracts`,
+                slug: `?walletAddress=${walletAddress}`,
                 method: ApiEndpoint.getMyContracts.method,
                 headers: ApiEndpoint.getMyContracts.headers,
                 data: {walletAddress},
@@ -104,7 +106,7 @@ export const saveNewContract = createAsyncThunk(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async ({ contractName, deployedAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
         try {
-            const response = await request({
+            const response = await Request({
                 url: ApiEndpoint.saveContract,
                 method: ApiEndpoint.saveContract.method,
                 headers: ApiEndpoint.saveContract.headers,

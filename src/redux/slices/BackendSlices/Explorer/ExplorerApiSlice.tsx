@@ -2,9 +2,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiError,  ApiSuccess, ExplorerResult } from '../../../../interfaces/interface';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
-import request from '../../../../Backend/axiosCall/apiCall';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { addNewSearchResult } from './ExplorerResultSlice';
+import Request from '../../../../Backend/axiosCall/apiCall';
 
 // Async thunk to fetch searchResult by name
 export const fetchSearchResult = createAsyncThunk(
@@ -12,8 +12,7 @@ export const fetchSearchResult = createAsyncThunk(
     async ({ searchInput, rpcUrl }: any, { rejectWithValue, dispatch }) => {
 
         try {
-            console.log(rpcUrl);
-            const response = await request({
+            const response = await Request({
                 url: "explorerSearch",
                 slug: `/${searchInput}`,
                 method: ApiEndpoint.explorerSearch.method,
@@ -22,9 +21,6 @@ export const fetchSearchResult = createAsyncThunk(
                 },
                 headers: ApiEndpoint.explorerSearch.headers,
             });
-            
-            console.log("response", response);
-
             const searchResultData: ExplorerResult = response;
             
             dispatch(addNewSearchResult(searchResultData))

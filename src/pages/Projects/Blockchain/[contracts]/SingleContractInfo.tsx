@@ -92,7 +92,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                                 buttonText="View On Explorer"
                                 handleButtonClick={viewOnExplorer} // Pass deploy function
                             />
-                                    <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
+                             <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
                         </>
                     )}
                 </>

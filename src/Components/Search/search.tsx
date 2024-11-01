@@ -48,9 +48,7 @@ export default function Search() {
                     Close
                 </Button>}
             </div>
-            <div style={{
-                overflow:"hidden"
-            }}>
+            <div>
                     {showResult && <SearchResults searchInput={searchInput} />}
             </div>
 
