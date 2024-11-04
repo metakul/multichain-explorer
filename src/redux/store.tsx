@@ -4,6 +4,8 @@ import contractsSlice from "./slices/BackendSlices/Blockchain/AllContractsSlice"
 import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
 import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
+import recentBlocksState from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice"
+import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice"
 import { useDispatch } from 'react-redux'
 import logger from 'redux-logger'
 const store = configureStore({
@@ -12,7 +14,9 @@ const store = configureStore({
     contracts:contractsSlice,
     singleContract:singleContract,
     deployedContracts: deployedContracts,
-    explorerSearchResult:explorerSlice
+    explorerSearchResult:explorerSlice,
+    recentBlocksState: recentBlocksState,
+    currentBlockState: currentBlockState
   },
   middleware:getDefaultMiddlerware =>
     getDefaultMiddlerware().concat(logger),

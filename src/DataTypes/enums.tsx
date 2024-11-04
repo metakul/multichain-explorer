@@ -49,6 +49,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
 
   //explorer
   explorerSearch: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getLatestBlock: { url: '/backendApi/block/latest', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 
 

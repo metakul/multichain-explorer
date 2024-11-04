@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Define the Grid component
-const Grid = ({ columns = 3, gap = 3, rows, children, style }:any) => {
+const Grid = ({ columns = 2, gap = 3, rows, children, style }:any) => {
     // Define grid styles based on props
     const gridStyle = {
         display: 'grid',
