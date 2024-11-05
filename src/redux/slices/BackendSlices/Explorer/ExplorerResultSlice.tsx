@@ -50,9 +50,9 @@ const searchResultSlice = createSlice({
                 state.loading = false;
                 state.error = null;
             })
-            .addCase(fetchSearchResult.rejected, (state, action) => {
+            .addCase(fetchSearchResult.rejected, (state, ) => {
                 state.loading = false;
-                state.error = action.payload as string;
+                state.error = "Something Went Wrong"
             });
     }
 });

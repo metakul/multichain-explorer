@@ -1,19 +1,24 @@
 import { SetStateAction, useState } from "react";
 import { Button, TextField } from "@radix-ui/themes";
-import SearchResults from "./searchResult";
 import SubmitButton from "../Buttons/SubmitButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import { fetchSearchResult } from "../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice";
 import { useRpc } from "../../contexts/RpcProviderContext";
+import { selectSearchResultError, selectSearchResultLoading, selectTransactionBySearchInput } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
+import { ExplorerResult } from "../../interfaces/interface";
+import TransactionInfo from "../Transactions/TrxTable";
 
 export default function Search() {
 
     const dispatch = useDispatch<AppDispatch>();
-    const { rpcUrl } = useRpc()
-
+    
     const [showResult, setShowResult] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    const { rpcUrl } = useRpc()
+    const loading = useSelector(selectSearchResultLoading);
+    const error = useSelector(selectSearchResultError);
+    const transaction: ExplorerResult | undefined = useSelector(selectTransactionBySearchInput(searchInput));
 
     const changeHandler = (e: { target: { value: SetStateAction<string> } }) => {
         setSearchInput(e.target.value);
@@ -34,7 +39,7 @@ export default function Search() {
             }}>
                 <TextField.Root
                     type="text"
-                    placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
+                    placeholder="Search by  Txn Hash" // todo add search by block, address,ens
                     required
                     value={searchInput}
                     onChange={changeHandler}
@@ -49,9 +54,8 @@ export default function Search() {
                 </Button>}
             </div>
             <div>
-                    {showResult && <SearchResults searchInput={searchInput} />}
+                {showResult && <TransactionInfo transaction={[transaction]} loading={loading} error={error}/>}
             </div>
-
         </div>
     );
 }

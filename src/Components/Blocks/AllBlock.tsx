@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
+import { selectBlocks, selectBlocksLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
 import { Box, Text } from '@radix-ui/themes';
 import Grid from '../Grid';
 import { curretnBlockInfo } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
-import { fetchBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 
 const BlockCards: React.FC = () => {
     const blocks = useSelector(selectBlocks);
+    const allBlocksLoading = useSelector(selectBlocksLoading);
     const currentBlock = useSelector(curretnBlockInfo);
     const dispatch = useDispatch<AppDispatch>();
     const { rpcUrl } = useRpc()
     useEffect(() => {
-        dispatch(fetchBlocks(rpcUrl))
+        dispatch(fetchRecentBlocks(rpcUrl))
         dispatch(fetchCurrentBlock(rpcUrl))
     }, [dispatch, rpcUrl])
     
@@ -65,6 +66,8 @@ const BlockCards: React.FC = () => {
                         </p>
                     </Box>
                 ))}
+
+                {allBlocksLoading && <Text>Loading Previous Blocks</Text> }
             </Grid>
         </div>
     );

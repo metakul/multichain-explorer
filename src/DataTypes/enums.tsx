@@ -50,8 +50,12 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   //explorer
   explorerSearch: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   getLatestBlock: { url: '/backendApi/block/latest', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-};
+  fetchRecentBlocks: { url: '/backendApi/blocks/previous', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
+  // New endpoint for fetching transactions by block number
+  getTransactionsInBlock: { url: '/backendApi/block/transactions/:blockNumber', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchAllTransactions: { url: '/backendApi/block/allTransactions', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+};
 
 export enum Network {
   Polygon = "Polygon",

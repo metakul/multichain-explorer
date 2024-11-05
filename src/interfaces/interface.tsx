@@ -139,3 +139,12 @@ export interface Block {
   uncles: string[];
   transactions: string[];
 }
+
+export interface ITrx {
+  hash: string;            // Transaction hash
+  blockNumber: number;    // Block number containing the transaction
+  from: string;           // Address sending the transaction
+  to: string;             // Address receiving the transaction
+  value: any;          // Value transferred (in Wei as a string)
+  gasPrice: string;       // Gas price for the transaction (in Wei as a string)
+}

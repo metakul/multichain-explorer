@@ -32,9 +32,7 @@ const Request = async ({ url, method, slug, data, headers }: RequestOptions) => 
   };
 
   // Check and set appropriate data for non-GET requests
-  if (endpoint.method !== 'GET') {
     axiosConfig.data = data;
-  }
 
   try {
 

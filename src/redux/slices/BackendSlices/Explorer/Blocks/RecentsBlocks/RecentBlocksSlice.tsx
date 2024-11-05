@@ -33,10 +33,15 @@ const blocksSlice = createSlice({
             state.blocks.push(action.payload);
             state.error = null;
         },
+        setRecentBlocksLoading: (state, action: PayloadAction<boolean>) => {
+           console.log(action.payload);
+           
+            state.loading = action.payload;
+        },
     },
 });
 
-export const { setBlocks, addNewBlock } = blocksSlice.actions;
+export const { setBlocks, addNewBlock, setRecentBlocksLoading } = blocksSlice.actions;
 
 export default blocksSlice.reducer;
 
