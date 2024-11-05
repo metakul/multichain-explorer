@@ -15,8 +15,13 @@ function Transactions() {
     const error = useSelector(selectTransactionsError);
 
     useEffect(() => {
-        dispatch(fetchAllTransactions(rpcUrl));
-    }, [dispatch, rpcUrl]);
+        if (transactions.length>0){
+            return
+        }
+        else{
+            dispatch(fetchAllTransactions(rpcUrl));
+        }
+    }, [dispatch, rpcUrl, transactions]);
 
     const handleReload = () => {
         dispatch(fetchAllTransactions(rpcUrl)); // Dispatch the fetch action on button click

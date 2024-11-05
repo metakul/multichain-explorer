@@ -88,7 +88,7 @@ export default function TransactionInfo({ transaction, loading, error }: TrxInfo
                                     {singleTrx?.to?.slice(0, 8)}...{singleTrx?.to.slice(-8)}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {(singleTrx.value / 10 ** 18).toFixed(5)} ETH
+                                    {(singleTrx?.value / 10 ** 18).toFixed(5)} ETH
                                 </Table.Cell>
                                 <Table.Cell>
                                     {(parseFloat(singleTrx?.gasPrice) / 10 ** 18).toFixed(12)}

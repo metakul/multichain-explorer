@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // RpcProviderContext.ts
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { ethers } from "ethers";
 import { networks, NetworkType } from "../DataTypes/enums";
 
@@ -93,9 +93,6 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
     };
 
 
-    useEffect(() => {
-        connectToRpc(networkName);
-    }, [networkName]);
 
     return (
         <RpcContext.Provider value={{ networkName, connected, rpcUrl, provider, connectToRpc }}>

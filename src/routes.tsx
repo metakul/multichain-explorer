@@ -9,6 +9,7 @@ import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
 import Dashboard from "./pages/Dashbaord";
 import Explorer from "./pages/Projects/Explorer";
 import Transaction from "./pages/Projects/Explorer/Transaction";
+import SingleBlock from "./pages/Projects/Explorer/Block";
 
 const Router: React.FC = () => {
 
@@ -49,6 +50,10 @@ const Router: React.FC = () => {
         {
           path: `${EXPLORER_PAGE.Transaction}/:hash`,
           element: <Transaction />,
+        },
+        {
+          path: `${EXPLORER_PAGE.SINGLE_BLOCK}/:block`,
+          element: <SingleBlock />,
         },
       ],
     },

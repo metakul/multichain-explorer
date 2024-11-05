@@ -7,7 +7,7 @@ export const navigateToTransaction = (navigate: ReturnType<typeof useNavigate>,h
 };
 
 export const navigateToBlock = (navigate: ReturnType<typeof useNavigate>, blockNumber: number) => {
-    navigate(`/block/${blockNumber}`);
+    navigate(`${EXPLORER_PAGE.SINGLE_BLOCK}/${blockNumber}`);
 };
 
 export const navigateToAddress = (navigate: ReturnType<typeof useNavigate>, address: string) => {
