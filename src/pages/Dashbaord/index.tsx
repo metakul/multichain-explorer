@@ -1,6 +1,6 @@
 import React from 'react';
 import { Path, useNavigate } from 'react-router-dom';
-import { EXPLORER, PROJECTS } from '../../DataTypes/enums';
+import { EXPLORER_PAGE, PROJECTS } from '../../DataTypes/enums';
 import HomeButton from '../../Components/Typogrpahy/Buttons/HomeButton';
 
 const Dashboard: React.FC = () => {
@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
                 </HomeButton>
             </div>
             <div className="projects">
-                <HomeButton onClick={() => handleNavigation(EXPLORER.EXPLORER_HOME)}>
+                <HomeButton onClick={() => handleNavigation(EXPLORER_PAGE.EXPLORER_HOME)}>
                     C3I Explorer
                 </HomeButton>
             </div>

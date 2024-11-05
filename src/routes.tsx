@@ -1,13 +1,14 @@
 import React from "react";
 import { useRoutes, Navigate } from "react-router-dom";
 import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
-import { ContractType, EXPLORER, Pages, PROJECTS } from "./DataTypes/enums";
+import { ContractType, EXPLORER_PAGE, Pages, PROJECTS } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contracts]/SingleContractInfo";
 import Web3ProfilePage from "./pages/Projects/Blockchain/ProfilePage";
 import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
 import Dashboard from "./pages/Dashbaord";
 import Explorer from "./pages/Projects/Explorer";
+import Transaction from "./pages/Projects/Explorer/Transaction";
 
 const Router: React.FC = () => {
 
@@ -42,8 +43,12 @@ const Router: React.FC = () => {
           element: <Web3ProfilePage />,
         },
         {
-          path: EXPLORER.EXPLORER_HOME,
+          path: EXPLORER_PAGE.EXPLORER_HOME,
           element: <Explorer />,
+        },
+        {
+          path: `${EXPLORER_PAGE.Transaction}/:hash`,
+          element: <Transaction />,
         },
       ],
     },

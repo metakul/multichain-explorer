@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container,  Table } from "@radix-ui/themes";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
-import { useNavigate } from "react-router-dom";
 import { ITrx } from "../../interfaces/interface";
+import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
+import { useNavigate } from "react-router-dom";
 
 interface TrxInfoProps {
     transaction: any;
@@ -12,7 +13,7 @@ interface TrxInfoProps {
 
 export default function TransactionInfo({ transaction, loading, error }: TrxInfoProps) {
 
-    const navigate = useNavigate()
+    const navigate=useNavigate()
     // Render a skeleton table if loading
     if (loading) {
         return (
@@ -74,18 +75,30 @@ export default function TransactionInfo({ transaction, loading, error }: TrxInfo
                     <Table.Body>
                         {transaction.map((singleTrx: ITrx) => (
                             <Table.Row key={singleTrx?.hash}>
-                                <Table.Cell>{singleTrx?.hash.slice(0, 16)}...</Table.Cell>
-                                <Table.Cell>{singleTrx?.blockNumber}</Table.Cell>
-                                <Table.Cell>{singleTrx?.from?.slice(0, 8)}...{singleTrx?.from.slice(-8)}</Table.Cell>
-                                <Table.Cell>{singleTrx?.to?.slice(0, 8)}...{singleTrx?.to.slice(-8)}</Table.Cell>
-                                <Table.Cell>{(singleTrx.value / 10 ** 18).toFixed(5)} ETH</Table.Cell>
-                                <Table.Cell>{(parseFloat(singleTrx?.gasPrice) / 10 ** 18).toFixed(12)}</Table.Cell>
+                                <Table.Cell onClick={() => navigateToTransaction(navigate,singleTrx?.hash)}>
+                                    {singleTrx?.hash.slice(0, 16)}...
+                                </Table.Cell>
+                                <Table.Cell onClick={() => navigateToBlock(navigate,singleTrx?.blockNumber)}>
+                                    {singleTrx?.blockNumber}
+                                </Table.Cell>
+                                <Table.Cell onClick={() => navigateToAddress(navigate,singleTrx?.from)}>
+                                    {singleTrx?.from?.slice(0, 8)}...{singleTrx?.from.slice(-8)}
+                                </Table.Cell>
+                                <Table.Cell onClick={() => navigateToAddress(navigate,singleTrx?.to)}>
+                                    {singleTrx?.to?.slice(0, 8)}...{singleTrx?.to.slice(-8)}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {(singleTrx.value / 10 ** 18).toFixed(5)} ETH
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {(parseFloat(singleTrx?.gasPrice) / 10 ** 18).toFixed(12)}
+                                </Table.Cell>
                                 <Table.Cell style={{
-                                    display:"flex",
-                                    justifyContent:"center",
-                                    marginTop:16
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    marginTop: 16
                                 }}>
-                                    <EyeOpenIcon onClick={() => { navigate(singleTrx?.hash) }} />
+                                    <EyeOpenIcon onClick={() => navigateToTransaction(navigate,singleTrx?.hash)} />
                                 </Table.Cell>
                             </Table.Row>
                         ))}
