@@ -17,12 +17,9 @@ export const fetchRecentBlocks = createAsyncThunk(
                 data: {
                     providerUrl: rpcUrl
                 },
-                slug:"/4",
+                slug:"/3",
             });
             const blocks: Block[] = response; 
-
-            console.log("responseresponseresponseresponse", response);
-            
             dispatch(setBlocks(blocks));
             dispatch(setRecentBlocksLoading(false));
         } catch (error) {

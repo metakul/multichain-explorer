@@ -13,8 +13,44 @@ interface TrxInfoProps {
 export default function TransactionInfo({ transaction, loading, error }: TrxInfoProps) {
 
     const navigate = useNavigate()
+    // Render a skeleton table if loading
     if (loading) {
-        return <Container>Loading Transaction Info</Container>;
+        return (
+            <Container>
+                <Table.Root variant="surface">
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.ColumnHeaderCell>Transaction Hash |</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Block |</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>From |</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>To |</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Value |</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Txn Fee</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>View Txn </Table.ColumnHeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <Table.Row key={index}>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '100px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '40px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '80px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '80px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '60px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '60px', borderRadius: '4px' }} /></Table.Cell>
+                                <Table.Cell style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+                                    <div style={{ backgroundColor: '#e0e0e0', height: '24px', width: '24px', borderRadius: '50%' }} />
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table.Root>
+            </Container>
+        );
+    }
+
+    if (transaction.length == 0 && !loading && !error) {
+        return <Container>No Transaction Founds</Container>;
     }
 
     if (error) {
@@ -36,16 +72,20 @@ export default function TransactionInfo({ transaction, loading, error }: TrxInfo
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {transaction.map((transaction: ITrx) => (
-                            <Table.Row key={transaction.hash}>
-                                <Table.Cell>{transaction.hash.slice(0, 16)}...</Table.Cell>
-                                <Table.Cell>{transaction.blockNumber}</Table.Cell>
-                                <Table.Cell>{transaction.from.slice(0, 8)}...{transaction.from.slice(-8)}</Table.Cell>
-                                <Table.Cell>{transaction.to.slice(0, 8)}...{transaction.to.slice(-8)}</Table.Cell>
-                                <Table.Cell>{(transaction.value / 10 ** 18).toFixed(5)} ETH</Table.Cell>
-                                <Table.Cell>{(parseFloat(transaction.gasPrice) / 10 ** 18).toFixed(12)}</Table.Cell>
-                                <Table.Cell>
-                                    <EyeOpenIcon onClick={() => { navigate(transaction.hash) }} />
+                        {transaction.map((singleTrx: ITrx) => (
+                            <Table.Row key={singleTrx?.hash}>
+                                <Table.Cell>{singleTrx?.hash.slice(0, 16)}...</Table.Cell>
+                                <Table.Cell>{singleTrx?.blockNumber}</Table.Cell>
+                                <Table.Cell>{singleTrx?.from?.slice(0, 8)}...{singleTrx?.from.slice(-8)}</Table.Cell>
+                                <Table.Cell>{singleTrx?.to?.slice(0, 8)}...{singleTrx?.to.slice(-8)}</Table.Cell>
+                                <Table.Cell>{(singleTrx.value / 10 ** 18).toFixed(5)} ETH</Table.Cell>
+                                <Table.Cell>{(parseFloat(singleTrx?.gasPrice) / 10 ** 18).toFixed(12)}</Table.Cell>
+                                <Table.Cell style={{
+                                    display:"flex",
+                                    justifyContent:"center",
+                                    marginTop:16
+                                }}>
+                                    <EyeOpenIcon onClick={() => { navigate(singleTrx?.hash) }} />
                                 </Table.Cell>
                             </Table.Row>
                         ))}

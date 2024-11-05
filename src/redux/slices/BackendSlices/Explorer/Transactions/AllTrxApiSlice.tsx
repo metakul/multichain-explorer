@@ -5,8 +5,6 @@ import Request from "../../../../../Backend/axiosCall/apiCall";
 import { ApiEndpoint } from "../../../../../DataTypes/enums";
 import { setTransactions, setTransactionsLoading } from "./AllTrxSlice";
 
-
-
 // Async thunk to fetch all transactions
 export const fetchAllTransactions = createAsyncThunk(
     'transactions/fetchAllTransactions',
@@ -21,7 +19,7 @@ export const fetchAllTransactions = createAsyncThunk(
                 data: {
                     providerUrl: rpcUrl
                 },
-                slug:"?requiredTransactions=2"
+                slug:"/10"
             });
             const transactions: ITrx[] = response;  // Assuming response contains an array of transactions
             dispatch(setTransactions(transactions));

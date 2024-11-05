@@ -26,13 +26,13 @@ function Transactions() {
         <Box p="4">
             <h3>Recent Transactions</h3>
             <Button onClick={handleReload} disabled={loading}>
-                Reload
+                {loading? "Loading Trx" : "Reload" }
             </Button>
             <Box style={{
                 display: "flex", flexDirection: "column", gap: "3"
             }}
             >
-                {transactions && <TransactionInfo transaction={transactions} loading={loading} error={error} />}
+                {transactions  && <TransactionInfo transaction={transactions} loading={loading} error={error} />}
             </Box>
         </Box>
     );

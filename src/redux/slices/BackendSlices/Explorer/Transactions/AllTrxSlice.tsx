@@ -2,7 +2,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ITrx } from "../../../../../interfaces/interface";
 import { fetchAllTransactions } from "./AllTrxApiSlice";
-import { generateFakeTransactions } from "./fakeData";
 
 // Initial state of the transactions slice
 interface TransactionsState {
@@ -12,7 +11,7 @@ interface TransactionsState {
 }
 
 const initialState: TransactionsState = {
-    transactions: generateFakeTransactions(10),
+    transactions: [],
     loading: false,
     error: null,
 };

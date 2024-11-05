@@ -31,6 +31,7 @@ const BlockCards: React.FC = () => {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                         borderRadius: '8px',
                         padding: '16px',
+                        height: "200px"
                     }}>
                         <Text style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>
                             Current Block Info #{currentBlock.number}
@@ -52,6 +53,7 @@ const BlockCards: React.FC = () => {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                         borderRadius: '8px',
                         padding: '16px',
+                        height:"200px"
                     }}>
                         <Text style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>
                             Block #{block.number}
@@ -67,7 +69,26 @@ const BlockCards: React.FC = () => {
                     </Box>
                 ))}
 
-                {allBlocksLoading && <Text>Loading Previous Blocks</Text> }
+                {allBlocksLoading && (
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <Box key={index} style={{
+                            backgroundColor: '#e0e0e0',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '8px',
+                            padding: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '8px',
+                            height: "200px"
+                        }}>
+                            <div style={{ height: '20px', backgroundColor: '#ccc', borderRadius: '4px' }}></div>
+                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
+                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
+                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
+                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
+                        </Box>
+                    ))
+                )}
             </Grid>
         </div>
     );
