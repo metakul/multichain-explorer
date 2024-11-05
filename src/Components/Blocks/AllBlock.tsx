@@ -69,7 +69,7 @@ const BlockCards: React.FC = () => {
                     </Box>
                 ))}
 
-                {allBlocksLoading && (
+                {allBlocksLoading &&  blocks.length==0  && (
                     Array.from({ length: 3 }).map((_, index) => (
                         <Box key={index} style={{
                             backgroundColor: '#e0e0e0',
