@@ -26,8 +26,6 @@ export const WalletAuthProvider = ({ children }:any) => {
     const [walletAddress, setWalletAddress] = useState<string>("");
 
     const connectWallet = async () => {
-        console.log("connecting");
-        
         if (typeof window.ethereum !== "undefined") {
             if (!connected) {
                 try {

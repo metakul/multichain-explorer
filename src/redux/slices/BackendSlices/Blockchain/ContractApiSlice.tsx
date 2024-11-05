@@ -43,8 +43,6 @@ export const fetchAllContracts = createAsyncThunk(
     'contracts/getAllContracts',
     async (_, { rejectWithValue, dispatch }) => {
         try {
-            console.log("Fetching");
-            
             const response = await Request({
                 url: "getAllContracts",
                 method: ApiEndpoint.getAllContracts.method,

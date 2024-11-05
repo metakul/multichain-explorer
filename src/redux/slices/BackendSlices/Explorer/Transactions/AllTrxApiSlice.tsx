@@ -11,7 +11,6 @@ export const fetchAllTransactions = createAsyncThunk(
     async (rpcUrl: string, { dispatch, rejectWithValue }) => {
         try {
             dispatch(setTransactionsLoading(true));
-            console.log(rpcUrl);
             
             const response = await Request({
                 url: "fetchAllTransactions",

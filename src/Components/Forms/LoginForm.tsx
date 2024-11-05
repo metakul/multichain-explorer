@@ -26,7 +26,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
   const handleLoginSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
       const loginData: LoginData = {
         userId: user,
         password: password,
@@ -35,15 +34,12 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 
       (dispatch as AppDispatch)(loginUser(loginData));
       setShowOtpField(true);
-    } catch (error) {
-      console.error('Login failed In LoginPage:', error);
-    }
+   
   };
 
   const handleVerifyOtpSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
       const verifyLoginData: VerifyLoginData = {
         trxId,
         otp: otp,
@@ -51,9 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 
       // Dispatch loginVerifyUser action
       (dispatch as AppDispatch)(loginVerifyUser(verifyLoginData));
-    } catch (error) {
-      console.error('OTP verification failed:', error);
-    }
+ 
   };
 
   const handleResendOtp = async () => {

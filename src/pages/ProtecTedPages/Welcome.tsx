@@ -4,17 +4,16 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/slices/authSlice'
 import { AppDispatch } from '../../redux/store'
-import { selectUser, selectUserType } from '../../redux/slices/authSlice';
+import { /*selectUser,*/ selectUserType } from '../../redux/slices/authSlice';
 import { Button, Container } from '@radix-ui/themes'
 import CustomHeading from '../../Components/Typogrpahy/Text/Heading'
 import { Link } from 'react-router-dom'
 import { Pages } from '../../DataTypes/enums'
 import VerificationData from '../Projects/Blockchain/ProfilePage/MyContracts'
 const ProtectedPage: React.FC<ProtectedPageProps> = (props) => {
-  const selectedUser = useSelector(selectUser)
+  // const selectedUser = useSelector(selectUser)
   const selectedUserType = useSelector(selectUserType)
   const dispatch = useDispatch();
-  console.log(selectedUser)
 
   const handleLogout = async (event: React.FormEvent) => {
     event.preventDefault();

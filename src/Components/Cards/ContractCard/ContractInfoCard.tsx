@@ -62,16 +62,12 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
         // Initialize errors array with empty strings
         const errors = Array(constructorInputs.length).fill("");
 
-        console.log("init error", errors);
-
         // Validate inputs
         constructorInputs.forEach((input, index) => {
             if (input.trim() === "") {
                 errors[index] = `The ${constructor[index].name} field cannot be empty.`;
             }
         });
-
-        console.log(errors);
 
         // Set errors if any are found
         if (errors.some((error) => error !== "")) {

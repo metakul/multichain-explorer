@@ -8,10 +8,8 @@ import { RequestOptions } from '../../interfaces/interface';
 const Request = async ({ url, method, slug, data, headers }: RequestOptions) => {
   // const storedAccessToken = Cookies.get('access');  // Retrieve stored access token
   const endpoint = ApiEndpoint[url];
-  console.log(method, url,);
 
   if (!endpoint) {
-    console.log(headers);
     throw new Error(`Invalid API endpoint: ${url}`);
   }
 
@@ -47,7 +45,6 @@ const Request = async ({ url, method, slug, data, headers }: RequestOptions) => 
       throw new Error(errorText);
     }
 
-      console.log(response);
       
 
     return response.data;  // Return the response data for further processing

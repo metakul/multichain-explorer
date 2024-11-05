@@ -22,15 +22,11 @@ const searchResultSlice = createSlice({
     initialState,
     reducers: {
         setMySearchResult: (state, action: PayloadAction<any[]>) => {
-            console.log(action.payload);
-            
             state.loading = false;
             state.searchResult = action.payload;
             state.error = null;
         },
         addNewSearchResult: (state, action: PayloadAction<any>) => {
-            console.log(action.payload);
-            
             state.loading = false;
             state.searchResult.push(action.payload);
             state.error = null;

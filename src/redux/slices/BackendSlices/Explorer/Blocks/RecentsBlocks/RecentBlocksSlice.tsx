@@ -34,8 +34,6 @@ const blocksSlice = createSlice({
             state.error = null;
         },
         setRecentBlocksLoading: (state, action: PayloadAction<boolean>) => {
-           console.log(action.payload);
-           
             state.loading = action.payload;
         },
     },

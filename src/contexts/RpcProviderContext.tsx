@@ -53,7 +53,6 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
                         } else throw switchError;
                     });
                 } else {
-                    console.warn("No provider found. Please install MetaMask or provide a valid RPC URL.");
                     setConnected(false);
                     return;
                 }
@@ -63,7 +62,6 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
                 setRpcUrl(customRpcUrl);
                 setNetworkName(customNetworkName);
                 setConnected(true);
-                console.log(`Connected to custom RPC URL: ${customRpcUrl} on ${customNetworkName}`);
             } else {
                 // Fallback: switch using MetaMask without a custom RPC URL
                 if (window.ethereum) {
@@ -85,14 +83,11 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
                     setRpcUrl(networks[customNetworkName].rpcUrls[0]);
                     setNetworkName(customNetworkName);
                     setConnected(true);
-                    console.log(`Switched to ${customNetworkName} using MetaMask.`);
                 } else {
-                    console.warn("No provider found. Please install MetaMask or provide a valid RPC URL.");
                     setConnected(false);
                 }
             }
         } catch (error) {
-            console.error("Error connecting to RPC:", error);
             setConnected(false);
         }
     };

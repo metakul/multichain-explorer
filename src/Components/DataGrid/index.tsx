@@ -10,7 +10,6 @@ interface CustomTableProps {
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({ columns, data }) => {
-  console.log(columns,data);
   
   return (
     <Table.Root variant="surface">
