@@ -11,5 +11,5 @@ export const navigateToBlock = (navigate: ReturnType<typeof useNavigate>, blockN
 };
 
 export const navigateToAddress = (navigate: ReturnType<typeof useNavigate>, address: string) => {
-    navigate(`/address/${address}`);
+    navigate(`${EXPLORER_PAGE.SINGLE_ADDRESS}/${address}`);
 };

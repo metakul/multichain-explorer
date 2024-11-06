@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashbaord";
 import Explorer from "./pages/Projects/Explorer";
 import Transaction from "./pages/Projects/Explorer/Transaction";
 import SingleBlock from "./pages/Projects/Explorer/Block";
+import AddressInfo from "./pages/Projects/Explorer/Address";
 
 const Router: React.FC = () => {
 
@@ -54,6 +55,10 @@ const Router: React.FC = () => {
         {
           path: `${EXPLORER_PAGE.SINGLE_BLOCK}/:block`,
           element: <SingleBlock />,
+        },
+        {
+          path: `${EXPLORER_PAGE.SINGLE_ADDRESS}/:address`,
+          element: <AddressInfo />,
         },
       ],
     },

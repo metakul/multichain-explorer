@@ -26,6 +26,7 @@ export enum EXPLORER_PAGE {
   EXPLORER_HOME = "/explorer",
   Transaction = "/Transaction",
   SINGLE_BLOCK = "/block",
+  SINGLE_ADDRESS = "/address",
 }
 export enum ProfileTab {
   tabTitle1 = "OverView",
