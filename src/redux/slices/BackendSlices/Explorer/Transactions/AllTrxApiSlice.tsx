@@ -30,3 +30,28 @@ export const fetchAllTransactions = createAsyncThunk(
         }
     }
 );
+// Async thunk to fetch all transactions
+export const fetchSingleTrx = createAsyncThunk(
+    'transactions/fetchSingleTrx',
+    async ({ rpcUrl, hash }:{rpcUrl:string,hash:string}, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(setTransactionsLoading(true));
+            
+            const response = await Request({
+                url: "fetchSingleTrx",
+                method: ApiEndpoint.fetchSingleTrx.method,
+                data: {
+                    providerUrl: rpcUrl
+                },
+                slug:`/${hash}`
+            });
+            const transaction: ITrx = response;  // Assuming response contains an array of transactions
+            dispatch(setTransactions([transaction]));
+            dispatch(setTransactionsLoading(false));
+        } catch (error) {
+            dispatch(setTransactionsLoading(false));
+            const castedError = error as ApiError;
+            return rejectWithValue(castedError.error || "Failed to fetch transactions");
+        }
+    }
+);

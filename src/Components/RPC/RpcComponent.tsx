@@ -19,7 +19,7 @@ const RpcComponent: React.FC = () => {
             <Box width="64px" height="64px" style={{
                 position:"absolute",
                 right:0,
-                top:100
+                top:60
             }}>
                 <Flex direction={"row"}>
                     <Box>

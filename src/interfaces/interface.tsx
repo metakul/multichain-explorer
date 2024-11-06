@@ -141,10 +141,23 @@ export interface Block {
 }
 
 export interface ITrx {
-  hash: string;            // Transaction hash
-  blockNumber: number;    // Block number containing the transaction
-  from: string;           // Address sending the transaction
-  to: string;             // Address receiving the transaction
-  value: any;          // Value transferred (in Wei as a string)
-  gasPrice: string;       // Gas price for the transaction (in Wei as a string)
+  hash: string;                     // Transaction hash
+  blockHash: string;                // Hash of the block containing the transaction
+  blockNumber: number;              // Block number containing the transaction
+  from: string;                     // Address sending the transaction
+  to: string;                       // Address receiving the transaction
+  value: number;                    // Value transferred (in Wei as a string)
+  gas: string;                      // Gas limit for the transaction
+  gasPrice: string;                 // Gas price for the transaction (in Wei as a string)
+  transactionIndex: string;         // Index of the transaction within the block
+  type: string;                     // Type of transaction (e.g., 0, 1, 2 for EIP-1559)
+  nonce: string;                    // Nonce of the transaction
+  input: string;                    // Input data for the transaction
+  maxFeePerGas?: string;            // Max fee per gas for EIP-1559 transactions
+  maxPriorityFeePerGas?: string;    // Max priority fee per gas for EIP-1559 transactions
+  chainId: string;                  // Chain ID of the network
+  accessList?: Array<any>;          // Access list for EIP-2930 transactions
+  r: string;                        // ECDSA signature r value
+  s: string;                        // ECDSA signature s value
+  v: string;                        // Recovery ID for the transaction
 }

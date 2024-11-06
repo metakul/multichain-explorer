@@ -4,7 +4,7 @@ import { ITrx } from "../../../../../interfaces/interface";
 import { fetchAllTransactions } from "./AllTrxApiSlice";
 
 // Initial state of the transactions slice
-interface TransactionsState {
+export interface TransactionsState {
     transactions: ITrx[];
     loading: boolean;
     error: string | null;
@@ -48,3 +48,6 @@ export default trxSlice.reducer;
 export const selectTransactions = (state: { transactionsState: TransactionsState }) => state.transactionsState.transactions;
 export const selectTransactionsLoading = (state: { transactionsState: TransactionsState }) => state.transactionsState.loading;
 export const selectTransactionsError = (state: { transactionsState: TransactionsState }) => state.transactionsState.error;
+// Selector to get a single transaction by hash
+export const selectTransactionByHash = (state: { transactionsState: TransactionsState }, hash: string) =>
+    state.transactionsState.transactions.find(transaction => transaction.hash === hash);
