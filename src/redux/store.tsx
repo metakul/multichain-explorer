@@ -7,6 +7,7 @@ import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
 import recentBlocksState from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice"
 import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice"
 import transactionsState from "./slices/BackendSlices/Explorer/Transactions/AllTrxSlice"
+import addressInfoState from "./slices/BackendSlices/Explorer/Address/AddressInfoSlice"
 import { useDispatch } from 'react-redux'
 import logger from 'redux-logger'
 const store = configureStore({
@@ -19,6 +20,7 @@ const store = configureStore({
     recentBlocksState: recentBlocksState,
     currentBlockState: currentBlockState,
     transactionsState: transactionsState,
+    addressInfo: addressInfoState
   },
   middleware:getDefaultMiddlerware =>
     getDefaultMiddlerware().concat(logger),

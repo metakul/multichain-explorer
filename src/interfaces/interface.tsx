@@ -161,3 +161,9 @@ export interface ITrx {
   s: string;                        // ECDSA signature s value
   v: string;                        // Recovery ID for the transaction
 }
+
+
+export interface IAddress {
+  balance:string;
+  transactions:string[];
+}
