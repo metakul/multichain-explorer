@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Request from "../../../../../../Backend/axiosCall/apiCall";
 import { ApiError, Block } from "../../../../../../interfaces/interface";
-import { setBlocks, setRecentBlocksLoading } from "./RecentBlocksSlice";
+import { addNewBlock, setBlocks, setRecentBlocksLoading } from "./RecentBlocksSlice";
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
 
 export const fetchRecentBlocks = createAsyncThunk(
@@ -26,6 +26,28 @@ export const fetchRecentBlocks = createAsyncThunk(
             dispatch(setRecentBlocksLoading(false));
             const castedError = error as ApiError
             return rejectWithValue(castedError.error || "Failed to fetch blocks");
+        }
+    }
+);
+
+
+export const fetchBlockInfo = createAsyncThunk(
+    'blocks/fetchBlockInfo',
+    async ({ rpcUrl, blockNo }: { rpcUrl: string, blockNo: string }, { dispatch, rejectWithValue }) => {
+        try {
+            const response = await Request({
+                url: "fetchBlockInfo",
+                method: ApiEndpoint.fetchBlockInfo.method,
+                data: {
+                    providerUrl: rpcUrl
+                },
+                slug: `/${blockNo}`
+            });
+            const blockInfo: Block = response;
+            dispatch(addNewBlock(blockInfo));
+        } catch (error) {
+            const castedError = error as ApiError
+            return rejectWithValue(castedError.error || "Failed to fetch current Block");
         }
     }
 );

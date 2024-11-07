@@ -166,4 +166,5 @@ export interface ITrx {
 export interface IAddress {
   balance:string;
   transactions:string[];
+  address:string
 }

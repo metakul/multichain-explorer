@@ -18,7 +18,10 @@ function AddressInfo() {
     const error = useSelector(selectAddressInfoError);
 
     useEffect(() => {
-        if (!addressInfo && address) {
+        if (addressInfo && addressInfo.address==address) {
+            return
+        }
+        else if (!addressInfo && address){
             dispatch(getAddressInfo({ rpcUrl, address }));
         }
     }, [dispatch, address, rpcUrl, addressInfo]);
@@ -29,7 +32,7 @@ function AddressInfo() {
     return (
         <div>
             <h1>Address Details</h1>
-            <p>Balance: {addressInfo?.balance}</p>
+            <p>Balance: {addressInfo?.balance} ethers</p>
             <h2>Transactions</h2>
             <ul>
                 {addressInfo?.transactions && addressInfo.transactions.length > 0 ? (

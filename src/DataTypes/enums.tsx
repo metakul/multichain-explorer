@@ -60,6 +60,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   fetchAllTransactions: { url: '/backendApi/block/allTransactions', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   fetchSingleTrx: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   getAddressInfo: { url: '/backendApi/address', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchBlockInfo: { url: '/backendApi/block', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 
 export enum Network {

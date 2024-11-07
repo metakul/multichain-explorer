@@ -61,7 +61,7 @@ function Transaction() {
 const DetailRow = ({ label, value, loading }: { label: string; value?: string; loading: boolean }) => (
     <Box style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eaeaea' }}>
         <Text style={{ fontWeight: 'bold' }}>{label}</Text>
-        <Text>{loading ? <Skeleton /> : value}</Text>
+        <Text>{loading ? <Skeleton /> : truncateValue(value) }</Text>
     </Box>
 );
 
@@ -69,5 +69,11 @@ const DetailRow = ({ label, value, loading }: { label: string; value?: string; l
 const Skeleton = () => (
     <Box style={{ width: '100px', height: '16px', backgroundColor: '#eaeaea', borderRadius: '4px' }} />
 );
+
+// Truncate long values to make them more readable
+const truncateValue = (value?: string) => {
+    if (!value) return "N/A";
+    return value.length > 50 ? `${value.slice(0, 50)}...` : value;
+};
 
 export default Transaction;

@@ -47,3 +47,9 @@ export default blocksSlice.reducer;
 export const selectBlocks = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.blocks;
 export const selectBlocksLoading = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.loading;
 export const selectBlocksError = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.error;
+
+// New selector to fetch a block by its number or hash
+export const selectBlockByNumberOrHash = (state: { recentBlocksState: BlocksState }, identifier: string) =>
+    state.recentBlocksState.blocks.find(
+        (block) => block.number === identifier || block.hash === identifier
+    );

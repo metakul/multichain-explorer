@@ -22,6 +22,7 @@ export const getAddressInfo = createAsyncThunk(
 
             // Assuming response is formatted as expected with `balance` and `transactions` fields
             const addressInfo: IAddress = {
+                address: address,
                 balance: response.balance,
                 transactions: response.transactions || []
             };
@@ -30,9 +31,9 @@ export const getAddressInfo = createAsyncThunk(
             dispatch(setLoading(false)); // Set loading to false once data is fetched
         } catch (error) {
             const castedError = error as ApiError;
-            dispatch(setError(castedError.error || "Failed to fetch current Block"));
+            dispatch(setError(castedError.error || "Failed to fetch Address Info"));
             dispatch(setLoading(false)); // Set loading to false in case of an error
-            return rejectWithValue(castedError.error || "Failed to fetch current Block");
+            return rejectWithValue(castedError.error || "Failed to fetch Address Info");
         }
     }
 );
