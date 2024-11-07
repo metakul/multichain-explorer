@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
             <h1>Welcome to Our Projects</h1>
             <div>
                 <HomeButton onClick={() => handleNavigation(PROJECTS.CONTRACTS_HOME)}>
-                    C3I Contract Home
+                    C3I Contracts
                 </HomeButton>
             </div>
             <div className="projects">

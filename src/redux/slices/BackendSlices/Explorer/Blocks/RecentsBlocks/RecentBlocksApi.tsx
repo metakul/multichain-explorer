@@ -13,7 +13,6 @@ export const fetchRecentBlocks = createAsyncThunk(
             const response = await Request({
                 url: "fetchRecentBlocks",
                 method: ApiEndpoint.fetchRecentBlocks.method,
-                // todo
                 data: {
                     providerUrl: rpcUrl
                 },
@@ -47,7 +46,7 @@ export const fetchBlockInfo = createAsyncThunk(
             dispatch(addNewBlock(blockInfo));
         } catch (error) {
             const castedError = error as ApiError
-            return rejectWithValue(castedError.error || "Failed to fetch current Block");
+            return rejectWithValue(castedError.error || "Failed to fetch recent Blocks");
         }
     }
 );

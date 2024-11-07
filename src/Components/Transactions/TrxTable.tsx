@@ -75,19 +75,19 @@ export default function TransactionInfo({ transaction, loading, error }: TrxInfo
                     <Table.Body>
                         {transaction.map((singleTrx: ITrx) => (
                             <Table.Row key={singleTrx?.hash}>
-                                <Table.Cell onClick={() => navigateToTransaction(navigate,singleTrx?.hash)}>
+                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToTransaction(navigate,singleTrx?.hash)}>
                                     {singleTrx?.hash.slice(0, 16)}...
                                 </Table.Cell>
-                                <Table.Cell onClick={() => navigateToBlock(navigate,singleTrx?.blockNumber)}>
+                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToBlock(navigate,singleTrx?.blockNumber)}>
                                     {singleTrx?.blockNumber}
                                 </Table.Cell>
-                                <Table.Cell onClick={() => navigateToAddress(navigate,singleTrx?.from)}>
+                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToAddress(navigate,singleTrx?.from)}>
                                     {singleTrx?.from?.slice(0, 8)}...{singleTrx?.from?.slice(-8)}
                                 </Table.Cell>
-                                <Table.Cell onClick={() => navigateToAddress(navigate,singleTrx?.to)}>
+                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToAddress(navigate,singleTrx?.to)}>
                                     {singleTrx?.to?.slice(0, 8)}...{singleTrx?.to?.slice(-8)}
                                 </Table.Cell>
-                                <Table.Cell>
+                                <Table.Cell >
                                     {(singleTrx?.value / 10 ** 18)?.toFixed(5)} ETH
                                 </Table.Cell>
                                 <Table.Cell>

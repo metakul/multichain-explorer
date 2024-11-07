@@ -8,12 +8,15 @@ import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blo
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
+import { navigateToBlock } from '../../helpers/navigationHelpers';
+import { useNavigate } from 'react-router-dom';
 
 const BlockCards: React.FC = () => {
     const blocks = useSelector(selectBlocks);
     const allBlocksLoading = useSelector(selectBlocksLoading);
     const currentBlock = useSelector(curretnBlockInfo);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate()
     const { rpcUrl } = useRpc()
     useEffect(() => {
         dispatch(fetchRecentBlocks(rpcUrl))
@@ -33,7 +36,7 @@ const BlockCards: React.FC = () => {
                         padding: '16px',
                         height: "200px"
                     }}>
-                        <Text style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>
+                        <Text style={{ color: "blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(currentBlock?.number))}>
                             Current Block Info #{currentBlock.number}
                         </Text>
                         {/* <p><strong>Hash:</strong> {currentBlock.hash}</p> */}
@@ -55,7 +58,7 @@ const BlockCards: React.FC = () => {
                         padding: '16px',
                         height:"200px"
                     }}>
-                        <Text style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>
+                        <Text style={{color:"blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(block.number))}>
                             Block #{block.number}
                         </Text>
                         {/* <p><strong>Hash:</strong> {block.hash}</p> */}
