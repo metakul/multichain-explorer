@@ -45,7 +45,7 @@ const RpcComponent: React.FC = () => {
             height="64px"
             style={{
                 position: "absolute",
-                right: 0,
+                right: 20,
                 top: 60,
             }}
         >

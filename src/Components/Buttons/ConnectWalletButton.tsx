@@ -11,7 +11,7 @@ interface ConnectWalletButtonProps {
 }
 
 function ConnectWalletButton({ style, className = "", ...props }: ConnectWalletButtonProps) {
-    const { connected, walletAddress, connectToRpc, disconnectWallet } = useRpc();
+    const { connected, walletAddress, connectToRpc, disconnectWallet, networkName } = useRpc();
 
     const formatAddress = (address: string) => {
         if (!address) return "";
@@ -22,7 +22,7 @@ function ConnectWalletButton({ style, className = "", ...props }: ConnectWalletB
         if (connected) {
             disconnectWallet();
         } else {
-            await connectToRpc("Polygon");
+            await connectToRpc(networkName);
         }
     };
 

@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Box, Heading } from "@radix-ui/themes";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+import { Box } from "@radix-ui/themes";
 import * as Avatar from "@radix-ui/react-avatar";
 
 
 export default function Header() {
-    const [ethPrice, setEthPrice] = useState("2347");
+    // const [ethPrice, setEthPrice] = useState("2347");
 
     //todo move to backend call
 
-    useEffect(() => {
-        const getEthPrice = async () => {
-            const response = await axios.get("http://localhost:5001/getethprice", {});
-            setEthPrice(response.data.usdPrice);
-        };
-        getEthPrice();
-    }, []);
+    // useEffect(() => {
+    //     const getEthPrice = async () => {
+    //         const response = await axios.get("http://localhost:5001/getethprice", {});
+    //         setEthPrice(response.data.usdPrice);
+    //     };
+    //     getEthPrice();
+    // }, []);
 
     return (
         <Box>
@@ -30,13 +30,6 @@ export default function Header() {
                     />
                 </Avatar.Root>
             </h3>
-            <Box display='block'>
-                <Heading size="6">
-                    ETH Price: <span style={{ color: 'blue' }}>${Number(ethPrice).toFixed(2)}</span>
-                </Heading>
-
-            </Box>
-
         </Box>
     );
 }
