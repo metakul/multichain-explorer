@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ExplorerResult } from "../../../../interfaces/interface";
+import {  ITrx } from "../../../../interfaces/interface";
 import { fetchSearchResult } from "./ExplorerApiSlice";
 
 // Initial state of the searchResult slice
 interface SearchResultState {
-    searchResult: ExplorerResult[];
+    searchResult: ITrx[];
     loading: boolean;
     error: string | null;
 }
@@ -21,12 +21,7 @@ const searchResultSlice = createSlice({
     name: 'searchResult',
     initialState,
     reducers: {
-        setMySearchResult: (state, action: PayloadAction<any[]>) => {
-            state.loading = false;
-            state.searchResult = action.payload;
-            state.error = null;
-        },
-        addNewSearchResult: (state, action: PayloadAction<any>) => {
+        addNewSearchResult: (state, action: PayloadAction<ITrx>) => {
             state.loading = false;
             state.searchResult.push(action.payload);
             state.error = null;
@@ -34,6 +29,9 @@ const searchResultSlice = createSlice({
         filterSearchResultByHash: (state, action: PayloadAction<string>) => {
             const hashToFilter = action.payload;
             state.searchResult = state.searchResult.filter(result => result.hash === hashToFilter);
+        },
+        setSearchResultLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -53,7 +51,7 @@ const searchResultSlice = createSlice({
     }
 });
 
-export const { setMySearchResult, addNewSearchResult, filterSearchResultByHash } = searchResultSlice.actions;
+export const { addNewSearchResult, filterSearchResultByHash, setSearchResultLoading } = searchResultSlice.actions;
 
 export default searchResultSlice.reducer;
 
@@ -63,6 +61,6 @@ export const selectSearchResultLoading = (state: { explorerSearchResult: SearchR
 export const selectSearchResultError = (state: { explorerSearchResult: SearchResultState }) => state.explorerSearchResult.error;
 export const selectTransactionBySearchInput = (trxId: string) =>
     createSelector(
-        (state: { explorerSearchResult: { searchResult: ExplorerResult[] } }) => state.explorerSearchResult.searchResult,
+        (state: { explorerSearchResult: { searchResult: ITrx[] } }) => state.explorerSearchResult.searchResult,
         (searchResult) => searchResult.find(txn => txn.hash === trxId)
     );

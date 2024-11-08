@@ -13,13 +13,13 @@ function SingleBlock() {
     const blocks = useSelector(selectBlocks);
     const isLoading = useSelector(selectBlocksLoading);
     const { rpcUrl } = useRpc();
-    const blockData = blocks.find((b) => b.number === block || b.hash === block);
+    const blockData = blocks.find((b) => b.number == block || b.hash == block);
 
     useEffect(() => {
-        if (block && !blockData) {
-            dispatch(fetchBlockInfo({ rpcUrl, blockNo: block }));
-        }
-    }, [block, blockData, dispatch, rpcUrl]);
+            if (block) {
+                dispatch(fetchBlockInfo({ rpcUrl, blockNo: block }));
+            }
+    }, [block, blockData, rpcUrl]);
 
 
     return (
@@ -49,8 +49,8 @@ function SingleBlock() {
                         <DetailRow label="Timestamp" value={blockData.timestamp} loading={isLoading} />
                         <DetailRow label="Total Difficulty" value={blockData.totalDifficulty} loading={isLoading} />
                         <DetailRow label="Transactions Root" value={blockData.transactionsRoot} loading={isLoading} />
-                        <DetailRow label="Uncles" value={blockData.uncles.join(", ")} loading={isLoading} />
-                        <DetailRow label="Transactions" value={blockData.transactions.join(", ")} loading={isLoading} />
+                        {/* <DetailRow label="Uncles" value={blockData.uncles.join(", ")} loading={isLoading} /> */}
+                        <DetailRow label="Transactions" value={blockData?.transactions?.join(", ")} loading={isLoading} />
                     </Box>
                 ) : (
                     <Text>Loading block data...</Text>

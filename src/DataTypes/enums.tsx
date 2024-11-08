@@ -61,10 +61,12 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   fetchSingleTrx: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   getAddressInfo: { url: '/backendApi/address', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   fetchBlockInfo: { url: '/backendApi/block', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchChainStats: { url: '/backendApi/stats', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 
 export enum Network {
   Polygon = "Polygon",
+  Amoy = "Amoy",
   Bsc = "Bsc",
   Localhost = "Localhost"
 }
@@ -74,7 +76,18 @@ export type NetworkType = keyof typeof Network;
 export const networks: Record<Network, NetworkConfig> = {
   Polygon: {
     chainId: `0x${Number(137).toString(16)}`,
-    chainName: "Polygon Mainnet",
+    chainName: "Amoy Testnet",
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18
+    },
+    rpcUrls: ["https://polygon-amoy.g.alchemy.com/v2/roMKSSyXWVrSgFgBLhXoRW_-Y1zIciII"],
+    blockExplorerUrls: ["https://polygonscan.com/"]
+  },
+  Amoy: {
+    chainId: `0x${Number(137).toString(16)}`,
+    chainName: "Amoy Testnet",
     nativeCurrency: {
       name: "MATIC",
       symbol: "MATIC",

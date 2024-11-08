@@ -5,7 +5,7 @@ import { Block } from "../../../../../../interfaces/interface";
 
 
 // Initial state of the blocks slice
-interface BlocksState {
+export interface BlocksState {
     blocks: Block[];
     loading: boolean;
     error: string | null;
@@ -29,9 +29,20 @@ const blocksSlice = createSlice({
             state.error = null;
         },
         addNewBlock: (state, action: PayloadAction<Block>) => {
+            const newBlock = action.payload;
+            // Check if a block with the same hash or number already exists
+            const blockExists = state.blocks.some(
+                (block) => block.hash === newBlock.hash || block.number === newBlock.number
+            );
+
+            if (!blockExists) {
+                state.blocks.push(newBlock);
+                state.error = null;
+            } else {
+                state.error = "Block already exists";
+            }
+
             state.loading = false;
-            state.blocks.push(action.payload);
-            state.error = null;
         },
         setRecentBlocksLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice"
 import contractsSlice from "./slices/BackendSlices/Blockchain/AllContractsSlice"
+import explorerStatsInfo from "./slices/BackendSlices/Explorer/ExplorerStatsSlice"
 import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
 import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
@@ -14,6 +15,7 @@ const store = configureStore({
   reducer: {
     auth:authReducer,
     contracts:contractsSlice,
+    explorerStatsInfo: explorerStatsInfo,
     singleContract:singleContract,
     deployedContracts: deployedContracts,
     explorerSearchResult:explorerSlice,

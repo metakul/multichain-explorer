@@ -8,7 +8,8 @@ import { RequestOptions } from '../../interfaces/interface';
 const Request = async ({ url, method, slug, data, headers }: RequestOptions) => {
   // const storedAccessToken = Cookies.get('access');  // Retrieve stored access token
   const endpoint = ApiEndpoint[url];
-
+  console.log(method,headers);
+  
   if (!endpoint) {
     throw new Error(`Invalid API endpoint: ${url}`);
   }

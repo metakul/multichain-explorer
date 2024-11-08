@@ -6,7 +6,7 @@ import { AppDispatch } from "../../redux/store";
 import { fetchSearchResult } from "../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice";
 import { useRpc } from "../../contexts/RpcProviderContext";
 import { selectSearchResultError, selectSearchResultLoading, selectTransactionBySearchInput } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
-import { ExplorerResult } from "../../interfaces/interface";
+import { ITrx } from "../../interfaces/interface";
 import TransactionInfo from "../Transactions/TrxTable";
 
 export default function Search() {
@@ -18,7 +18,7 @@ export default function Search() {
     const { rpcUrl } = useRpc()
     const loading = useSelector(selectSearchResultLoading);
     const error = useSelector(selectSearchResultError);
-    const transaction: ExplorerResult | undefined = useSelector(selectTransactionBySearchInput(searchInput));
+    const transaction: ITrx | undefined = useSelector(selectTransactionBySearchInput(searchInput));
 
     const changeHandler = (e: { target: { value: SetStateAction<string> } }) => {
         setSearchInput(e.target.value);
@@ -43,6 +43,10 @@ export default function Search() {
                     required
                     value={searchInput}
                     onChange={changeHandler}
+                    style={{
+                        width: "",
+                        marginRight: "10px"
+                    }}
                 />
 
                 {/* Replaced Button with LoadingButton */}

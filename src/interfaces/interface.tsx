@@ -79,22 +79,11 @@ export interface DeployedContract {
   error: string;
 }
 
-export interface ExplorerResult {
-  hash: string;
-  blockHash: string;
-  blockNumber: string;
-  chainId: string;
-  from:string,
-  to:string,
-  gas:string,
-  gasPrice: string,
-  input: string
-  value: number; // Value of the transaction in ETH
-}
+
 
 export interface SearchResultsProps {
   result: {
-    result: ExplorerResult[]; 
+    result: ITrx[]; 
     searchInput: string;
   };
 }
@@ -113,6 +102,23 @@ export interface NetworkConfig {
   nativeCurrency: NativeCurrency;
   rpcUrls: string[];
   blockExplorerUrls: string[];
+}
+
+export interface NetworkStats {
+  totalBlocks: number;
+  totalAddresses: number;
+  totalTransactions: number;
+  averageBlockTime: number;
+  totalGasUsed: string;
+  transactionsToday: number;
+  gasUsedToday: string;
+  gasPrices: {
+    average: number;
+    fast: number;
+    slow: number;
+  };
+  staticGasPrice: string;
+  networkUtilizationPercentage: number;
 }
 
 // Block interface based on the data structure provided
