@@ -1,4 +1,4 @@
-import { Box, Button } from '@radix-ui/themes';
+import { Box, Button, Text } from '@radix-ui/themes';
 import TransactionInfo from './TrxTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -29,10 +29,14 @@ function Transactions() {
 
     return (
         <Box p="4">
-            <h3>Recent Transactions</h3>
+            <Box style={{
+                display: "flex",
+            }}>
+            <Text style={{ fontSize: "24px", fontWeight: "bold" }}>Recent Transactions </Text>    
             <Button onClick={handleReload} disabled={loading}>
                 {loading? "Loading Trx" : "Reload" }
             </Button>
+            </Box>
             <Box style={{
                 display: "flex", flexDirection: "column", gap: "3"
             }}

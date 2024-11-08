@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlocks, selectBlocksLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
-import { Box, Text } from '@radix-ui/themes';
+import { Box, Button, Text } from '@radix-ui/themes';
 import Grid from '../Grid';
 import { curretnBlockInfo } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
@@ -11,68 +11,64 @@ import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blo
 import { navigateToBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 
-const BlockCards: React.FC = () => {
+const AllBlock: React.FC = () => {
     const blocks = useSelector(selectBlocks);
     const allBlocksLoading = useSelector(selectBlocksLoading);
     const currentBlock = useSelector(curretnBlockInfo);
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate()
-    const { rpcUrl } = useRpc()
+    const navigate = useNavigate();
+    const { rpcUrl } = useRpc();
+
     useEffect(() => {
-        dispatch(fetchRecentBlocks(rpcUrl))
-        dispatch(fetchCurrentBlock(rpcUrl))
-    }, [dispatch, rpcUrl])
-    
+        dispatch(fetchRecentBlocks(rpcUrl));
+        dispatch(fetchCurrentBlock(rpcUrl));
+    }, [dispatch, rpcUrl]);
+
+    const handleReload = () => {
+        dispatch(fetchRecentBlocks(rpcUrl));
+        dispatch(fetchCurrentBlock(rpcUrl));
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const renderBlockInfo = (block: any) => (
+        <Box key={block.hash} style={{
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            padding: '16px',
+            height: "200px"
+        }}>
+            <Text style={{ color: "blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(block?.number))}>
+                Block #{block?.number ?? "N/A"}
+            </Text>
+            <p><strong>Gas Limit:</strong> {block?.gasLimit ?? "N/A"}</p>
+            <p><strong>Size:</strong> {block?.size ? `${block.size} bytes` : "N/A"}</p>
+            <p><strong>Difficulty:</strong> {block?.difficulty ?? "N/A"}</p>
+            <p><strong>Timestamp:</strong> {block?.timestamp ? new Date(parseInt(block.timestamp) * 1000).toLocaleString() : "N/A"}</p>
+        </Box>
+    );
+
     return (
-        <div >
-            <Grid
-                gap="3" width="auto"
-            >
-                {currentBlock && (
-                    <Box key={currentBlock.hash} style={{
-                        backgroundColor: '#ffffff',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        borderRadius: '8px',
-                        padding: '16px',
-                        height: "200px"
-                    }}>
-                        <Text style={{ color: "blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(currentBlock?.number))}>
-                            Current Block Info #{currentBlock.number}
-                        </Text>
-                        {/* <p><strong>Hash:</strong> {currentBlock.hash}</p> */}
-                        {/* <p><strong>Miner:</strong> {currentBlock.miner}</p> */}
-                        <p><strong>Gas Limit:</strong> {currentBlock.gasLimit}</p>
-                        <p><strong>Size:</strong> {currentBlock.size} bytes</p>
-                        <p><strong>Difficulty:</strong> {currentBlock.difficulty}</p>
-                        <p>
-                            <strong>Timestamp:</strong> {new Date(parseInt(currentBlock.timestamp) * 1000).toLocaleString()}
-                        </p>
-                    </Box>
+        <div>
+            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>   Blocks Info</Text>    
+            <Button onClick={handleReload} disabled={allBlocksLoading}>
+                {allBlocksLoading ? "Loading Blocks" : "Reload"}
+            </Button>
+            <Grid gap="3" width="auto">
+
+                {/* Render current block info */}
+                {currentBlock && renderBlockInfo(currentBlock)}
+
+                {/* Render recent blocks */}
+                {blocks && blocks.length > 0 ? (
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    blocks.map((block, index) => renderBlockInfo(block))
+                ) : (
+                    <p>No blocks found</p>
                 )}
 
-                {blocks && blocks.map((block, index) => (
-                    <Box key={block.hash || index} style={{
-                        backgroundColor: '#ffffff',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        borderRadius: '8px',
-                        padding: '16px',
-                        height:"200px"
-                    }}>
-                        <Text style={{color:"blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(block.number))}>
-                            Block #{block.number}
-                        </Text>
-                        {/* <p><strong>Hash:</strong> {block.hash}</p> */}
-                        {/* <p><strong>Miner:</strong> {block.miner}</p> */}
-                        <p><strong>Gas Limit:</strong> {block.gasLimit}</p>
-                        <p><strong>Size:</strong> {block.size} bytes</p>
-                        <p><strong>Difficulty:</strong> {block.difficulty}</p>
-                        <p>
-                            <strong>Timestamp:</strong> {new Date(parseInt(block.timestamp) * 1000).toLocaleString()}
-                        </p>
-                    </Box>
-                ))}
-
-                {allBlocksLoading &&  blocks.length==0  && (
+                {/* Loading state with skeleton placeholders */}
+                {allBlocksLoading && blocks.length === 0 && (
                     Array.from({ length: 3 }).map((_, index) => (
                         <Box key={index} style={{
                             backgroundColor: '#e0e0e0',
@@ -97,4 +93,4 @@ const BlockCards: React.FC = () => {
     );
 };
 
-export default BlockCards;
+export default AllBlock;

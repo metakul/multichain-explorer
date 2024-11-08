@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectStatsInfo, selectStatsLoading, selectStatsError } from '../../redux/slices/BackendSlices/Explorer/ExplorerStatsSlice';
 import { fetchExplorerStats } from '../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice';
 import { useRpc } from '../../contexts/RpcProviderContext';
-import { Box, Card, Flex, Text } from '@radix-ui/themes';
+import { Box, Button, Card, Flex, Text } from '@radix-ui/themes';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();
@@ -18,8 +18,18 @@ function ExplorerStats() {
         dispatch(fetchExplorerStats({ rpcUrl }));
     }, [dispatch, rpcUrl]);
 
-    // If there's an error, show "N/A" for all stats
-    if (error) return <div>Error loading stats: N/A</div>;
+    const handleReload = () => {
+        dispatch(fetchExplorerStats({ rpcUrl }));
+    };
+
+    // If there's an error,
+    if (error) return <Box style={{ margin: "auto", marginTop: "" }}>
+        <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "6px" }}> Explorer Stats Info  </Text>    
+        <Button onClick={handleReload} disabled={loading}>
+            {loading ? "Loading Trx" : "Reload"}
+        </Button>
+        <p>Error loading stats</p>
+        </Box>
 
     const StatCard = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
         <Box style={{
@@ -70,6 +80,11 @@ function ExplorerStats() {
     );
 
     return (
+        <Box style={{ margin: "auto" }}>
+            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>  Explorer Stats Info </Text>    
+            <Button onClick={handleReload} disabled={loading}>
+                {loading ? "Loading Stats" : "Reload"}
+            </Button>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
             {loading
                 ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
@@ -90,6 +105,8 @@ function ExplorerStats() {
                     </>
                 )}
         </div>
+        </Box>
+
     );
 }
 

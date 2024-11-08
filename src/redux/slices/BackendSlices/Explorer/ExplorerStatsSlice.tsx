@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NetworkStats } from '../../../../interfaces/interface';
+import { fetchExplorerStats } from './ExplorerApiSlice';
 
 // Initial state for explorerStats slice
 interface ExplorerStatsState {
@@ -26,6 +27,12 @@ const explorerStatsSlice = createSlice({
         setExplorerStatsLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchExplorerStats.rejected, (state, action) => {
+            state.error = action.payload as string;
+            state.loading = false;
+        });
     },
   
 });
