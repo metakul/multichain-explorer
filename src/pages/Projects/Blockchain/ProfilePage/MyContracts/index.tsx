@@ -10,15 +10,15 @@ import { AppDispatch } from '../../../../../redux/store';
 import { getMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
 import ContractInfoCard from '../../../../../Components/Cards/ContractCard/ContractInfoCard';
 import { useNavigate } from 'react-router-dom';
-import { useWalletAuth } from '../../../../../contexts/WalletAuthContext';
 import { ContractType, PROJECTS } from '../../../../../DataTypes/enums';
+import { useRpc } from '../../../../../contexts/RpcProviderContext';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
 
   const myContracts = useSelector(selectMyContracts)
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const { walletAddress } =useWalletAuth()
+  const { walletAddress } =useRpc()
 
   useEffect(() => {
     (dispatch as AppDispatch)(getMyContracts(walletAddress));

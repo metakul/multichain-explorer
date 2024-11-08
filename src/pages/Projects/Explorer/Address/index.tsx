@@ -24,7 +24,7 @@ function AddressInfo() {
         else if (!addressInfo && address){
             dispatch(getAddressInfo({ rpcUrl, address }));
         }
-    }, [dispatch, address, rpcUrl, addressInfo]);
+    }, [ address, rpcUrl, addressInfo]);
 
     if (loading) return <Text>Loading...</Text>;
     if (error) return <Text>Error: {error}</Text>;

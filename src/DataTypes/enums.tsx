@@ -68,7 +68,7 @@ export enum Network {
   Polygon = "Polygon",
   Amoy = "Amoy",
   Bsc = "Bsc",
-  Localhost = "Localhost"
+  Localhost = "Localhost",
 }
 
 export type NetworkType = keyof typeof Network;

@@ -25,7 +25,7 @@ function Transaction() {
         if (!transaction && hash) {
             dispatch(fetchSingleTrx({ rpcUrl, hash }));
         }
-    }, [dispatch, hash, rpcUrl, transaction]);
+    }, [ hash, rpcUrl, transaction]);
 
     if (error) return <Text>Error: {error}</Text>;
 

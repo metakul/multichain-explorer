@@ -17,7 +17,7 @@ const ContractsGrid: React.FC = () => {
     // Fetch contracts when the component mounts
     useEffect(() => {
         (dispatch as AppDispatch)(fetchAllContracts());
-    }, [dispatch]);
+    }, []);
 
     const navigateUser = (contract: { contractName: any }) => {
         // Use template string to replace :contractName with the actual contract name

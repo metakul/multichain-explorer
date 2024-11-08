@@ -16,7 +16,7 @@ function ExplorerStats() {
 
     useEffect(() => {
         dispatch(fetchExplorerStats({ rpcUrl }));
-    }, [dispatch, rpcUrl]);
+    }, [rpcUrl]);
 
     const handleReload = () => {
         dispatch(fetchExplorerStats({ rpcUrl }));

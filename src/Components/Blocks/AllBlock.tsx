@@ -22,7 +22,7 @@ const AllBlock: React.FC = () => {
     useEffect(() => {
         dispatch(fetchRecentBlocks(rpcUrl));
         dispatch(fetchCurrentBlock(rpcUrl));
-    }, [dispatch, rpcUrl]);
+    }, [ rpcUrl]);
 
     const handleReload = () => {
         dispatch(fetchRecentBlocks(rpcUrl));

@@ -1,10 +1,10 @@
 import MyContracts from "./MyContracts";
 import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
-import { useWalletAuth } from "../../../../contexts/WalletAuthContext";
+import { useRpc } from "../../../../contexts/RpcProviderContext";
 
 function Web3ProfilePage() {
 
-  const { connected } = useWalletAuth();
+  const { connected } = useRpc();
 
   return (
     <>

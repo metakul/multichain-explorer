@@ -8,25 +8,25 @@ import { AppDispatch } from "../../../../redux/store";
 import { Box, Text } from "@radix-ui/themes";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
-import { useWalletAuth } from "../../../../contexts/WalletAuthContext";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
 import { ContractType } from "../../../../DataTypes/enums";
 import ContractFunctionsForm from "../../../../Components/Contracts/InteractWithContract";
 import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
+import { useRpc } from "../../../../contexts/RpcProviderContext";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?:string }>();
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
 
-    const { walletAddress, connected } = useWalletAuth();
+    const { walletAddress, connected } = useRpc();
 
     // Fetch the single contract when the component mounts
     useEffect(() => {
         if (contractName) {
             dispatch(fetchContractByName(contractName));
         }
-    }, [dispatch, contractName]);
+    }, [contractName]);
 
     // Handle loading or error cases
     if (!contract) {

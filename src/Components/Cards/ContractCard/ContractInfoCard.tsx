@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Box } from "@radix-ui/themes";
 import { ContractData, DeployedContract } from "../../../interfaces/interface";
-import { useWalletAuth } from "../../../contexts/WalletAuthContext";
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton";
 import ConstructorInputForm from "./ConstructorInfo";
 import { ContractType } from "../../../DataTypes/enums";
+import { useRpc } from "../../../contexts/RpcProviderContext";
 
 // Props for the component
 interface ContractInfoProps {
@@ -28,7 +28,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     handleButtonClick,
 }) => {
     const { contractName, constructor, loading, error } = contractInfo;
-    const { connected } = useWalletAuth();
+    const { connected } = useRpc();
 
     // State to manage constructor inputs
     const [constructorInputs, setConstructorInputs] = useState<string[]>([]);

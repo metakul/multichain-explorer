@@ -5,12 +5,12 @@ import { CaretDownIcon } from '@radix-ui/react-icons';
 import './style.css';
 import ConnectWalletButton from '../../Components/Buttons/ConnectWalletButton';
 import { EXPLORER_PAGE, Pages, PROJECTS } from '../../DataTypes/enums';
-import { useWalletAuth } from '../../contexts/WalletAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@radix-ui/themes';
+import { useRpc } from '../../contexts/RpcProviderContext';
 
 const NavigationMenuDemo = () => {
-    const { connected} = useWalletAuth();
+    const { connected} = useRpc();
     const navigate =useNavigate()
 
     return (

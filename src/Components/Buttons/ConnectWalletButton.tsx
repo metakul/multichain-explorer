@@ -1,31 +1,45 @@
-import { useWalletAuth } from "../../contexts/WalletAuthContext";
+import { useRpc } from "../../contexts/RpcProviderContext";
 import "./Button.css";
 import { Button } from "@radix-ui/themes";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function ConnectWalletButton({style, className = "", ...props }:any) {
-    const { connected, walletAddress, connectWallet } = useWalletAuth();
+import { CSSProperties } from "react";
 
-    const formatAddress = (address: string ) => {
+interface ConnectWalletButtonProps {
+    style?: CSSProperties;
+    className?: string;
+    [key: string]: unknown;
+}
+
+function ConnectWalletButton({ style, className = "", ...props }: ConnectWalletButtonProps) {
+    const { connected, walletAddress, connectToRpc, disconnectWallet } = useRpc();
+
+    const formatAddress = (address: string) => {
         if (!address) return "";
-        return `${address.slice(0, 4)}...${address.slice(-3)}`;
+        return `${address.slice(0, 4)}...${address.slice(-4)}`;
+    };
+
+    const handleClick = async () => {
+        if (connected) {
+            disconnectWallet();
+        } else {
+            await connectToRpc("Polygon");
+        }
     };
 
     return (
         <Button
             className={`btn ${className}`}
-            onClick={connectWallet}
+            onClick={handleClick}
             style={style}
             {...props}
         >
-            {connected ? (
+            {connected && walletAddress ? (
                 <>
-                {formatAddress(walletAddress)} Disconnect Wallet
-             
+                    {formatAddress(walletAddress)} Disconnect Wallet
                 </>
-            ) :
-            
-            ("Connect Wallet")}
+            ) : (
+                "Connect Wallet"
+            )}
         </Button>
     );
 }
