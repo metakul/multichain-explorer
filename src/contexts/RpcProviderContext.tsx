@@ -62,36 +62,69 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
 
     const connectToRpc = async (customNetworkName: NetworkType, customRpcUrl?: string) => {
         try {
-            if (window.ethereum) {
-                // Attempt to switch the network in MetaMask
-                await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId: networks[customNetworkName].chainId }],
-                }).catch(async (switchError: any) => {
-                    if (switchError.code === 4902) {
-                        await window.ethereum.request({
-                            method: "wallet_addEthereumChain",
-                            params: [{
-                                ...networks[customNetworkName],
-                                rpcUrls: [customRpcUrl || networks[customNetworkName].rpcUrls[0]],
-                            }],
-                        });
-                    } else throw switchError;
-                });
+            // Create a new provider using the custom RPC URL if provided
+            const customProvider = customRpcUrl ? new ethers.JsonRpcProvider(customRpcUrl) : undefined;
 
-                // Retrieve wallet address
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                setWalletAddress(accounts[0]);
+            if (customProvider) {
+                // Attempt to switch the network in MetaMask
+                if (window.ethereum) {
+                    await window.ethereum.request({
+                        method: "wallet_switchEthereumChain",
+                        params: [{ chainId: networks[customNetworkName].chainId }],
+                    }).catch(async (switchError: any) => {
+                        if ((switchError as any).code === 4902) {
+                            // If the network isn't available in MetaMask, add it
+                            await window.ethereum.request({
+                                method: "wallet_addEthereumChain",
+                                params: [{
+                                    ...networks[customNetworkName],
+                                    rpcUrls: [customRpcUrl], // Update the RPC URLs to include the custom one
+                                }],
+                            });
+                        } else throw switchError;
+                    });
+                } else {
+                    setConnected(false);
+                    return;
+                }
+
+                // Set the provider and network details
+                setProvider(customProvider);
+                setRpcUrl(customRpcUrl);
+                setNetworkName(customNetworkName);
                 setConnected(true);
             } else {
-                setConnected(false);
-                console.error("Ethereum provider not available");
+                // Fallback: switch using MetaMask without a custom RPC URL
+                if (window.ethereum) {
+                    const defaultProvider = new ethers.BrowserProvider(window.ethereum);
+                    await window.ethereum.request({
+                        method: "wallet_switchEthereumChain",
+                        params: [{ chainId: networks[customNetworkName].chainId }],
+                    }).catch(async (switchError: any) => {
+                        if ((switchError as any).code === 4902) {
+                            // Add the network if not available
+                            await window.ethereum.request({
+                                method: "wallet_addEthereumChain",
+                                params: [{ ...networks[customNetworkName] }],
+                            });
+                        } else throw switchError;
+                    });
+
+                    setProvider(defaultProvider);
+                    setRpcUrl(networks[customNetworkName].rpcUrls[0]);
+                    setNetworkName(customNetworkName);
+                    setConnected(true);
+                } else {
+                    setConnected(false);
+                }
             }
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            setWalletAddress(accounts[0]);
         } catch (error) {
             setConnected(false);
-            console.error("Error connecting to wallet:", error);
         }
     };
+
 
     // Function to disconnect wallet
     const disconnectWallet = () => {
