@@ -21,7 +21,7 @@ function Transactions() {
         else{
             dispatch(fetchAllTransactions(rpcUrl));
         }
-    }, [ rpcUrl]);
+    }, [dispatch, rpcUrl, transactions.length]);
 
     const handleReload = () => {
         dispatch(fetchAllTransactions(rpcUrl)); // Dispatch the fetch action on button click
