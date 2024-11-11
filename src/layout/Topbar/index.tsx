@@ -6,16 +6,28 @@ import './style.css';
 import ConnectWalletButton from '../../Components/Buttons/ConnectWalletButton';
 import { EXPLORER_PAGE, Pages, PROJECTS } from '../../DataTypes/enums';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@radix-ui/themes';
+import { Button, IconButton } from '@radix-ui/themes';
 import { useRpc } from '../../contexts/RpcProviderContext';
 
-const NavigationMenuDemo = () => {
+interface HeaderProps {
+    setIsSidebarOpen: () => void;
+    APP_BAR: string
+}
+
+const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
     const { connected} = useRpc();
     const navigate =useNavigate()
 
     return (
-        <NavigationMenu.Root className="NavigationMenuRoot">
+        <NavigationMenu.Root className="NavigationMenuRoot" style={{
+            height: APP_BAR,
+        }}>
             <NavigationMenu.List className="NavigationMenuList">
+                <IconButton
+                    onClick={() => setIsSidebarOpen()}
+                >
+                   Menu
+                </IconButton>
                 <NavigationMenu.Item>
                     <NavigationMenu.Trigger className="NavigationMenuTrigger">
                         Learn <CaretDownIcon className="CaretDown" aria-hidden />
@@ -89,4 +101,4 @@ const ListItem = React.forwardRef(({ className, children, title, ...props }: any
     </li>
 ));
 
-export default NavigationMenuDemo;
+export default Header;

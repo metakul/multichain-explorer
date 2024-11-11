@@ -13,6 +13,8 @@ export enum Pages {
   HOME = '/',
   DASHBOARD = '/dashboard/app',
   PROFILE = '/dashboard/profile',
+  TRANSACTIONS='/transactions',
+  BLOCKS='/blocks',
 
 }
 export enum PROJECTS {
