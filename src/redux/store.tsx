@@ -6,6 +6,7 @@ import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
 import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
 import recentBlocksState from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice"
+import recentBlocksStateInFrames from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice"
 import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice"
 import transactionsState from "./slices/BackendSlices/Explorer/Transactions/AllTrxSlice"
 import addressInfoState from "./slices/BackendSlices/Explorer/Address/AddressInfoSlice"
@@ -22,7 +23,8 @@ const store = configureStore({
     recentBlocksState: recentBlocksState,
     currentBlockState: currentBlockState,
     transactionsState: transactionsState,
-    addressInfo: addressInfoState
+    addressInfo: addressInfoState,
+    recentBlocksStateInFrames: recentBlocksStateInFrames
   },
   middleware:getDefaultMiddlerware =>
     getDefaultMiddlerware().concat(logger),

@@ -64,6 +64,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   getAddressInfo: { url: '/backendApi/address', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   fetchBlockInfo: { url: '/backendApi/block', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   fetchChainStats: { url: '/backendApi/stats', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchBlocksInFrame: { url: '/backendApi/blocksInFrame', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 
 export enum Network {

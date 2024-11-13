@@ -11,6 +11,7 @@ import Explorer from "./pages/Projects/Explorer";
 import Transaction from "./pages/Projects/Explorer/Transaction";
 import SingleBlock from "./pages/Projects/Explorer/Block";
 import AddressInfo from "./pages/Projects/Explorer/Address";
+import AllBLocks from "./pages/Projects/Explorer/AllBlocks";
 
 const Router: React.FC = () => {
 
@@ -59,6 +60,10 @@ const Router: React.FC = () => {
         {
           path: `${EXPLORER_PAGE.SINGLE_ADDRESS}/:address`,
           element: <AddressInfo />,
+        },
+        {
+          path: Pages.BLOCKS,
+          element: <AllBLocks />,
         },
       ],
     },

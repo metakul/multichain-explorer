@@ -3,6 +3,7 @@ import Request from "../../../../../../Backend/axiosCall/apiCall";
 import { ApiError, Block } from "../../../../../../interfaces/interface";
 import { addNewBlock, setBlocks, setRecentBlocksLoading } from "./RecentBlocksSlice";
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
+import { setBlocksInFrames, setBlocksInFramesLoading } from "./BlocksWithFrameSlice";
 
 export const fetchRecentBlocks = createAsyncThunk(
     'blocks/fetchRecentBlocks',
@@ -16,7 +17,7 @@ export const fetchRecentBlocks = createAsyncThunk(
                 data: {
                     providerUrl: rpcUrl
                 },
-                slug:"/3",
+                slug:"/5",
             });
             const blocks: Block[] = response; 
             dispatch(setBlocks(blocks));
@@ -28,7 +29,6 @@ export const fetchRecentBlocks = createAsyncThunk(
         }
     }
 );
-
 
 export const fetchBlockInfo = createAsyncThunk(
     'blocks/fetchBlockInfo',
@@ -47,6 +47,32 @@ export const fetchBlockInfo = createAsyncThunk(
         } catch (error) {
             const castedError = error as ApiError
             return rejectWithValue(castedError.error || "Failed to fetch recent Blocks");
+        }
+    }
+);
+
+export const fetchBlocksInFrame = createAsyncThunk(
+    'blocks/fetchBlocksInFrame',
+    async({ rpcUrl, startBlock, blocksPerPage }: { rpcUrl: string, startBlock:string, blocksPerPage:string }, { dispatch, rejectWithValue }) => {
+        try {
+            dispatch(setBlocksInFramesLoading(true));
+
+            const response = await Request({
+                url: "fetchBlocksInFrame",
+                method: ApiEndpoint.fetchBlocksInFrame.method,
+                data: {
+                    providerUrl: rpcUrl,
+                    startBlock: startBlock,
+                    blocksPerPage: blocksPerPage
+                },
+            });
+            const blocks: Block[] = response;
+            dispatch(setBlocksInFrames(blocks));
+            dispatch(setBlocksInFramesLoading(false));
+        } catch (error) {
+            dispatch(setBlocksInFramesLoading(false));
+            const castedError = error as ApiError
+            return rejectWithValue(castedError.error || "Failed to fetch blocks with pagination");
         }
     }
 );

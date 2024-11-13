@@ -12,6 +12,7 @@ const RpcComponent: React.FC = () => {
     const [isEditing, setIsEditing] = useState<boolean>(false); 
 
     // Handle setting custom RPC
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleSetCustomRpc = () => {
         if (customRpcUrl) {
             setRpc(selectedNetwork, customRpcUrl); 
@@ -33,7 +34,7 @@ const RpcComponent: React.FC = () => {
     // Effect to set RPC on network change
     useEffect(() => {
         handleSetCustomRpc();
-    }, [handleSetCustomRpc, selectedNetwork]);
+    }, [ selectedNetwork]);
 
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
