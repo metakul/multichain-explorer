@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectStatsInfo, selectStatsLoading, selectStatsError } from '../../redux/slices/BackendSlices/Explorer/ExplorerStatsSlice';
 import { fetchExplorerStats } from '../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice';
 import { useRpc } from '../../contexts/RpcProviderContext';
-import { Box, Button, Card, Flex, Text } from '@radix-ui/themes';
+import Box from '../UI/Box';
+import Button from '../UI/Button';
+import Text from '../UI/Text';
+import Flex from '../UI/Flex';
+import Card from '../UI/Card';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();

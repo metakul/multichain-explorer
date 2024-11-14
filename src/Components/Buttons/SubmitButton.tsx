@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Button.css";
-import { Button } from "@radix-ui/themes";
+import Button from "../UI/Button";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SubmitButton({ style,buttonText, className = "", onClick, ...props }: any) {

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { fetchContractByName, saveNewContract } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
-import { Box, Text } from "@radix-ui/themes";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
@@ -13,6 +12,8 @@ import { ContractType } from "../../../../DataTypes/enums";
 import ContractFunctionsForm from "../../../../Components/Contracts/InteractWithContract";
 import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
+import Text from "../../../../Components/UI/Text";
+import Box from "../../../../Components/UI/Box";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?:string }>();

@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from "react";
-import { Button, TextField } from "@radix-ui/themes";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/store";
@@ -8,6 +7,8 @@ import { useRpc } from "../../contexts/RpcProviderContext";
 import { selectSearchResultError, selectSearchResultLoading, selectTransactionBySearchInput } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
 import { ITrx } from "../../interfaces/interface";
 import TransactionInfo from "../Transactions/TrxTable";
+import Button from "../UI/Button";
+import TextField from "../UI/TextField";
 
 export default function Search() {
 
@@ -37,7 +38,7 @@ export default function Search() {
             <div style={{
                 display: "flex"
             }}>
-                <TextField.Root
+                <TextField
                     type="text"
                     placeholder="Search by  Txn Hash" // todo add search by block, address,ens
                     required
@@ -58,7 +59,7 @@ export default function Search() {
                 </Button>}
             </div>
             <div>
-                {showResult && <TransactionInfo transaction={[transaction]} loading={loading} error={error}/>}
+                {showResult && transaction && <TransactionInfo transaction={[transaction]} loading={loading} error={error}/>}
             </div>
         </div>
     );

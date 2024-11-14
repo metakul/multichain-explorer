@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, loginVerifyUser, resendOtpLogin } from '../../redux/slices/authApiSlice';
 import { LoginData, VerifyLoginData } from '../../interfaces/interface';
 import { AppDispatch } from '../../redux/store';
-import CustomHeading from '../Typogrpahy/Text/Heading';
-import CustomTextField from '../Typogrpahy/Text/TextFeild';
+import CustomHeading from '../UI/Typogrpahy/Text/Heading';
+import CustomTextField from '../UI/Typogrpahy/Text/TextFeild';
 import { LoginFormProps } from '../../interfaces/CompInterfaces';
 import { LoginButtonText } from '../../DataTypes/constText';
 import DependentSignUpForm from './SignUp/Applicants/Dependent';
@@ -83,7 +83,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                   label="Username"
                   placeholder="Enter your username"
                   value={user}
-                  onChange={(value) => setuser(value)}
+                  onChange={(value: React.SetStateAction<string>) => setuser(value)}
                 />
 
                 <CustomTextField
@@ -92,7 +92,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                   placeholder="Enter your password"
                   type="password"
                   value={password}
-                  onChange={(value) => setPassword(value)}
+                  onChange={(value: React.SetStateAction<string>) => setPassword(value)}
                 />
 
                 {showOtpField && (
@@ -102,7 +102,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     placeholder="Enter OTP"
                     type="text"
                     value={otp}
-                    onChange={(value) => setOtp(value)}
+                    onChange={(value: React.SetStateAction<string>) => setOtp(value)}
                   />
                 )}
 

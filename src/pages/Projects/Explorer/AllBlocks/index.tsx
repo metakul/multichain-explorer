@@ -1,7 +1,6 @@
 // src/components/AllBlocks.tsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Text } from '@radix-ui/themes';
 import { curretnBlockInfo, setCurrentBlock } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchBlocksInFrame } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../../../contexts/RpcProviderContext';
@@ -11,6 +10,9 @@ import { Block } from '../../../../interfaces/interface';
 import Request from '../../../../Backend/axiosCall/apiCall';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
 import BlockInfo from '../../../../Components/Blocks/BlockInfo';
+import Text from '../../../../Components/UI/Text';
+import Box from '../../../../Components/UI/Box';
+import Button from '../../../../Components/UI/Button';
 
 const AllBlocks: React.FC = () => {
     const blocksPerPage=5

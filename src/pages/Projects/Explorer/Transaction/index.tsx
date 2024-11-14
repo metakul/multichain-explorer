@@ -10,7 +10,8 @@ import {
 import { fetchSingleTrx } from "../../../../redux/slices/BackendSlices/Explorer/Transactions/AllTrxApiSlice";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { AppDispatch } from "../../../../redux/store";
-import { Box, Text } from "@radix-ui/themes";
+import Box from "../../../../Components/UI/Box";
+import Text from "../../../../Components/UI/Text";
 
 function Transaction() {
     const dispatch = useDispatch<AppDispatch>();

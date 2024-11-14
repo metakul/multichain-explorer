@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text } from '@radix-ui/themes';
 import { navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import { Block } from '../../interfaces/interface';
@@ -12,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
 import { useRpc } from '../../contexts/RpcProviderContext';
+import Box from '../UI/Box';
+import Text from '../UI/Text';
 
 interface BlockInfoProps {
     block: Block;

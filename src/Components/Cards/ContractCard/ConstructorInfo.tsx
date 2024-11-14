@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Label } from "@radix-ui/react-label";
-import { TextField } from "@radix-ui/themes";
+import CustomTextField from "../../UI/Typogrpahy/Text/TextFeild";
+import Label from "../../UI/Label";
 
 interface ConstructorInputFormProps {
     constructorParams:any;
@@ -30,12 +30,12 @@ const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
                         <Label htmlFor={`param-${index}`}>
                             Param {index + 1}: {param.name} ({param.type})
                         </Label>
-                        <TextField.Root
+                        <CustomTextField
                             id={`param-${index}`}
                             type={param.type === "number" ? "number" : "text"} // Dynamic input type
                             placeholder={`Enter value for ${param.name}`}
                             value={constructorInputs[index] || ""}
-                            onChange={(e) => handleInputChange(index, e.target.value)}
+                            onChange={(e: { target: { value: string; }; }) => handleInputChange(index, e.target.value)}
                         />
                         {inputErrors[index] && ( // Display error from props
                             <Label style={{ color: 'red' }}>

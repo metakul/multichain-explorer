@@ -1,15 +1,15 @@
 import React from 'react'
 import { ProtectedPageProps } from '../../interfaces/CompInterfaces'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/slices/authSlice'
 import { AppDispatch } from '../../redux/store'
 import { /*selectUser,*/ selectUserType } from '../../redux/slices/authSlice';
-import { Button, Container } from '@radix-ui/themes'
-import CustomHeading from '../../Components/Typogrpahy/Text/Heading'
+import CustomHeading from '../../Components/UI/Typogrpahy/Text/Heading'
 import { Link } from 'react-router-dom'
 import { Pages } from '../../DataTypes/enums'
 import VerificationData from '../Projects/Blockchain/ProfilePage/MyContracts'
+import Container from '../../Components/UI/Container'
+import Button from '../../Components/UI/Button'
 const ProtectedPage: React.FC<ProtectedPageProps> = (props) => {
   // const selectedUser = useSelector(selectUser)
   const selectedUserType = useSelector(selectUserType)
@@ -26,7 +26,7 @@ const ProtectedPage: React.FC<ProtectedPageProps> = (props) => {
   };
 
   return (
-    <Container >
+    <Container>
       {props.pageTitle}. {props.pageDescription}
       <CustomHeading style={{ fontSize: '24px' }}>
         Hi {selectedUserType} this is dashboard

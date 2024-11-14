@@ -1,6 +1,6 @@
 // import { useEffect, useState } from "react";
 // import axios from "axios";
-import { Box } from "@radix-ui/themes";
+import Box from "../UI/Box";
 import * as Avatar from "@radix-ui/react-avatar";
 
 

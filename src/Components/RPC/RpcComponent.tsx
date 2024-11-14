@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useRpc } from "../../contexts/RpcProviderContext";
 import { Network, NetworkType } from "../../DataTypes/enums";
-import { Box, Flex } from "@radix-ui/themes";
+import Box from "../UI/Box";
+import Flex from "../UI/Flex";
 
 const RpcComponent: React.FC = () => {
     const { networkName, setRpc } = useRpc();

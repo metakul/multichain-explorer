@@ -1,6 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Flex, Text, IconButton } from "@radix-ui/themes";
+import Box from "../../../Components/UI/Box";
+import Flex from "../../../Components/UI/Flex";
+import Button from "../../../Components/UI/Button";
+import Text from "../../../Components/UI/Text";
 
 interface NavItemProps {
     item: {
@@ -23,7 +26,7 @@ const NavItem: React.FC<NavItemProps> = ({ item, isSidebarOpen }) => {
                 onClick={icon ? () => navigate(to) : undefined}
                 style={{ cursor: "pointer", alignItems: 'center' }}
             >
-                <IconButton
+                <Button
                     style={{
                         minHeight: 48,
                         justifyContent: isSidebarOpen ? 'initial' : 'center',
@@ -53,7 +56,7 @@ const NavItem: React.FC<NavItemProps> = ({ item, isSidebarOpen }) => {
                     >
                         {text}
                     </Text>
-                </IconButton>
+                </Button>
             </Flex>
         </Box>
     );

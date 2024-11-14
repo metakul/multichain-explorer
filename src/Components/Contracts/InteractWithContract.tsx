@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import * as Form from "@radix-ui/react-form";
-
+import CustomForm, { CustomFormField, CustomFormSubmit } from "../UI/Form";
 interface ContractFunctionProps {
     deployedAddress: string;
     abi: any;
@@ -57,28 +56,27 @@ const ContractFunctionsForm: React.FC<ContractFunctionProps> = ({ deployedAddres
                 .map((func: any) => (
                     <div key={func.name}>
                         <h3>{func.name}</h3>
-                        <Form.Root
+                        <CustomForm
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 handleFunctionSubmit(func.name, func.inputs);
                             }}
                         >
                             {func.inputs.map((input: any, index: number) => (
-                                <Form.Field name="personal-form" key={`${func.name}-${index}`}>
-                                    <Form.Label>{input.name} ({input.type})</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        required
-                                        onChange={(e) => handleInputChange(func.name, index, e.target.value)}
-                                    />
-                                </Form.Field>
+                                <CustomFormField
+                                    name="personal-form"
+                                    key={`${func.name}-${index}`}
+                                    label={`${input.name} (${input.type})`}
+                                    type="text"
+                                    onChange={(e) => handleInputChange(func.name, index, e.target.value)}
+                                />
                             ))}
-                            <Form.Submit asChild>
+                            <CustomFormSubmit disabled={loading}>
                                 <button type="submit" disabled={loading}>
                                     {loading ? "Loading..." : `Execute ${func.name}`}
                                 </button>
-                            </Form.Submit>
-                        </Form.Root>
+                            </CustomFormSubmit>
+                        </CustomForm>
                     </div>
                 ))}
         </div>

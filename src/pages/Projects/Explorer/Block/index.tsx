@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { fetchBlockInfo } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi";
 import { selectBlocks, selectBlocksLoading } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
-import { Box, Text } from "@radix-ui/themes";
 import { AppDispatch } from "../../../../redux/store";
+import Box from "../../../../Components/UI/Box";
+import Text from "../../../../Components/UI/Text";
 
 function SingleBlock() {
     const { block } = useParams<{ block: string }>();

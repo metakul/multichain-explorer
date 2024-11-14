@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Text } from "@radix-ui/themes";
 import { selectAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice"; // Assuming the correct import path
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { AppDispatch } from "../../../../redux/store";
-import Grid from "../../../../Components/Grid";
+import Grid from "../../../../Components/UI/Grid";
 import { useNavigate } from "react-router-dom";
 import { ContractType, PROJECTS } from "../../../../DataTypes/enums";
+import Box from "../../../../Components/UI/Box";
+import Text from "../../../../Components/UI/Text";
 
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlocks, selectBlocksLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
-import { Box, Button, Text } from '@radix-ui/themes';
-import Grid from '../Grid';
+import Grid from '../UI/Grid';
 import { curretnBlockInfo } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
@@ -10,6 +9,9 @@ import { AppDispatch } from '../../redux/store';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 import { navigateToBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
+import Box from '../UI/Box';
+import Text from '../UI/Text';
+import Button from '../UI/Button';
 
 const AllBlock: React.FC = () => {
     const blocks = useSelector(selectBlocks);

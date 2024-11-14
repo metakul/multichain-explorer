@@ -1,7 +1,6 @@
 import { useRpc } from "../../contexts/RpcProviderContext";
+import Button from "../UI/Button";
 import "./Button.css";
-import { Button } from "@radix-ui/themes";
-
 import { CSSProperties } from "react";
 
 interface ConnectWalletButtonProps {

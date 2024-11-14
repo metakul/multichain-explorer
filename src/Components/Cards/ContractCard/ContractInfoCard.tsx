@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { Box } from "@radix-ui/themes";
 import { ContractData, DeployedContract } from "../../../interfaces/interface";
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton";
 import ConstructorInputForm from "./ConstructorInfo";
@@ -81,7 +80,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
 
     // While data is being fetched
     if (loading) {
-        return <Box>Loading Contract</Box>;
+        return <div>Loading Contract</div>;
     }
 
     // If there is an error fetching data

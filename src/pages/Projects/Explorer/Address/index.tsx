@@ -5,7 +5,7 @@ import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { getAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
 import { useEffect } from "react";
 import { selectAddressInfoError, selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
-import { Text } from "@radix-ui/themes";
+import Text from "../../../../Components/UI/Text";
 
 function AddressInfo() {
     const { address } = useParams<{ address: string }>(); // Retrieve the address parameter

@@ -2,14 +2,14 @@
 // import { ProtectedPageProps } from '../../../interfaces/CompInterfaces';
 import { useSelector } from 'react-redux'
 import { selectUserType } from '../../../redux/slices/authSlice';
-import { Box } from '@radix-ui/themes'
-import CustomHeading from '../../../Components/Typogrpahy/Text/Heading'
+import CustomHeading from '../../../Components/UI/Typogrpahy/Text/Heading'
 import { Link } from 'react-router-dom'
 import { Pages, ProfileTab } from '../../../DataTypes/enums'
-import CustomTab from '../../../Components/Tabs/tabs';
+import CustomTab from '../../../Components/UI/Tabs/tabs';
 import OverView from '../../../Components/Profile/OverView';
 import UserActivity from '../../../Components/Profile/Activity';
 import UserProfile from '../../../Components/Profile/Profile';
+import Box from '../../../Components/UI/Box';
 
 const ProfilePage= () => {
   const selectedUserType = useSelector(selectUserType)

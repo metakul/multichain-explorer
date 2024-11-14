@@ -1,4 +1,3 @@
-import { Box, Button, Text } from '@radix-ui/themes';
 import TransactionInfo from './TrxTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -6,6 +5,9 @@ import { fetchAllTransactions } from '../../redux/slices/BackendSlices/Explorer/
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';
 import { selectTransactions, selectTransactionsError, selectTransactionsLoading } from '../../redux/slices/BackendSlices/Explorer/Transactions/AllTrxSlice';
+import Box from '../UI/Box';
+import Text from '../UI/Text';
+import Button from '../UI/Button';
 
 function Transactions() {
     const dispatch = useDispatch <AppDispatch>();

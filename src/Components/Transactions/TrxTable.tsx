@@ -1,111 +1,109 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container,  Table } from "@radix-ui/themes";
+import React from "react";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { ITrx } from "../../interfaces/interface";
-import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
 import { useNavigate } from "react-router-dom";
-
+import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
+import Container from "../UI/Container";
+import CustomTable, { CustomTableHeader, CustomTableRow, CustomTableCell } from "../UI/Table";
 interface TrxInfoProps {
-    transaction: any;
+    transaction: ITrx[] | [];
     loading: boolean;
-    error: any
+    error: string | null;
 }
 
-export default function TransactionInfo({ transaction, loading, error }: TrxInfoProps) {
+const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }) => {
+    const navigate = useNavigate();
 
-    const navigate=useNavigate()
-    // Render a skeleton table if loading
+    // Render loading skeleton
     if (loading) {
         return (
             <Container>
-                <Table.Root variant="surface">
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeaderCell>Transaction Hash |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Block |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>From |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>To |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Value |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Txn Fee</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>View Txn </Table.ColumnHeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            <Table.Row key={index}>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '100px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '40px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '80px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '80px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '60px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell><div style={{ backgroundColor: '#e0e0e0', height: '16px', width: '60px', borderRadius: '4px' }} /></Table.Cell>
-                                <Table.Cell style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
-                                    <div style={{ backgroundColor: '#e0e0e0', height: '24px', width: '24px', borderRadius: '50%' }} />
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-                    </Table.Body>
-                </Table.Root>
+                <CustomTable>
+                    <CustomTableHeader>
+                        <CustomTableCell>Transaction Hash</CustomTableCell>
+                        <CustomTableCell>Block</CustomTableCell>
+                        <CustomTableCell>From</CustomTableCell>
+                        <CustomTableCell>To</CustomTableCell>
+                        <CustomTableCell>Value</CustomTableCell>
+                        <CustomTableCell>Txn Fee</CustomTableCell>
+                        <CustomTableCell>View Txn</CustomTableCell>
+                    </CustomTableHeader>
+                    <CustomTableRow>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
+                    </CustomTableRow>
+                </CustomTable>
             </Container>
         );
     }
 
-    if (transaction.length == 0 && !loading && !error) {
-        return <Container>No Transaction Founds</Container>;
-    }
-
+    // Render error message if there's an error
     if (error) {
         return <Container>{error}</Container>;
     }
-    if (transaction && transaction.length > 0) {
-        return (
-            <Container>
-                <Table.Root variant="surface">
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeaderCell>Transaction Hash |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Block |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>From |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>To |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Value |</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Txn Fee</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>View Txn </Table.ColumnHeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {transaction.map((singleTrx: ITrx) => (
-                            <Table.Row key={singleTrx?.hash}>
-                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToTransaction(navigate,singleTrx?.hash)}>
-                                    {singleTrx?.hash.slice(0, 16)}...
-                                </Table.Cell>
-                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToBlock(navigate,singleTrx?.blockNumber)}>
-                                    {singleTrx?.blockNumber}
-                                </Table.Cell>
-                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToAddress(navigate,singleTrx?.from)}>
-                                    {singleTrx?.from?.slice(0, 8)}...{singleTrx?.from?.slice(-8)}
-                                </Table.Cell>
-                                <Table.Cell style={{ color: "blue", }} onClick={() => navigateToAddress(navigate,singleTrx?.to)}>
-                                    {singleTrx?.to?.slice(0, 8)}...{singleTrx?.to?.slice(-8)}
-                                </Table.Cell>
-                                <Table.Cell >
-                                    {(singleTrx?.value / 10 ** 18)?.toFixed(5)} ETH
-                                </Table.Cell>
-                                <Table.Cell>
-                                    {(parseFloat(singleTrx?.gasPrice) / 10 ** 18)?.toFixed(12)}
-                                </Table.Cell>
-                                <Table.Cell style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    marginTop: 16
-                                }}>
-                                    <EyeOpenIcon onClick={() => navigateToTransaction(navigate,singleTrx?.hash)} />
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-                    </Table.Body>
-                </Table.Root>
-            </Container>
-        );
+
+    // Render no transaction message if no data
+    if (transaction.length === 0) {
+        return <Container>No Transactions Found</Container>;
     }
 
-}
+    // Render actual transactions
+    return (
+        <Container>
+            <CustomTable>
+                <CustomTableHeader>
+                    <CustomTableCell>Transaction Hash</CustomTableCell>
+                    <CustomTableCell>Block</CustomTableCell>
+                    <CustomTableCell>From</CustomTableCell>
+                    <CustomTableCell>To</CustomTableCell>
+                    <CustomTableCell>Value</CustomTableCell>
+                    <CustomTableCell>Txn Fee</CustomTableCell>
+                    <CustomTableCell>View Txn</CustomTableCell>
+                </CustomTableHeader>
+                {transaction.map((trx: ITrx) => (
+                    <CustomTableRow key={trx.hash}>
+                        <CustomTableCell
+                            style={{ color: "blue", cursor: "pointer" }}
+                            onClick={() => navigateToTransaction(navigate, trx.hash)}
+                        >
+                            {trx.hash.slice(0, 16)}...
+                        </CustomTableCell>
+                        <CustomTableCell
+                            style={{ color: "blue", cursor: "pointer" }}
+                            onClick={() => navigateToBlock(navigate, trx.blockNumber)}
+                        >
+                            {trx.blockNumber}
+                        </CustomTableCell>
+                        <CustomTableCell
+                            style={{ color: "blue", cursor: "pointer" }}
+                            onClick={() => navigateToAddress(navigate, trx.from)}
+                        >
+                            {trx.from.slice(0, 8)}...{trx.from.slice(-8)}
+                        </CustomTableCell>
+                        <CustomTableCell
+                            style={{ color: "blue", cursor: "pointer" }}
+                            onClick={() => navigateToAddress(navigate, trx.to)}
+                        >
+                            {trx.to.slice(0, 8)}...{trx.to.slice(-8)}
+                        </CustomTableCell>
+                        <CustomTableCell>{(trx.value / 10 ** 18).toFixed(5)} ETH</CustomTableCell>
+                        <CustomTableCell>{(parseFloat(trx.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
+                        <CustomTableCell style={{ display: "flex", justifyContent: "center" }}>
+                            <EyeOpenIcon
+                                onClick={() => navigateToTransaction(navigate, trx.hash)}
+                                style={{ cursor: "pointer" }}
+                            />
+                        </CustomTableCell>
+                    </CustomTableRow>
+                ))}
+            </CustomTable>
+        </Container>
+    );
+};
+
+export default TransactionInfo;

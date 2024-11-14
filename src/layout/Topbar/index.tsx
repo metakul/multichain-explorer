@@ -6,8 +6,8 @@ import './style.css';
 import ConnectWalletButton from '../../Components/Buttons/ConnectWalletButton';
 import { EXPLORER_PAGE, Pages, PROJECTS } from '../../DataTypes/enums';
 import { useNavigate } from 'react-router-dom';
-import { Button, IconButton } from '@radix-ui/themes';
 import { useRpc } from '../../contexts/RpcProviderContext';
+import Button from '../../Components/UI/Button';
 
 interface HeaderProps {
     setIsSidebarOpen: () => void;
@@ -23,11 +23,11 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
             height: APP_BAR,
         }}>
             <NavigationMenu.List className="NavigationMenuList">
-                <IconButton
+                <Button
                     onClick={() => setIsSidebarOpen()}
                 >
                    Menu
-                </IconButton>
+                </Button>
                 <NavigationMenu.Item>
                     <NavigationMenu.Trigger className="NavigationMenuTrigger">
                         Learn <CaretDownIcon className="CaretDown" aria-hidden />

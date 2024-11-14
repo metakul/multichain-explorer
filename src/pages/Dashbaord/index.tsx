@@ -1,7 +1,7 @@
 import React from 'react';
 import { Path, useNavigate } from 'react-router-dom';
 import { EXPLORER_PAGE, PROJECTS } from '../../DataTypes/enums';
-import HomeButton from '../../Components/Typogrpahy/Buttons/HomeButton';
+import HomeButton from '../../Components/UI/Typogrpahy/Buttons/HomeButton';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();

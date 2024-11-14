@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, IconButton } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import NavItem from "./NavItem";
+import Button from "../../Components/UI/Button";
+import Box from "../../Components/UI/Box";
 
 
 export interface MiniDrawerProps {
@@ -21,9 +22,9 @@ const Sidebar: React.FC<MiniDrawerProps> = ({ setIsSidebarOpen, isNonMobile, isS
         <Box display={isSidebarOpen ? "block" : "none"} style={{
             width: "240px",
         }}>
-            <IconButton onClick={() => setIsSidebarOpen()}>
+            <Button onClick={() => setIsSidebarOpen()}>
                 <ChevronLeftIcon />
-            </IconButton>
+            </Button>
             <Box style={{ listStyle: 'none', padding: 0 }}>
                 {navConfig.map((item: { text: string; icon: React.ReactNode | null; to: string; }, index: React.Key | null | undefined) => (
                     <NavItem isNonMobile={isNonMobile} item={item} key={index} isSidebarOpen={isSidebarOpen} />
