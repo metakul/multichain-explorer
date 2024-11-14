@@ -66,31 +66,6 @@ const AllBlocks: React.FC = () => {
                 ) : (
                     <p>No blocks found</p>
                 )}
-
-                {allBlocksLoading  && (
-                    Array.from({ length: 3 }).map((_, index) => (
-                        <Box
-                            key={index}
-                            style={{
-                                backgroundColor: '#e0e0e0',
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                                borderRadius: '8px',
-                                padding: '16px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '8px',
-                                height: '200px',
-                            }}
-                        >
-                            <div style={{ height: '20px', backgroundColor: '#ccc', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                        </Box>
-                    ))
-                )}
-
                 <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                     <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                         Previous

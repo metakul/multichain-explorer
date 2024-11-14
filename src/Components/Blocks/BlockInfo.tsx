@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
 import { useRpc } from '../../contexts/RpcProviderContext';
+import { Skeleton } from '@mui/material'; // Importing Skeleton from Material-UI
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Container from '../UI/Container';
@@ -27,7 +28,6 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
     const error = useSelector(selectTransactionsErrorForBlock(block.number));
     const { rpcUrl } = useRpc();
 
-    // State to handle the number of transactions displayed
     const [visibleTransactions, setVisibleTransactions] = useState(3);
 
     useEffect(() => {
@@ -36,7 +36,6 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
         }
     }, [block.number, dispatch, transactions.length, rpcUrl]);
 
-    // Function to handle loading more transactions
     const loadMoreTransactions = () => {
         setVisibleTransactions((prev) => prev + 5);
     };
@@ -74,55 +73,63 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
             <div style={{ background: 'black', width: '40px', height: '2px' }}></div>
             <Box style={{ borderLeft: '1px solid black', maxWidth: "400px" }}>
                 <div style={{ padding: '16px', marginLeft: '16px' }}>
-                    {loading && <p>Loading transactions...</p>}
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    {transactions.slice(0, visibleTransactions).map((trx) => (
-                        <div
-                            key={trx.hash}
-                            style={{
-                                marginBottom: '12px',
-                                padding: '8px',
-                                border: '1px solid #ddd',
-                                borderRadius: '4px',
-                            }}
-                        >
-                            <p>
-                                <strong>Transaction Hash:</strong>{' '}
-                                <Text
-                                    style={{
-                                        color: 'blue',
-                                        fontSize: '18px',
-                                        fontWeight: 'bold',
-                                        marginBottom: '8px',
-                                    }}
-                                    onClick={() => navigateToTransaction(navigate, String(trx?.hash))}
-                                >
-
-                                    {trx?.hash?.slice(0, 4)}...{trx?.hash?.slice(-4)}
-                                </Text>
-                            </p>
-                            <p
-                                onClick={() => navigateToAddress(navigate, String(trx?.from))}
-                            ><strong>From:</strong>
-                                {trx?.from?.slice(0, 4)}...{trx?.from?.slice(-4)}
-                            </p>
-                            <p onClick={() => navigateToAddress(navigate, String(trx?.to))}>
-                                <strong>To:</strong>
-                                 {trx?.to?.slice(0, 4)}...{trx?.to?.slice(-4)}
-                                 </p>
-                            <p><strong>Value:</strong> {trx.value}</p>
-                            <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
-                        </div>
-                    ))}
+                    {loading ? (
+                        Array.from({ length: visibleTransactions }).map((_, index) => (
+                            <Skeleton
+                                key={index}
+                                variant="rectangular"
+                                height={80}
+                                style={{
+                                    marginBottom: '12px',
+                                    borderRadius: '4px',
+                                }}
+                            />
+                        ))
+                    ) : error ? (
+                        <p style={{ color: 'red' }}>{error}</p>
+                    ) : (
+                        transactions.slice(0, visibleTransactions).map((trx) => (
+                            <div
+                                key={trx.hash}
+                                style={{
+                                    marginBottom: '12px',
+                                    padding: '8px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '4px',
+                                }}
+                            >
+                                <p>
+                                    <strong>Transaction Hash:</strong>{' '}
+                                    <Text
+                                        style={{
+                                            color: 'blue',
+                                            fontSize: '18px',
+                                            fontWeight: 'bold',
+                                            marginBottom: '8px',
+                                        }}
+                                        onClick={() => navigateToTransaction(navigate, String(trx?.hash))}
+                                    >
+                                        {trx?.hash?.slice(0, 4)}...{trx?.hash?.slice(-4)}
+                                    </Text>
+                                </p>
+                                <p onClick={() => navigateToAddress(navigate, String(trx?.from))}>
+                                    <strong>From:</strong> {trx?.from?.slice(0, 4)}...{trx?.from?.slice(-4)}
+                                </p>
+                                <p onClick={() => navigateToAddress(navigate, String(trx?.to))}>
+                                    <strong>To:</strong> {trx?.to?.slice(0, 4)}...{trx?.to?.slice(-4)}
+                                </p>
+                                <p><strong>Value:</strong> {trx.value}</p>
+                                <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
+                            </div>
+                        ))
+                    )}
                     {visibleTransactions < transactions.length && (
                         <button onClick={loadMoreTransactions} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
                             Load More
                         </button>
                     )}
-                    {transactions.length == 0 && !loading && (
-                        <Text>
-                            No Transaction in the Block
-                        </Text>
+                    {transactions.length === 0 && !loading && (
+                        <Text>No Transaction in the Block</Text>
                     )}
                 </div>
             </Box>
