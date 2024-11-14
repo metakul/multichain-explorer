@@ -6,15 +6,15 @@ import { curretnBlockInfo, setCurrentBlock } from '../../../../redux/slices/Back
 import { fetchBlocksInFrame } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../../../redux/store';
-import { selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectCurrentPage, selectBlocksPerPage, setCurrentPage, setBlocksPerPage } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectCurrentPage, setCurrentPage } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import { Block } from '../../../../interfaces/interface';
 import Request from '../../../../Backend/axiosCall/apiCall';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
 import BlockInfo from '../../../../Components/Blocks/BlockInfo';
 
 const AllBlocks: React.FC = () => {
+    const blocksPerPage=5
     const currentPage = useSelector(selectCurrentPage);
-    const blocksPerPage = useSelector(selectBlocksPerPage);
     const blocks = useSelector(selectBlocksForCurrentPage);
     const allBlocksLoading = useSelector(selectBlocksLoadingInFrames);
     const currentBlock = useSelector(curretnBlockInfo);
@@ -43,7 +43,7 @@ const AllBlocks: React.FC = () => {
             }
         };
         fetchBlockData();
-    }, [rpcUrl, blocksPerPage, dispatch]);
+    }, [rpcUrl, dispatch, currentPage]);
 
     const handlePageChange = (newPage: number) => {
         dispatch(setCurrentPage(newPage));
@@ -51,39 +51,22 @@ const AllBlocks: React.FC = () => {
         dispatch(fetchBlocksInFrame({ rpcUrl, startBlock: startBlock.toString(), blocksPerPage: blocksPerPage.toString() }));
     };
 
-    const handleBlocksPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newBlocksPerPage = Number(event.target.value);
-        dispatch(setBlocksPerPage(newBlocksPerPage));
-        const startBlock = Number(currentBlock?.number) - (currentPage - 1) * newBlocksPerPage;
-        dispatch(fetchBlocksInFrame({ rpcUrl, startBlock: startBlock.toString(), blocksPerPage: newBlocksPerPage.toString() }));
-    };
-
     return (
-        <div>
+        <div style={{
+            display:"flex",
+            justifyContent:"center",
+        }}>
             <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Blocks Info</Text>
-            <Box style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-                <label htmlFor="blocksPerPage">Blocks per page:</label>
-                <select
-                    id="blocksPerPage"
-                    value={blocksPerPage}
-                    onChange={handleBlocksPerPageChange}
-                    style={{ padding: '8px', borderRadius: '4px' }}
-                >
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={15}>15</option>
-                    <option value={20}>20</option>
-                </select>
-            </Box>
+
 
             <Box>
-                {blocks && blocks.length > 0 ? (
+                {!allBlocksLoading && blocks && blocks.length > 0 ? (
                     blocks.map((block) => <BlockInfo key={block.hash} block={block} />)
                 ) : (
                     <p>No blocks found</p>
                 )}
 
-                {allBlocksLoading && blocks.length === 0 && (
+                {allBlocksLoading  && (
                     Array.from({ length: 3 }).map((_, index) => (
                         <Box
                             key={index}
@@ -113,7 +96,9 @@ const AllBlocks: React.FC = () => {
                     </Button>
                     <Text style={{ margin: '0 16px' }}>Page {currentPage}</Text>
                     <Button onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
+          
                 </Box>
+                
             </Box>
         </div>
     );

@@ -1,47 +1,48 @@
-// src/components/BlockInfo.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Text } from '@radix-ui/themes';
-import { navigateToBlock } from '../../helpers/navigationHelpers';
+import { navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import { Block } from '../../interfaces/interface';
+import {
+    selectTransactionsErrorForBlock,
+    selectTransactionsForBlock,
+    selectTransactionsLoadingForBlock
+} from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { AppDispatch } from '../../redux/store';
+import { useRpc } from '../../contexts/RpcProviderContext';
 
 interface BlockInfoProps {
     block: Block;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }
 
 const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
     const navigate = useNavigate();
-    const mockTransactions = [
-        {
-            hash: '0x1234abcd5678efgh9012ijkl3456mnop',
-            from: '0xabcdefabcdefabcdefabcdefabcdefabcdef',
-            to: '0x1234567890123456789012345678901234567890',
-            value: '1.25 ETH',
-            gasPrice: '20 gwei',
-            blockNumber: 123456,
-        },
-        {
-            hash: '0x9876abcd5432efgh6789ijkl3456mnop',
-            from: '0xabcdefabcdefabcdefabcdefabcdefabcdef',
-            to: '0x112233445566778899aabbccddeeff0011223344',
-            value: '0.5 ETH',
-            gasPrice: '15 gwei',
-            blockNumber: 123456,
-        },
-        {
-            hash: '0x5678abcd1234efgh2345ijkl6789mnop',
-            from: '0xabcdefabcdefabcdefabcdefabcdefabcdef',
-            to: '0x445566778899aabbccddeeff0011223344556677',
-            value: '0.75 ETH',
-            gasPrice: '25 gwei',
-            blockNumber: 123456,
-        },
-    ];
+    const dispatch = useDispatch<AppDispatch>();
+    const transactions = useSelector(selectTransactionsForBlock(block.number));
+    const loading = useSelector(selectTransactionsLoadingForBlock(block.number));
+    const error = useSelector(selectTransactionsErrorForBlock(block.number));
+    const { rpcUrl } = useRpc();
+
+    // State to handle the number of transactions displayed
+    const [visibleTransactions, setVisibleTransactions] = useState(3);
+
+    useEffect(() => {
+        if (!transactions.length) {
+            dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
+        }
+    }, [block.number, dispatch, transactions.length, rpcUrl]);
+
+    // Function to handle loading more transactions
+    const loadMoreTransactions = () => {
+        setVisibleTransactions((prev) => prev + 5);
+    };
+
     return (
-        <div style={{ display: 'flex', alignItems: 'center', border: '1px solid black' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
             <Box
-                key={block.hash}
+                key={block.number}
                 style={{
                     backgroundColor: '#ffffff',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -56,6 +57,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                         fontSize: '18px',
                         fontWeight: 'bold',
                         marginBottom: '8px',
+                        cursor: 'pointer',
                     }}
                     onClick={() => navigateToBlock(navigate, Number(block?.number))}
                 >
@@ -67,12 +69,14 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                 <p><strong>Timestamp:</strong> {block?.timestamp ? new Date(parseInt(block.timestamp) * 1000).toLocaleString() : 'N/A'}</p>
             </Box>
 
-            <div style={{ background: 'black', width: '40px', height: '2px' }}></div> {/* vertical line div */}
+            <div style={{ background: 'black', width: '40px', height: '2px' }}></div>
             <div style={{ borderLeft: '1px solid black' }}>
                 <div style={{ padding: '16px', marginLeft: '16px' }}>
-                    {mockTransactions.map((trx, index) => (
+                    {loading && <p>Loading transactions...</p>}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {transactions.slice(0, visibleTransactions).map((trx) => (
                         <div
-                            key={index}
+                            key={trx.hash}
                             style={{
                                 marginBottom: '12px',
                                 padding: '8px',
@@ -82,12 +86,35 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                         >
                             <p>
                                 <strong>Transaction Hash:</strong>{' '}
-                                <a href={`https://etherscan.io/tx/${trx.hash}`} target="_blank" rel="noopener noreferrer">
+                                <Text
+                                    style={{
+                                        color: 'blue',
+                                        fontSize: '18px',
+                                        fontWeight: 'bold',
+                                        marginBottom: '8px',
+                                    }}
+                                    onClick={() => navigateToTransaction(navigate, String(trx?.hash))}
+                                >
+
                                     {trx.hash}
-                                </a>
+                                </Text>
                             </p>
+                            <p><strong>From:</strong> {trx.from}</p>
+                            <p><strong>To:</strong> {trx.to}</p>
+                            <p><strong>Value:</strong> {trx.value}</p>
+                            <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
                         </div>
                     ))}
+                    {visibleTransactions < transactions.length && (
+                        <button onClick={loadMoreTransactions} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
+                            Load More
+                        </button>
+                    )}
+                    {transactions.length == 0 && !loading && (
+                        <Text>
+                            No Transaction in the Block
+                        </Text>
+                    )}
                 </div>
             </div>
         </div>

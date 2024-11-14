@@ -5,18 +5,26 @@ import { Block } from "../../../../../../interfaces/interface";
 // Initial state of the blocks slice
 export interface BlocksState {
     blocks: Block[];
+    transactionsByBlock: { [blockNo: string]: BlockTransactionsState };
     loading: boolean;
     error: string | null;
     currentPage: number; // Pagination state
     blocksPerPage: number; // Blocks per page
 }
 
+interface BlockTransactionsState {
+    transactions: any[];
+    loading: boolean;
+    error: string | null;
+}
+
 const initialState: BlocksState = {
     blocks: [],
+    transactionsByBlock: {},
     loading: false,
     error: null,
-    currentPage: 1, // Initial page
-    blocksPerPage: 5, // Default blocks per page
+    currentPage: 1,
+    blocksPerPage: 5,
 };
 
 // Blocks slice
@@ -37,7 +45,7 @@ const blocksSlice = createSlice({
                 (newBlock) =>
                     !state.blocks.some(
                         (existingBlock) =>
-                            existingBlock.hash === newBlock.hash || existingBlock.number === newBlock.number
+                            existingBlock.number === newBlock.number || existingBlock.number === newBlock.number
                     )
             );
 
@@ -55,10 +63,42 @@ const blocksSlice = createSlice({
         setBlocksPerPage: (state, action: PayloadAction<number>) => {
             state.blocksPerPage = action.payload;
         },
+        setTransactionsLoading: (state, action: PayloadAction<string>) => {
+            const blockNo = action.payload;
+            state.transactionsByBlock[blockNo] = {
+                ...state.transactionsByBlock[blockNo],
+                loading: true,
+                error: null,
+            };
+        },
+        setTransactionsSuccess: (
+            state,
+            action: PayloadAction<{ blockNo: string; transactions: any[] }>
+        ) => {
+            const { blockNo, transactions } = action.payload;
+            state.transactionsByBlock[blockNo] = {
+                transactions,
+                loading: false,
+                error: null,
+            };
+        },
+        setTransactionsError: (
+            state,
+            action: PayloadAction<{ blockNo: string; error: string }>
+        ) => {
+            const { blockNo, error } = action.payload;
+            state.transactionsByBlock[blockNo] = {
+                ...state.transactionsByBlock[blockNo],
+                loading: false,
+                error,
+            };
+        },
     },
 });
 
-export const { setBlocks, setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage } = blocksSlice.actions;
+export const { setBlocks, setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
+    setTransactionsSuccess,
+    setTransactionsError, } = blocksSlice.actions;
 
 export default blocksSlice.reducer;
 
@@ -75,3 +115,14 @@ export const selectBlocksForCurrentPage = (state: { recentBlocksStateInFrames: B
     const startIndex = (currentPage - 1) * blocksPerPage;
     return blocks.slice(startIndex, startIndex + blocksPerPage);
 };
+
+
+// Redux slice - selectors
+export const selectTransactionsForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
+    state.recentBlocksStateInFrames.transactionsByBlock[blockNo]?.transactions || [];
+
+export const selectTransactionsLoadingForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
+    state.recentBlocksStateInFrames.transactionsByBlock[blockNo]?.loading || false;
+
+export const selectTransactionsErrorForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
+    state.recentBlocksStateInFrames.transactionsByBlock[blockNo]?.error || null;

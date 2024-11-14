@@ -3,7 +3,7 @@ import Request from "../../../../../../Backend/axiosCall/apiCall";
 import { ApiError, Block } from "../../../../../../interfaces/interface";
 import { addNewBlock, setBlocks, setRecentBlocksLoading } from "./RecentBlocksSlice";
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
-import { setBlocksInFrames, setBlocksInFramesLoading } from "./BlocksWithFrameSlice";
+import { setBlocksInFrames, setBlocksInFramesLoading, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
 
 export const fetchRecentBlocks = createAsyncThunk(
     'blocks/fetchRecentBlocks',
@@ -73,6 +73,36 @@ export const fetchBlocksInFrame = createAsyncThunk(
             dispatch(setBlocksInFramesLoading(false));
             const castedError = error as ApiError
             return rejectWithValue(castedError.error || "Failed to fetch blocks with pagination");
+        }
+    }
+);
+
+// Thunk for fetching transactions within a block
+export const getBlockWithTrx = createAsyncThunk(
+    'blocks/getBlockWithTrx',
+    async ({ blockNo, rpcUrl }: { blockNo: string; rpcUrl: string }, { dispatch, rejectWithValue }) => {
+        try {
+            // Dispatch loading state for the specific block
+            dispatch(setTransactionsLoading(blockNo));
+
+            // Make the API call to fetch transactions
+            const response = await Request({
+                url: "getBlockWithTrx",
+                method: ApiEndpoint.getBlockWithTrx.method,
+                data: {
+                    providerUrl: rpcUrl
+                },
+                slug: `/${blockNo}`
+            });
+
+            const transactions = Object.values(response);
+            // Dispatch success action with the fetched transactions
+            dispatch(setTransactionsSuccess({ blockNo, transactions }));
+        } catch (error) {
+            const castedError = error as ApiError;
+            // Dispatch error state for the specific block
+            dispatch(setTransactionsError({ blockNo, error: castedError.error || "Failed to fetch transactions" }));
+            return rejectWithValue(castedError.error || "Failed to fetch transactions");
         }
     }
 );
