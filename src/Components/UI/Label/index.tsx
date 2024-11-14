@@ -1,9 +1,8 @@
 import React from 'react';
+import { FormLabel, FormLabelProps } from '@mui/material';
 
-import { Label as RadixLabel, LabelProps } from "@radix-ui/react-label";
-
-const Label: React.FC<LabelProps> = (props) => {
-    return <RadixLabel {...props} />;
+const Label: React.FC<FormLabelProps> = (props) => {
+    return <FormLabel {...props} />;
 };
 
 export default Label;

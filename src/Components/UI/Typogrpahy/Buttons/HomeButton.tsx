@@ -1,14 +1,12 @@
-//buttons
-
 import React from 'react';
-import { Button } from '@radix-ui/themes';
-import { HomeButtonProps } from '../../../interfaces/CompInterfaces';
+import { Button as MuiButton } from '@mui/material';
+import { HomeButtonProps } from '../../../../interfaces/CompInterfaces';
 
 const HomeButton: React.FC<HomeButtonProps> = ({ onClick, children }) => {
   return (
-    <Button onClick={onClick}>
+    <MuiButton onClick={onClick}>
       {children}
-    </Button>
+    </MuiButton>
   );
 };
 

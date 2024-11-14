@@ -1,44 +1,38 @@
 import React from "react";
-import { Table } from "@radix-ui/themes";
+import { Table, TableHead,  TableRow, TableCell, TableProps, TableContainer, Paper } from "@mui/material";
 
-interface CustomTableProps {
+interface CustomTableProps extends TableProps {
     children: React.ReactNode;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomTable: React.FC<CustomTableProps & any> = ({ children, ...props }) => {
+const CustomTable: React.FC<CustomTableProps> = ({ children, ...props }) => {
     return (
-        <Table.Root {...props}>
-            {children}
-        </Table.Root>
+        <TableContainer component={Paper}>
+            <Table {...props}>
+                {children}
+            </Table>
+        </TableContainer>
     );
 };
 
 export const CustomTableHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
-        <Table.Header>
-            <Table.Row>{children}</Table.Row>
-        </Table.Header>
+        <TableHead>
+            <TableRow>{children}</TableRow>
+        </TableHead>
     );
 };
 
-// CustomTableRow.tsx
 export const CustomTableRow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <Table.Row>
-            {children}
-        </Table.Row>
-    );
+    return <TableRow>{children}</TableRow>;
 };
 
-// CustomTableCell.tsx
 export const CustomTableCell: React.FC<{ children: React.ReactNode; style?: React.CSSProperties; onClick?: () => void }> = ({ children, style, onClick }) => {
     return (
-        <Table.Cell style={style} onClick={onClick}>
+        <TableCell style={style} onClick={onClick}>
             {children}
-        </Table.Cell>
+        </TableCell>
     );
 };
-
 
 export default CustomTable;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card as RadixCard, CardProps } from '@radix-ui/themes';
+import { Card as MUICard, CardProps } from '@mui/material';
 
 const Card: React.FC<CardProps> = (props) => {
-    return <RadixCard {...props} />;
+    return <MUICard {...props} />;
 };
 
 export default Card;

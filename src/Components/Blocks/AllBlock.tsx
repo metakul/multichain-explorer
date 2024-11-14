@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlocks, selectBlocksLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
-import Grid from '../UI/Grid';
 import { curretnBlockInfo } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
@@ -12,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Button from '../UI/Button';
+import Grid from '../UI/Grid';
 
 const AllBlock: React.FC = () => {
     const blocks = useSelector(selectBlocks);
@@ -56,7 +56,7 @@ const AllBlock: React.FC = () => {
             <Button onClick={handleReload} disabled={allBlocksLoading}>
                 {allBlocksLoading ? "Loading Blocks" : "Reload"}
             </Button>
-            <Grid gap="3" width="auto">
+            <Grid gap={3} width="auto">
 
                 {/* Render current block info */}
                 {currentBlock && renderBlockInfo(currentBlock)}
@@ -64,7 +64,7 @@ const AllBlock: React.FC = () => {
                 {/* Render recent blocks */}
                 {blocks && blocks.length > 0 ? (
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    blocks.map((block, index) => renderBlockInfo(block))
+                    blocks.map((block) => renderBlockInfo(block))
                 ) : (
                     <p>No blocks found</p>
                 )}

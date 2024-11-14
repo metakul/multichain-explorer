@@ -45,7 +45,7 @@ export default function Search() {
                     value={searchInput}
                     onChange={changeHandler}
                     style={{
-                        width: "",
+                        width: "100%",
                         marginRight: "10px"
                     }}
                 />
@@ -59,7 +59,7 @@ export default function Search() {
                 </Button>}
             </div>
             <div>
-                {showResult && transaction && <TransactionInfo transaction={[transaction]} loading={loading} error={error}/>}
+                {showResult  && <TransactionInfo transaction={[transaction] as ITrx[]} loading={loading} error={error}/>}
             </div>
         </div>
     );

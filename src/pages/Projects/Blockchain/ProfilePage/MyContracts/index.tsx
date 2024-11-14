@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { VerificationProps } from '../../../../../interfaces/CompInterfaces';
 import CustomHeading from '../../../../../Components/UI/Typogrpahy/Text/Heading';
-import Grid from "../../../../../Components/UI/Grid";
+import Grid from '../../../../../Components/UI/Grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
 import { AppDispatch } from '../../../../../redux/store';
@@ -38,7 +38,16 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
       <Container style={{
       }}>
       <CustomHeading placeholder={props.pageTitle} />
-      <Grid columns="3" gap="3" width="auto" rows="repeat(3, 164px)">
+      <Grid
+        container
+        spacing={3}  // Spacing between items (MUI uses a spacing scale)
+        sx={{
+          gridTemplateColumns: 'repeat(3, 1fr)',  // Custom columns (3 columns)
+          gridTemplateRows: 'repeat(3, 164px)',  // Custom rows (3 rows, each 164px)
+          width: 'auto',  // Auto width
+          gap: '16px',  // Custom gap between items
+        }}
+      >
         {myContracts && myContracts.length > 0 ? (
           myContracts.map((contract: any, index: any) => (
             <Box

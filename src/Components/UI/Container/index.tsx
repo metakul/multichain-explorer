@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container as RadixContainer, ContainerProps } from '@radix-ui/themes';
+import { Container as MUIContainer, ContainerProps } from '@mui/material';
 
 const Container: React.FC<ContainerProps> = (props) => {
-    return <RadixContainer {...props} />;
+    return <MUIContainer {...props} />;
 };
 
 export default Container;

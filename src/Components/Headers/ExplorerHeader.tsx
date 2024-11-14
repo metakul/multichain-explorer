@@ -1,7 +1,6 @@
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 import Box from "../UI/Box";
-import * as Avatar from "@radix-ui/react-avatar";
 
 
 export default function Header() {
@@ -20,15 +19,16 @@ export default function Header() {
     return (
         <Box>
             <h3 style={{
-                textAlign: "left",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
             }} >The Blockchain Explorer
-                <Avatar.Root >
-                    <Avatar.Image
+                    <img
                         width={100} height={50}
                         src="/logo.svg"
                         alt="Colm Tuite"
                     />
-                </Avatar.Root>
             </h3>
         </Box>
     );

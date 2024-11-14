@@ -1,9 +1,8 @@
-
 import React from 'react';
-import { Box as RadixBox, BoxProps } from '@radix-ui/themes';
+import { Box as MUIBox, BoxProps } from '@mui/material';
 
 const Box: React.FC<BoxProps> = (props) => {
-    return <RadixBox {...props} />;
+    return <MUIBox {...props} />;
 };
 
 export default Box;

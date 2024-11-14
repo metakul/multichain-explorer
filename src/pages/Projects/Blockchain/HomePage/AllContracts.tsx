@@ -28,7 +28,7 @@ const ContractsGrid: React.FC = () => {
     // Render contracts in a grid layout
     return (
 
-        <Grid columns="3" gap="3" width="auto" rows="repeat(3, 164px)">
+        <Grid  rows="repeat(3, 164px)">
             {contracts && contracts.length > 0 ? (
                 contracts.map((contract: any, index: any) => (
                     <Box

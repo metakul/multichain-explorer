@@ -1,6 +1,5 @@
-// LoginButton.tsx
 import React, { ButtonHTMLAttributes } from 'react';
-import { Button } from '@radix-ui/themes'
+import { Button as MuiButton } from '@mui/material';
 
 interface LoginButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -9,9 +8,13 @@ interface LoginButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const LoginButton: React.FC<LoginButtonProps> = ({ children, onClick, color, ...props }) => {
   return (
-    <Button {...props} onClick={onClick} style={{ color }}>
+    <MuiButton
+      {...props}
+      onClick={onClick}
+      style={{ color }} // Applying the custom color as inline style
+    >
       {children}
-    </Button>
+    </MuiButton>
   );
 };
 

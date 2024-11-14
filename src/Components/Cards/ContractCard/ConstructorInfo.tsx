@@ -35,7 +35,7 @@ const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
                             type={param.type === "number" ? "number" : "text"} // Dynamic input type
                             placeholder={`Enter value for ${param.name}`}
                             value={constructorInputs[index] || ""}
-                            onChange={(e: { target: { value: string; }; }) => handleInputChange(index, e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(index, e.target.value)}
                         />
                         {inputErrors[index] && ( // Display error from props
                             <Label style={{ color: 'red' }}>

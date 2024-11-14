@@ -1,6 +1,6 @@
 import React from 'react';
-import { Heading } from '@radix-ui/themes';
-import { CustomHeadingProps } from '../../../interfaces/CompInterfaces';
+import { Typography } from '@mui/material';
+import { CustomHeadingProps } from '../../../../interfaces/CompInterfaces';
 
 const CustomHeading: React.FC<CustomHeadingProps> = ({
   placeholder,
@@ -8,10 +8,10 @@ const CustomHeading: React.FC<CustomHeadingProps> = ({
   style
 }) => {
   return (
-    <Heading style={style} >
+    <Typography variant="h5" style={style}>
       {placeholder && <label>{placeholder}</label>}
       {children}
-    </Heading>
+    </Typography>
   );
 };
 

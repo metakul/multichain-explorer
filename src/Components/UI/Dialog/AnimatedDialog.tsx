@@ -1,46 +1,39 @@
 import React from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { useTransition, animated, config } from 'react-spring';
 
 interface AnimatedDialogProps {
-  onSubmit?: (event: React.FormEvent) => Promise<void> | undefined
+  onSubmit?: (event: React.FormEvent) => Promise<void> | undefined;
   children: React.ReactNode;
-  isOpen?:boolean
+  isOpen?: boolean;
 }
 
-const AnimatedDialog: React.FC<AnimatedDialogProps> = ({isOpen, children }) => {
+const AnimatedDialog: React.FC<AnimatedDialogProps> = ({ isOpen, children }) => {
   const [open, setOpen] = React.useState(isOpen || false);
 
   const transitions = useTransition(open, {
-    from: { opacity: 0, x: -200 },
-    enter: { opacity: 1, x: 10 },
-    leave: { opacity: 0, y: 10 },
+    from: { opacity: 0, transform: 'translateX(-200px)' },
+    enter: { opacity: 1, transform: 'translateX(0)' },
+    leave: { opacity: 0, transform: 'translateY(10px)' },
     config: config.stiff,
   });
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      {/* <Dialog.Trigger>Open Dialog</Dialog.Trigger> */}
+    <Dialog open={open} onClose={() => setOpen(false)}>
       {transitions((styles, item) =>
         item ? (
-          <>
-            <Dialog.Overlay asChild>
-              <animated.div style={{ opacity: styles.opacity }} />
-            </Dialog.Overlay>
-            <Dialog.Content forceMount asChild>
-              <animated.div style={styles}>
-                  {children}
-                <Dialog.Close>Close</Dialog.Close>
-              </animated.div>
-            </Dialog.Content>
-          </>
+          <animated.div style={styles}>
+            <DialogTitle>Dialog</DialogTitle>
+            <DialogContent>{children}</DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpen(false)} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </animated.div>
         ) : null
       )}
-    </Dialog.Root>
+    </Dialog>
   );
 };
 

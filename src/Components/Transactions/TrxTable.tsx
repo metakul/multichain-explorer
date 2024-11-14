@@ -6,7 +6,7 @@ import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../..
 import Container from "../UI/Container";
 import CustomTable, { CustomTableHeader, CustomTableRow, CustomTableCell } from "../UI/Table";
 interface TrxInfoProps {
-    transaction: ITrx[] | [];
+    transaction: ITrx[] | undefined;
     loading: boolean;
     error: string | null;
 }
@@ -48,7 +48,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
     }
 
     // Render no transaction message if no data
-    if (transaction.length === 0) {
+    if (transaction && transaction.length === 0) {
         return <Container>No Transactions Found</Container>;
     }
 
@@ -65,7 +65,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                     <CustomTableCell>Txn Fee</CustomTableCell>
                     <CustomTableCell>View Txn</CustomTableCell>
                 </CustomTableHeader>
-                {transaction.map((trx: ITrx) => (
+                {transaction && transaction.map((trx: ITrx) => (
                     <CustomTableRow key={trx.hash}>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}

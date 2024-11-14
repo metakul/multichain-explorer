@@ -1,8 +1,8 @@
 import React from 'react';
-import { Flex as RadixFlex, FlexProps } from '@radix-ui/themes';
+import { Box, BoxProps } from '@mui/material';
 
-const Flex: React.FC<FlexProps> = (props) => {
-    return <RadixFlex {...props} />;
+const Flex: React.FC<BoxProps> = (props) => {
+    return <Box display="flex" {...props} />;
 };
 
 export default Flex;

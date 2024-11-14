@@ -1,6 +1,6 @@
 // CustomForm.tsx
 import React from "react";
-import * as RadixForm from "@radix-ui/react-form";
+import { TextField, Button, Box } from "@mui/material";
 
 interface CustomFormProps {
     children: React.ReactNode;
@@ -8,24 +8,30 @@ interface CustomFormProps {
 }
 
 const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit }) => {
-    return <RadixForm.Root onSubmit={onSubmit}>{children}</RadixForm.Root>;
+    return (
+        <form onSubmit={onSubmit}>
+            {children}
+        </form>
+    );
 };
 
 export const CustomFormField: React.FC<{ name: string; label: string; type: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; }> = ({ name, label, type, onChange }) => (
-    <RadixForm.Field name={name}>
-        <RadixForm.Label>{label}</RadixForm.Label>
-        <RadixForm.Control asChild>
-            <input type={type} required onChange={onChange} />
-        </RadixForm.Control>
-    </RadixForm.Field>
+    <Box mb={2}>
+        <TextField
+            name={name}
+            label={label}
+            type={type}
+            fullWidth
+            required
+            onChange={onChange}
+        />
+    </Box>
 );
 
 export const CustomFormSubmit: React.FC<{ disabled: boolean; children: React.ReactNode }> = ({ disabled, children }) => (
-    <RadixForm.Submit asChild>
-        <button type="submit" disabled={disabled}>
-            {children}
-        </button>
-    </RadixForm.Submit>
+    <Button type="submit" variant="contained" color="primary" disabled={disabled} fullWidth>
+        {children}
+    </Button>
 );
 
 export default CustomForm;

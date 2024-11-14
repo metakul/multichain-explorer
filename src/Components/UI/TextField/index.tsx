@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextField as RadixTextfield } from "@radix-ui/themes";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TextField: React.FC<any> = (props) => {
-    return <RadixTextfield.Root {...props} />;
+import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
+
+const TextField: React.FC<TextFieldProps> = (props) => {
+    return <MuiTextField {...props} />;
 };
 
 export default TextField;

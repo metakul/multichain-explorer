@@ -45,12 +45,12 @@ function ExplorerStats() {
             marginBottom: "20px"
         }}>
             <Card>
-                <Flex gap="3" align="center">
+                <Flex >
                     <Box>
-                        <Text as="div" size="2" weight="bold">
+                        <Text>
                             {label}
                         </Text>
-                        <Text as="div" size="2" color="blue">
+                        <Text>
                             {value ?? "N/A"} {/* Show N/A if value is null or undefined */}
                         </Text>
                     </Box>
@@ -69,7 +69,7 @@ function ExplorerStats() {
             marginBottom: "20px"
         }}>
             <Card>
-                <Flex gap="3" align="center">
+                <Flex gap="3" >
                     <Box>
                         <SkeletonBox width="120px" height="16px" />
                         <SkeletonBox width="80px" height="16px" />

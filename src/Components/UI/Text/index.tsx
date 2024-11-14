@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text as RadixText, TextProps } from '@radix-ui/themes';
+import { Typography, TypographyProps } from '@mui/material';
 
-const Text: React.FC<TextProps> = (props) => {
-    return <RadixText {...props} />;
+const Text: React.FC<TypographyProps> = (props) => {
+    return <Typography {...props} />;
 };
 
 export default Text;

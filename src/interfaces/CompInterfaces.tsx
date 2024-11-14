@@ -44,8 +44,10 @@ export interface CustomTextFieldProps {
   value?: string;
   className?: string;
   type?: string;
-  onChange?: (value: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange?: any
   children?: ReactNode;
+  id?: string;
 }
 
 export interface CustomHeadingProps {

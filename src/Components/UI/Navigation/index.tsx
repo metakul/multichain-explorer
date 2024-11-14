@@ -1,7 +1,5 @@
-import React from 'react';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { CaretDownIcon } from '@radix-ui/react-icons';
-import './navigation.css';
+import React, { useState } from 'react';
+import { Button,  Popover,  List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface NavigationProps {
@@ -9,44 +7,59 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ menuItems }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [activeItem, setActiveItem] = useState<{ title: string; description: string } | null>(null);
     const navigate = useNavigate();
 
+    const handleClick = (event: React.MouseEvent<HTMLElement>, item: { title: string; description: string }) => {
+        setAnchorEl(event.currentTarget);
+        setActiveItem(item);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setActiveItem(null);
+    };
+
+    const handleNavigate = (path: string) => {
+        navigate(path);
+        handleClose();
+    };
+
     return (
-        <NavigationMenu.Root className="NavigationRoot">
-            <NavigationMenu.List className="NavigationList">
-                {menuItems.map((item, index) => (
-                    <NavigationMenu.Item key={index} className="NavigationItem">
-                        <NavigationMenu.Trigger className="NavigationTrigger">
-                            {item.title} <CaretDownIcon className="CaretDown" />
-                        </NavigationMenu.Trigger>
+        <div>
+            {menuItems.map((item, index) => (
+                <div key={index}>
+                    <Button
+                        aria-controls={`menu-${index}`}
+                        aria-haspopup="true"
+                        onClick={(event) => handleClick(event, item)}
+                    >
+                        {item.title}
+                    </Button>
 
-                        <NavigationMenu.Content className="NavigationContent">
-                            <ul className="NavigationContentList">
-                                <li className="NavigationLinkItem">
-                                    <NavigationMenu.Link asChild>
-                                        <a
-                                            className="NavigationLink"
-                                            onClick={() => navigate(item.path)}
-                                        >
-                                            <div className="LinkTitle">{item.title}</div>
-                                            <p className="LinkDescription">{item.description}</p>
-                                        </a>
-                                    </NavigationMenu.Link>
-                                </li>
-                            </ul>
-                        </NavigationMenu.Content>
-                    </NavigationMenu.Item>
-                ))}
-            </NavigationMenu.List>
-
-            <NavigationMenu.Indicator className="NavigationIndicator">
-                <div className="Arrow" />
-            </NavigationMenu.Indicator>
-
-            <div className="ViewportPosition">
-                <NavigationMenu.Viewport className="NavigationViewport" />
-            </div>
-        </NavigationMenu.Root>
+                    <Popover
+                        id={`menu-${index}`}
+                        open={Boolean(anchorEl) && activeItem?.title === item.title}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <List>
+                            <ListItem onClick={() => handleNavigate(item.path)}>
+                                <ListItemText
+                                    primary={item.title}
+                                    secondary={item.description}
+                                />
+                            </ListItem>
+                        </List>
+                    </Popover>
+                </div>
+            ))}
+        </div>
     );
 };
 

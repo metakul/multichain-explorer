@@ -21,12 +21,12 @@ export default function DashboardLayout() {
   return (
     <>
       <Header APP_BAR={APP_BAR} setIsSidebarOpen={handleSideBarState} />
-      <RpcComponent />
       <Box style={{
         marginTop: APP_BAR,
         marginLeft: "auto",
         marginRight: "auto"
       }}>
+        <RpcComponent />
         <Sidebar
           APP_BAR={APP_BAR}
           isNonMobile={isNonMobile}
