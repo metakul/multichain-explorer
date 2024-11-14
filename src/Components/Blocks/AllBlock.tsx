@@ -12,6 +12,7 @@ import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Button from '../UI/Button';
 import Grid from '../UI/Grid';
+import Skeleton from '@mui/material/Skeleton';
 
 const AllBlock: React.FC = () => {
     const blocks = useSelector(selectBlocks);
@@ -29,7 +30,7 @@ const AllBlock: React.FC = () => {
     const handleReload = () => {
         dispatch(fetchRecentBlocks(rpcUrl));
         dispatch(fetchCurrentBlock(rpcUrl));
-    }
+    };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const renderBlockInfo = (block: any) => (
@@ -52,7 +53,7 @@ const AllBlock: React.FC = () => {
 
     return (
         <div>
-            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>   Blocks Info</Text>    
+            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>Blocks Info</Text>
             <Button onClick={handleReload} disabled={allBlocksLoading}>
                 {allBlocksLoading ? "Loading Blocks" : "Reload"}
             </Button>
@@ -63,17 +64,16 @@ const AllBlock: React.FC = () => {
 
                 {/* Render recent blocks */}
                 {blocks && blocks.length > 0 ? (
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     blocks.map((block) => renderBlockInfo(block))
                 ) : (
                     <p>No blocks found</p>
                 )}
 
-                {/* Loading state with skeleton placeholders */}
+                {/* Loading state with MUI Skeletons */}
                 {allBlocksLoading && blocks.length === 0 && (
                     Array.from({ length: 3 }).map((_, index) => (
                         <Box key={index} style={{
-                            backgroundColor: '#e0e0e0',
+                            backgroundColor: '#f5f5f5',
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                             borderRadius: '8px',
                             padding: '16px',
@@ -82,11 +82,11 @@ const AllBlock: React.FC = () => {
                             gap: '8px',
                             height: "200px"
                         }}>
-                            <div style={{ height: '20px', backgroundColor: '#ccc', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
-                            <div style={{ height: '16px', backgroundColor: '#ddd', borderRadius: '4px' }}></div>
+                            <Skeleton variant="text" height={28} width="60%" />
+                            <Skeleton variant="text" height={20} width="80%" />
+                            <Skeleton variant="text" height={20} width="70%" />
+                            <Skeleton variant="text" height={20} width="50%" />
+                            <Skeleton variant="text" height={20} width="90%" />
                         </Box>
                     ))
                 )}

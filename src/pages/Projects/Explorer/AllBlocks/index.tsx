@@ -57,10 +57,9 @@ const AllBlocks: React.FC = () => {
         <div style={{
             display:"flex",
             justifyContent:"center",
+            flexDirection:"column",
         }}>
             <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>All Blocks Info</Text>
-
-
             <Box>
                 {!allBlocksLoading && blocks && blocks.length > 0 ? (
                     blocks.map((block) => <BlockInfo key={block.hash} block={block} />)

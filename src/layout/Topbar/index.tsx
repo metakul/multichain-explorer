@@ -10,7 +10,7 @@ import {
 import ListIcon from '@mui/icons-material/List';
 // const NAV_WIDTH = 280;
 import "./style.css"
-import { NavLink as RouterLink, useNavigate } from "react-router-dom";
+import { NavLink as RouterLink } from "react-router-dom";
 import ConnectWalletButton from "../../Components/Buttons/ConnectWalletButton";
 
 interface HeaderProps {
@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
                 <IconButton
                     onClick={() => setIsSidebarOpen()}
                     sx={{
-                       
+
                     }}
                 >
                     <ListIcon />
@@ -47,7 +47,9 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
                         xs: 0.5,
                         sm: 1,
                     }}
+                    sx={{ ml: 'auto' }} 
                 >
+               
                 <ConnectWalletButton style={{
                     backgroundColor: "black",
                 }} />

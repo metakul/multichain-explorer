@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
 import Container from "../UI/Container";
 import CustomTable, { CustomTableHeader, CustomTableRow, CustomTableCell } from "../UI/Table";
+import Skeleton from "@mui/material/Skeleton";
+
 interface TrxInfoProps {
     transaction: ITrx[] | undefined;
     loading: boolean;
@@ -28,15 +30,17 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         <CustomTableCell>Txn Fee</CustomTableCell>
                         <CustomTableCell>View Txn</CustomTableCell>
                     </CustomTableHeader>
-                    <CustomTableRow>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                        <CustomTableCell><div className="skeleton" /></CustomTableCell>
-                    </CustomTableRow>
+                    {[...Array(10)].map((_, index) => (
+                        <CustomTableRow key={index}>
+                            <CustomTableCell><Skeleton variant="text" width={120} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="text" width={80} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="text" width={140} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="text" width={140} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="text" width={80} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="text" width={100} /></CustomTableCell>
+                            <CustomTableCell><Skeleton variant="circular" width={24} height={24} /></CustomTableCell>
+                        </CustomTableRow>
+                    ))}
                 </CustomTable>
             </Container>
         );
@@ -66,12 +70,12 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                     <CustomTableCell>View Txn</CustomTableCell>
                 </CustomTableHeader>
                 {transaction && transaction.map((trx: ITrx) => (
-                    <CustomTableRow key={trx.hash}>
+                    <CustomTableRow key={trx?.hash}>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToTransaction(navigate, trx.hash)}
+                            onClick={() => navigateToTransaction(navigate, trx?.hash)}
                         >
-                            {trx.hash.slice(0, 16)}...
+                            {trx?.hash?.slice(0, 16)}...
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
@@ -83,7 +87,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                             style={{ color: "blue", cursor: "pointer" }}
                             onClick={() => navigateToAddress(navigate, trx?.from)}
                         >
-                            {trx.from.slice(0, 8)}...{trx.from.slice(-8)}
+                            {trx?.from?.slice(0, 8)}...{trx?.from?.slice(-8)}
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
@@ -95,7 +99,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         <CustomTableCell>{(parseFloat(trx?.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
                         <CustomTableCell style={{ display: "flex", justifyContent: "center" }}>
                             <EyeOpenIcon
-                                onClick={() => navigateToTransaction(navigate, trx.hash)}
+                                onClick={() => navigateToTransaction(navigate, trx?.hash)}
                                 style={{ cursor: "pointer" }}
                             />
                         </CustomTableCell>

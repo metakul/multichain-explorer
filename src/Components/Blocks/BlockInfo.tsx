@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
+import { navigateToAddress, navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import { Block } from '../../interfaces/interface';
 import {
@@ -13,6 +13,7 @@ import { AppDispatch } from '../../redux/store';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
+import Container from '../UI/Container';
 
 interface BlockInfoProps {
     block: Block;
@@ -41,7 +42,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
+        <Container style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
             <Box
                 key={block.number}
                 style={{
@@ -71,7 +72,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
             </Box>
 
             <div style={{ background: 'black', width: '40px', height: '2px' }}></div>
-            <div style={{ borderLeft: '1px solid black' }}>
+            <Box style={{ borderLeft: '1px solid black', maxWidth: "400px" }}>
                 <div style={{ padding: '16px', marginLeft: '16px' }}>
                     {loading && <p>Loading transactions...</p>}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -97,11 +98,18 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                                     onClick={() => navigateToTransaction(navigate, String(trx?.hash))}
                                 >
 
-                                    {trx.hash}
+                                    {trx?.hash?.slice(0, 4)}...{trx?.hash?.slice(-4)}
                                 </Text>
                             </p>
-                            <p><strong>From:</strong> {trx.from}</p>
-                            <p><strong>To:</strong> {trx.to}</p>
+                            <p
+                                onClick={() => navigateToAddress(navigate, String(trx?.from))}
+                            ><strong>From:</strong>
+                                {trx?.from?.slice(0, 4)}...{trx?.from?.slice(-4)}
+                            </p>
+                            <p onClick={() => navigateToAddress(navigate, String(trx?.to))}>
+                                <strong>To:</strong>
+                                 {trx?.to?.slice(0, 4)}...{trx?.to?.slice(-4)}
+                                 </p>
                             <p><strong>Value:</strong> {trx.value}</p>
                             <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
                         </div>
@@ -117,8 +125,8 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                         </Text>
                     )}
                 </div>
-            </div>
-        </div>
+            </Box>
+        </Container>
     );
 };
 
