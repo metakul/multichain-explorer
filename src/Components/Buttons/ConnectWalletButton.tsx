@@ -9,7 +9,7 @@ interface ConnectWalletButtonProps {
     [key: string]: unknown;
 }
 
-function ConnectWalletButton({ style, className = "", ...props }: ConnectWalletButtonProps) {
+function ConnectWalletButton({ style, ...props }: ConnectWalletButtonProps) {
     const { connected, walletAddress, connectToRpc, disconnectWallet, networkName } = useRpc();
 
     const formatAddress = (address: string) => {
@@ -27,7 +27,6 @@ function ConnectWalletButton({ style, className = "", ...props }: ConnectWalletB
 
     return (
         <Button
-            className={`btn ${className}`}
             onClick={handleClick}
             style={style}
             {...props}

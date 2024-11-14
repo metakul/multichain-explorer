@@ -58,7 +58,7 @@ const AllBlocks: React.FC = () => {
             display:"flex",
             justifyContent:"center",
         }}>
-            <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Blocks Info</Text>
+            <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>All Blocks Info</Text>
 
 
             <Box>

@@ -22,7 +22,7 @@ export default function DashboardLayout() {
     <>
       <Header APP_BAR={APP_BAR} setIsSidebarOpen={handleSideBarState} />
       <Box style={{
-        marginTop: APP_BAR,
+        marginTop: 80,
         marginLeft: "auto",
         marginRight: "auto"
       }}>

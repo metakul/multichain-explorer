@@ -1,9 +1,16 @@
-import React from "react";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
-import NavItem from "./NavItem";
-import Button from "../../Components/UI/Button";
-import Box from "../../Components/UI/Box";
+import * as React from 'react';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
+import NavItem from './NavItem';
+//css
+import { CustomDrawer,DrawerHeader } from './style.css';
+import { SwipeableDrawer } from '@mui/material';
+import {
+    Menu as MenuIcon,
+} from "@mui/icons-material";
 
 export interface MiniDrawerProps {
     isSidebarOpen: boolean;
@@ -14,25 +21,73 @@ export interface MiniDrawerProps {
         icon: React.ReactNode | null;
         to: string;
     }[];
-    APP_BAR: string;
+    APP_BAR: string
 }
 
-const Sidebar: React.FC<MiniDrawerProps> = ({ setIsSidebarOpen, isNonMobile, isSidebarOpen, navConfig }) => {
+
+const MiniDrawer: React.FC<MiniDrawerProps> = ({ setIsSidebarOpen, isNonMobile, isSidebarOpen, navConfig }) => {
+
     return (
-        <Box display={isSidebarOpen ? "block" : "none"} style={{
-            width: "240px",
-        }}>
-            <Button onClick={() => setIsSidebarOpen()}>
-                <ChevronLeftIcon />
-            </Button>
-            <Box style={{ listStyle: 'none', padding: 0 }}>
-                {navConfig.map((item: { text: string; icon: React.ReactNode | null; to: string; }, index: React.Key | null | undefined) => (
-                    <NavItem isNonMobile={isNonMobile} item={item} key={index} isSidebarOpen={isSidebarOpen} />
-                ))}
-            </Box>
+        <>
+            {isNonMobile ? (
+                <CustomDrawer variant="permanent" open={isSidebarOpen}  >
+                    <DrawerHeader>
+                        <IconButton onClick={() => setIsSidebarOpen()} >
+                            <MenuIcon />
+                        </IconButton>
+                    </DrawerHeader>
+                    <Divider />
 
-        </Box>
+                    <List >
+                        {navConfig.map((item, index) => (
+                            <NavItem isNonMobile={isNonMobile} item={item} key={index} isSidebarOpen={isSidebarOpen} />
+                        ))}
+                    </List>
+                    <Divider />
+                    {isSidebarOpen &&
+                        <DrawerHeader>
+                            <IconButton onClick={() => setIsSidebarOpen()} >
+                                <ChevronLeftIcon />
+                            </IconButton>
+                        </DrawerHeader>
+                    }
+                    <Divider />
+                </CustomDrawer>
+            ) : (
+                <SwipeableDrawer
+                    variant="persistent"
+                    open={isSidebarOpen} onClose={function (event: React.SyntheticEvent<object, Event>): void {
+                        isSidebarOpen
+                        console.log(event);
+
+                    }} onOpen={function (event: React.SyntheticEvent<object, Event>): void {
+                        isSidebarOpen
+                        console.log(event);
+
+                    }}                >
+                    <DrawerHeader>
+                        <IconButton onClick={() => setIsSidebarOpen()} >
+                            <MenuIcon />
+                        </IconButton>
+                    </DrawerHeader>
+                    <Divider />
+                    <List >
+                        {navConfig.map((item, index) => (
+                            <NavItem isNonMobile={isNonMobile} item={item} key={index} isSidebarOpen={isSidebarOpen} />
+                        ))}
+                    </List>
+                    <Divider />
+                    <DrawerHeader>
+                        <IconButton onClick={() => setIsSidebarOpen()} >
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </DrawerHeader>
+                    <Divider />
+                </SwipeableDrawer>
+            )}
+        </>
+
+
     );
-};
-
-export default Sidebar;
+}
+export default MiniDrawer;

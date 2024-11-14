@@ -1,9 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import Box from "../../../Components/UI/Box";
-import Flex from "../../../Components/UI/Flex";
-import Button from "../../../Components/UI/Button";
-import Text from "../../../Components/UI/Text";
+import { ListItemText, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
+import { NavLink as RouterLink } from "react-router-dom";
 
 interface NavItemProps {
     item: {
@@ -17,48 +14,32 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ item, isSidebarOpen }) => {
     const { text, icon, to } = item;
-    const navigate = useNavigate();
-
-
+   
     return (
-        <Box key={text} style={{ display: isSidebarOpen ? 'block' : 'none', padding: 0 }}>
-            <Flex
-                onClick={icon ? () => navigate(to) : undefined}
-                style={{ cursor: "pointer", alignItems: 'center' }}
+        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+                component={RouterLink}
+                to={to}
+                sx={{
+                    minHeight: 48,
+                    justifyContent: isSidebarOpen ? 'initial' : 'center',
+                    px: 2.5,
+                }}
             >
-                <Button
-                    style={{
-                        minHeight: 48,
-                        justifyContent: isSidebarOpen ? 'initial' : 'center',
-                        padding: '0 10px',
-                        width: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
-                    {icon && (
-                        <Box
-                            style={{
-                                minWidth: 0,
-                                marginRight: isSidebarOpen ? '12px' : 'auto',
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            {icon}
-                        </Box>
-                    )}
-                    <Text
-                        style={{
-                            opacity: isSidebarOpen ? 1 : 0,
-                            transition: 'opacity 0.3s',
+                {icon && (
+                    <ListItemIcon
+                        sx={{
+                            minWidth: 0,
+                            mr: isSidebarOpen ? 3 : 'auto',
+                            justifyContent: 'center',
                         }}
                     >
-                        {text}
-                    </Text>
-                </Button>
-            </Flex>
-        </Box>
+                        {icon}
+                    </ListItemIcon>
+                )}
+                <ListItemText primary={text} sx={{ opacity: isSidebarOpen ? 1 : 0 }} />
+            </ListItemButton>
+        </ListItem>
     );
 };
 
