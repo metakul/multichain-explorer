@@ -75,24 +75,24 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToBlock(navigate, trx.blockNumber)}
+                            onClick={() => navigateToBlock(navigate, trx?.blockNumber)}
                         >
-                            {trx.blockNumber}
+                            {trx?.blockNumber}
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToAddress(navigate, trx.from)}
+                            onClick={() => navigateToAddress(navigate, trx?.from)}
                         >
                             {trx.from.slice(0, 8)}...{trx.from.slice(-8)}
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToAddress(navigate, trx.to)}
+                            onClick={() => navigateToAddress(navigate, trx?.to)}
                         >
-                            {trx.to.slice(0, 8)}...{trx.to.slice(-8)}
+                            {trx?.to?.slice(0, 8)}...{trx?.to?.slice(-8)}
                         </CustomTableCell>
-                        <CustomTableCell>{(trx.value / 10 ** 18).toFixed(5)} ETH</CustomTableCell>
-                        <CustomTableCell>{(parseFloat(trx.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
+                        <CustomTableCell>{(trx?.value / 10 ** 18).toFixed(5)} ETH</CustomTableCell>
+                        <CustomTableCell>{(parseFloat(trx?.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
                         <CustomTableCell style={{ display: "flex", justifyContent: "center" }}>
                             <EyeOpenIcon
                                 onClick={() => navigateToTransaction(navigate, trx.hash)}

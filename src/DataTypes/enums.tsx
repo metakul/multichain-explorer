@@ -15,6 +15,7 @@ export enum Pages {
   PROFILE = '/dashboard/profile',
   TRANSACTIONS='/transactions',
   BLOCKS='/blocks',
+  API ='/API',
 
 }
 export enum PROJECTS {

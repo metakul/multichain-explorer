@@ -12,6 +12,7 @@ import Transaction from "./pages/Projects/Explorer/Transaction";
 import SingleBlock from "./pages/Projects/Explorer/Block";
 import AddressInfo from "./pages/Projects/Explorer/Address";
 import AllBLocks from "./pages/Projects/Explorer/AllBlocks";
+import SwaggerDocumentation from "./pages/Projects/Swagger";
 
 const Router: React.FC = () => {
 
@@ -64,6 +65,10 @@ const Router: React.FC = () => {
         {
           path: Pages.BLOCKS,
           element: <AllBLocks />,
+        },
+        {
+          path: Pages.API,
+          element: <SwaggerDocumentation />,
         },
       ],
     },
