@@ -21,7 +21,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
         label={label}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange && onChange(e.target.value)}
+        onChange={onChange}
         fullWidth
         variant="outlined"
         type={type}      // Pass type prop

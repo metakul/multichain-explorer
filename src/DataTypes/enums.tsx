@@ -91,7 +91,7 @@ export const networks: Record<Network, NetworkConfig> = {
     blockExplorerUrls: ["https://polygonscan.com/"]
   },
   Amoy: {
-    chainId: `0x${Number(137).toString(16)}`,
+    chainId: `0x${Number(0x13882).toString(16)}`,
     chainName: "Amoy Testnet",
     nativeCurrency: {
       name: "MATIC",

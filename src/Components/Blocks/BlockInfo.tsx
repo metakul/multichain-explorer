@@ -71,7 +71,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
             </Box>
 
             <div style={{ background: 'black', width: '40px', height: '2px' }}></div>
-            <Box style={{ borderLeft: '1px solid black', maxWidth: "400px" }}>
+            <Box style={{ borderLeft: '1px solid black', maxWidth: "600px" }}>
                 <div style={{ padding: '16px', marginLeft: '16px' }}>
                     {loading ? (
                         Array.from({ length: visibleTransactions }).map((_, index) => (

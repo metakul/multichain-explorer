@@ -8,8 +8,7 @@ import { RequestOptions } from '../../interfaces/interface';
 const Request = async ({ url, method, slug, data, headers }: RequestOptions) => {
   // const storedAccessToken = Cookies.get('access');  // Retrieve stored access token
   const endpoint = ApiEndpoint[url];
-  console.log(method,headers);
-  
+
   if (!endpoint) {
     throw new Error(`Invalid API endpoint: ${url}`);
   }
@@ -18,7 +17,7 @@ const Request = async ({ url, method, slug, data, headers }: RequestOptions) => 
   if (slug) {
     fullUrl += `${slug}`;  // Append additional slug to URL if provided
   }
-
+  console.log(endpoint);
 
   const axiosConfig: AxiosRequestConfig = {
     method: endpoint.method,
@@ -33,6 +32,8 @@ const Request = async ({ url, method, slug, data, headers }: RequestOptions) => 
   // Check and set appropriate data for non-GET requests
     axiosConfig.data = data;
 
+  console.log(axiosConfig);
+    
   try {
 
     const response = await axios(axiosConfig);

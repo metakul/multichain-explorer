@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const RpcComponent: React.FC = () => {
-    const { networkName, setRpc } = useRpc();
+    const { networkName, setRpc, rpcUrl } = useRpc();
     const [customRpcUrl, setCustomRpcUrlState] = useState<string>("");
     const [selectedNetwork, setSelectedNetwork] = useState<NetworkType>(networkName);
     const [isCustomRpc, setIsCustomRpc] = useState<boolean>(false);
@@ -38,7 +38,7 @@ const RpcComponent: React.FC = () => {
     // Effect to set RPC on network change
     useEffect(() => {
         handleSetCustomRpc();
-    }, [selectedNetwork]);
+    }, [selectedNetwork, rpcUrl]);
 
     const handleEditToggle = () => {
         setIsEditing(!isEditing);

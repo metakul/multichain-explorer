@@ -30,7 +30,7 @@ function Transactions() {
     };
 
     return (
-        <Box p="4">
+        <Box >
             <Box style={{
                 display: "flex",
             }}>

@@ -32,7 +32,7 @@ const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 export const RpcProvider = ({ children }: { children: ReactNode }) => {
     const [connected, setConnected] = useState(false);
     const [rpcUrl, setRpcUrl] = useState(RPC_ENDPOINT);
-    const [networkName, setNetworkName] = useState<any>("Polygon");
+    const [networkName, setNetworkName] = useState<any>("Amoy");
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
@@ -53,7 +53,7 @@ export const RpcProvider = ({ children }: { children: ReactNode }) => {
             }
 
             // Set network
-            setNetworkName(customNetworkName || "Polygon");
+            setNetworkName(customNetworkName);
         } catch (error) {
             setConnected(false);
             console.error("Error setting RPC:", error);
