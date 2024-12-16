@@ -56,10 +56,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                 await deployedContract.getAddress().then((deployedAddress) => {
                     // Dispatch the action with the resolved contract address
                     dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
-
                 })
-
-                
             }
         } catch (error) {
             console.error("Deployment error:", error);

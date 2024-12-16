@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useRpc } from "../../contexts/RpcProviderContext";
 import { Network, NetworkType } from "../../DataTypes/enums";
 import Box from "../UI/Box";
@@ -14,7 +14,6 @@ const RpcComponent: React.FC = () => {
     const [isCustomRpc, setIsCustomRpc] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isRpcVisible, setIsRpcVisible] = useState<boolean>(false); // For controlling visibility of RPC options
-    const rpcRef = useRef<HTMLDivElement | null>(null); // Ref for the RPC component container
 
     // Handle setting custom RPC
     const handleSetCustomRpc = () => {
@@ -48,22 +47,6 @@ const RpcComponent: React.FC = () => {
         setIsRpcVisible(!isRpcVisible); // Toggle visibility of RPC settings
     };
 
-    // Close RPC settings if clicked outside
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (rpcRef.current && !rpcRef.current.contains(event.target as Node)) {
-                setIsRpcVisible(false); // Close RPC settings if clicked outside
-            }
-        };
-
-        // Add event listener on mount
-        document.addEventListener("mousedown", handleClickOutside);
-
-        // Clean up event listener on unmount
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
 
     return (
         <Box
@@ -74,7 +57,7 @@ const RpcComponent: React.FC = () => {
                 top: 60,
             }}
         >
-            <Box ref={rpcRef}>
+            <Box>
                 {isRpcVisible ? (
                     // Show the RPC component when isRpcVisible is true
                     <>

@@ -24,8 +24,10 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
 
   useEffect(() => {
     (dispatch as AppDispatch)(getMyContracts(walletAddress));
-  }, [dispatch, rpcUrl]);
+  }, [dispatch, rpcUrl, walletAddress]);
 
+  console.log(walletAddress);
+  
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
     // Replace :contractName in the path with the actual contract name
     const path = PROJECTS.DEPLOYED_CONTRACT
