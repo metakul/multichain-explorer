@@ -27,7 +27,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
         if (contractName) {
             dispatch(fetchContractByName(contractName));
         }
-    }, [contractName]);
+    }, [contractName, dispatch]);
 
     // Handle loading or error cases
     if (!contract) {
