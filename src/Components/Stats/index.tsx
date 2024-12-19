@@ -41,8 +41,6 @@ function ExplorerStats() {
             boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '8px',
             padding: '16px',
-            height: "60px",
-            marginBottom: "20px"
         }}>
             <Card>
                 <Flex >
@@ -85,11 +83,16 @@ function ExplorerStats() {
 
     return (
         <Box style={{ margin: "auto" }}>
-            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>  Explorer Stats Info </Text>    
+            <Box sx={{
+                display: "flex"
+            }}>
+
+            <Text style={{ fontSize: "24px", fontWeight: "bold", }}>  Explorer Stats Info </Text>    
             <Button onClick={handleReload} disabled={loading}>
                 {loading ? "Loading Stats" : "Reload"}
             </Button>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+            </Box>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
             {loading
                 ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
                 : stats && (

@@ -96,7 +96,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         </CustomTableCell>
                         <CustomTableCell>{(trx?.value / 10 ** 18).toFixed(5)} ETH</CustomTableCell>
                         <CustomTableCell>{(parseFloat(trx?.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
-                        <CustomTableCell style={{ display: "flex", justifyContent: "center" }}>
+                        <CustomTableCell>
                             <EyeOpenIcon
                                 onClick={() => navigateToTransaction(navigate, trx?.hash)}
                                 style={{ cursor: "pointer" }}

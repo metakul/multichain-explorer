@@ -39,7 +39,6 @@ const AllBlock: React.FC = () => {
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '8px',
             padding: '16px',
-            height: "200px"
         }}>
             <Text style={{ color: "blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }} onClick={() => navigateToBlock(navigate, Number(block?.number))}>
                 Block #{block?.number ?? "N/A"}
@@ -53,10 +52,15 @@ const AllBlock: React.FC = () => {
 
     return (
         <div>
-            <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>Blocks Info</Text>
-            <Button onClick={handleReload} disabled={allBlocksLoading}>
-                {allBlocksLoading ? "Loading Blocks" : "Reload"}
-            </Button>
+            <Box sx={{
+                display: "flex"
+            }}>
+
+                <Text style={{ fontSize: "24px", fontWeight: "bold" }}>Blocks Info</Text>
+                <Button onClick={handleReload} disabled={allBlocksLoading}>
+                    {allBlocksLoading ? "Loading Blocks" : "Reload"}
+                </Button>
+            </Box>
             <Grid gap={3} width="auto">
 
                 {/* Render current block info */}
