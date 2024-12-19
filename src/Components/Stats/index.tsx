@@ -28,12 +28,12 @@ function ExplorerStats() {
 
     // If there's an error,
     if (error) return <Box style={{ margin: "auto", marginTop: "" }}>
-        <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "6px" }}> Explorer Stats Info  </Text>    
+        <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "6px" }}> Explorer Stats Info  </Text>
         <Button onClick={handleReload} disabled={loading}>
             {loading ? "Loading Trx" : "Reload"}
         </Button>
         <p>Error loading stats</p>
-        </Box>
+    </Box>
 
     const StatCard = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
         <Box style={{
@@ -87,31 +87,31 @@ function ExplorerStats() {
                 display: "flex"
             }}>
 
-            <Text style={{ fontSize: "24px", fontWeight: "bold", }}>  Explorer Stats Info </Text>    
-            <Button onClick={handleReload} disabled={loading}>
-                {loading ? "Loading Stats" : "Reload"}
-            </Button>
+                <Text style={{ fontSize: "24px", fontWeight: "bold", }}>  Explorer Stats Info </Text>
+                <Button onClick={handleReload} disabled={loading}>
+                    {loading ? "Loading Stats" : "Reload"}
+                </Button>
             </Box>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
-            {loading
-                ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
-                : stats && (
-                    <>
-                        <StatCard label="Total Blocks" value={stats.totalBlocks} />
-                        <StatCard label="Total Addresses" value={stats.totalAddresses} />
-                        <StatCard label="Total Transactions" value={stats.totalTransactions} />
-                        <StatCard label="Average Block Time" value={`${stats.averageBlockTime} s`} />
-                        <StatCard label="Total Gas Used" value={stats.totalGasUsed} />
-                        <StatCard label="Transactions Today" value={stats.transactionsToday} />
-                        <StatCard label="Gas Used Today" value={stats.gasUsedToday} />
-                        <StatCard label="Average Gas Price" value={stats.gasPrices.average} />
-                        <StatCard label="Fast Gas Price" value={stats.gasPrices.fast} />
-                        <StatCard label="Slow Gas Price" value={stats.gasPrices.slow} />
-                        <StatCard label="Static Gas Price" value={stats.staticGasPrice} />
-                        <StatCard label="Network Utilization" value={`${stats.networkUtilizationPercentage}%`} />
-                    </>
-                )}
-        </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
+                {loading
+                    ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
+                    : stats && (
+                        <>
+                            <StatCard label="Total Blocks" value={stats.totalBlocks} />
+                            <StatCard label="Total Addresses" value={stats.totalAddresses} />
+                            <StatCard label="Total Transactions" value={stats.totalTransactions} />
+                            <StatCard label="Average Block Time" value={`${stats.averageBlockTime} s`} />
+                            <StatCard label="Total Gas Used" value={stats.totalGasUsed} />
+                            <StatCard label="Transactions Today" value={stats.transactionsToday} />
+                            <StatCard label="Gas Used Today" value={stats.gasUsedToday} />
+                            <StatCard label="Average Gas Price" value={stats.gasPrices.average} />
+                            <StatCard label="Fast Gas Price" value={stats.gasPrices.fast} />
+                            <StatCard label="Slow Gas Price" value={stats.gasPrices.slow} />
+                            <StatCard label="Static Gas Price" value={stats.staticGasPrice} />
+                            <StatCard label="Network Utilization" value={`${stats.networkUtilizationPercentage}%`} />
+                        </>
+                    )}
+            </div>
         </Box>
 
     );

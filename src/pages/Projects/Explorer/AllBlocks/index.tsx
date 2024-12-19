@@ -1,7 +1,7 @@
 // src/components/AllBlocks.tsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { curretnBlockInfo, setCurrentBlock } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
+import { currentBlockInfo, setCurrentBlock } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchBlocksInFrame } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../../../redux/store';
@@ -19,7 +19,7 @@ const AllBlocks: React.FC = () => {
     const currentPage = useSelector(selectCurrentPage);
     const blocks = useSelector(selectBlocksForCurrentPage);
     const allBlocksLoading = useSelector(selectBlocksLoadingInFrames);
-    const currentBlock = useSelector(curretnBlockInfo);
+    const currentBlock = useSelector(currentBlockInfo);
     const dispatch = useDispatch<AppDispatch>();
     const { rpcUrl } = useRpc();
 

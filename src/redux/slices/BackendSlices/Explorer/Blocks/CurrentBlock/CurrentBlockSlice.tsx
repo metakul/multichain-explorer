@@ -39,6 +39,6 @@ export const { setCurrentBlock, addNewBlock } = currentblockSlice.actions;
 export default currentblockSlice.reducer;
 
 // Selectors
-export const curretnBlockInfo = (state: { currentBlockState: CurrentBlockState }) => state.currentBlockState.currentBlock;
+export const currentBlockInfo = (state: { currentBlockState: CurrentBlockState }) => state.currentBlockState.currentBlock;
 export const selectCurrentBlockLoading = (state: { currentBlockState: CurrentBlockState }) => state.currentBlockState.loading;
 export const selectCurrentBlockError = (state: { currentBlockState: CurrentBlockState }) => state.currentBlockState.error;

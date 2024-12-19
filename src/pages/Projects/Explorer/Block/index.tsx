@@ -21,7 +21,7 @@ function SingleBlock() {
         if (block) {
             dispatch(fetchBlockInfo({ rpcUrl, blockNo: block }));
         }
-    }, [block, blockData, rpcUrl]);
+    }, [block, blockData, dispatch, rpcUrl]);
 
     return (
         <Box style={{ padding: "16px", margin: "auto", marginTop: "120px" }}>

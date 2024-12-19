@@ -35,7 +35,7 @@ function Web3ProfilePage() {
                 textAlign: "center",
                 fontSize: "1.3rem"
               }}>
-                Welcome <br/> {walletAddress}
+                Welcome<br/>{walletAddress}
               </Typography>
 
             </Box>
