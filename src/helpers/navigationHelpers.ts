@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { EXPLORER_PAGE, Pages } from '../DataTypes/enums';
 
 export const navigateToTransaction = (navigate: ReturnType<typeof useNavigate>,hash: string) => {
-    navigate(`${EXPLORER_PAGE.Transaction}/${hash}`);
+    navigate(`${EXPLORER_PAGE.SINGLE_TRANSACTIONS}/${hash}`);
 };
 
 export const navigateToBlock = (navigate: ReturnType<typeof useNavigate>, blockNumber: number) => {

@@ -9,7 +9,7 @@ import { selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectCurrentP
 import { Block } from '../../../../interfaces/interface';
 import Request from '../../../../Backend/axiosCall/apiCall';
 import { ApiEndpoint } from '../../../../DataTypes/enums';
-import BlockInfo from '../../../../Components/Blocks/BlockInfo';
+import BlockInfo from '../../../../Components/Blocks/SingleBlockWithTrx';
 import Text from '../../../../Components/UI/Text';
 import Box from '../../../../Components/UI/Box';
 import Button from '../../../../Components/UI/Button';

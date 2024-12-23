@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import {
     selectTransactionsLoading,
@@ -12,6 +12,9 @@ import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { AppDispatch } from "../../../../redux/store";
 import Box from "../../../../Components/UI/Box";
 import Text from "../../../../Components/UI/Text";
+import { truncateValue } from "../../../../helpers/scripts";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { EXPLORER_PAGE } from "../../../../DataTypes/enums";
 
 function Transaction() {
     const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +29,7 @@ function Transaction() {
         if (!transaction && hash) {
             dispatch(fetchSingleTrx({ rpcUrl, hash }));
         }
-    }, [ hash, rpcUrl, transaction]);
+    }, [dispatch, hash, rpcUrl, transaction]);
 
     if (error) return <Text>Error: {error}</Text>;
 
@@ -34,47 +37,65 @@ function Transaction() {
         <Box style={{ marginTop: "120px" }}>
             <Text>Transaction Details:</Text>
             <Box style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', marginTop: '16px' }}>
-                <DetailRow label="Transaction Hash" value={loading ? "" : transaction?.hash} loading={loading} />
-                <DetailRow label="Block Hash" value={transaction?.blockHash} loading={loading} />
-                <DetailRow label="Block Number" value={transaction?.blockNumber?.toString()} loading={loading} />
-                <DetailRow label="Transaction Index" value={transaction?.transactionIndex} loading={loading} />
-                <DetailRow label="Type" value={transaction?.type} loading={loading} />
-                <DetailRow label="Nonce" value={transaction?.nonce} loading={loading} />
-                <DetailRow label="From" value={transaction?.from} loading={loading} />
-                <DetailRow label="To" value={transaction?.to} loading={loading} />
-                <DetailRow label="Value" value={transaction?.value?.toString()} loading={loading} />
-                <DetailRow label="Gas" value={transaction?.gas} loading={loading} />
-                <DetailRow label="Gas Price" value={transaction?.gasPrice} loading={loading} />
-                <DetailRow label="Max Fee Per Gas" value={transaction?.maxFeePerGas || "N/A"} loading={loading} />
-                <DetailRow label="Max Priority Fee Per Gas" value={transaction?.maxPriorityFeePerGas || "N/A"} loading={loading} />
-                <DetailRow label="Chain ID" value={transaction?.chainId} loading={loading} />
-                <DetailRow label="Input Data" value={transaction?.input} loading={loading} />
-                <DetailRow label="Access List" value={JSON.stringify(transaction?.accessList)} loading={loading} />
-                <DetailRow label="R" value={transaction?.r} loading={loading} />
-                <DetailRow label="S" value={transaction?.s} loading={loading} />
-                <DetailRow label="V" value={transaction?.v} loading={loading} />
+                <TrxDetailRow label="Trx Hash" value={loading ? "" : transaction?.hash} loading={loading} />
+                <TrxDetailRow label="Block Hash" value={transaction?.blockHash} loading={loading} />
+                <TrxDetailRow label="Block Number" value={transaction?.blockNumber?.toString()} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_BLOCK}/${transaction?.blockNumber}`} />
+                <TrxDetailRow label="Transaction Index" value={transaction?.transactionIndex} loading={loading} />
+                <TrxDetailRow label="Type" value={transaction?.type} loading={loading} />
+                <TrxDetailRow label="Nonce" value={transaction?.nonce} loading={loading} />
+                <TrxDetailRow label="From" value={transaction?.from} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.from}`} />
+                <TrxDetailRow label="To" value={transaction?.to} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.to}`} />
+                <TrxDetailRow label="Value" value={transaction?.value?.toString()} loading={loading} />
+                <TrxDetailRow label="Gas" value={transaction?.gas} loading={loading} />
+                <TrxDetailRow label="Gas Price" value={transaction?.gasPrice} loading={loading} />
+                <TrxDetailRow label="Max Fee Per Gas" value={transaction?.maxFeePerGas || "N/A"} loading={loading} />
+                <TrxDetailRow label="Max Priority Fee Per Gas" value={transaction?.maxPriorityFeePerGas || "N/A"} loading={loading} />
+                <TrxDetailRow label="Chain ID" value={transaction?.chainId} loading={loading} />
+                <TrxDetailRow label="Input Data" value={transaction?.input} loading={loading} />
+                <TrxDetailRow label="Access List" value={JSON.stringify(transaction?.accessList)} loading={loading} />
+                <TrxDetailRow label="R" value={transaction?.r} loading={loading} />
+                <TrxDetailRow label="S" value={transaction?.s} loading={loading} />
+                <TrxDetailRow label="V" value={transaction?.v} loading={loading} />
             </Box>
         </Box>
     );
 }
 
-// DetailRow component to display a label-value pair with optional loading skeleton
-const DetailRow = ({ label, value, loading }: { label: string; value?: string; loading: boolean }) => (
-    <Box style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eaeaea' }}>
-        <Text style={{ fontWeight: 'bold' }}>{label}</Text>
-        <Text>{loading ? <Skeleton /> : truncateValue(value) }</Text>
-    </Box>
-);
+// TrxDetailRow component to display a label-value pair with optional loading skeleton
+const TrxDetailRow = ({ label, value, loading, navigateTo }: { label: string; value?: string; loading: boolean; navigateTo?: string }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (navigateTo) {
+            navigate(navigateTo);
+        }
+    };
+
+    return (
+        <Box
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '8px 0',
+                borderBottom: '1px solid #eaeaea',
+                cursor: navigateTo ? 'pointer' : 'default'
+            }}
+            onClick={navigateTo ? handleClick : undefined}
+        >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <HelpOutlineIcon />
+                <Text style={{ fontWeight: 'bold' }}>{label}</Text>
+            </Box>
+            <Text style={{ color: navigateTo ? "blue" : "inherit" }}>
+                {loading ? <Skeleton /> : truncateValue(value)}
+            </Text>
+        </Box>
+    );
+};
 
 // Skeleton component for displaying a loading placeholder
 const Skeleton = () => (
     <Box style={{ width: '100px', height: '16px', backgroundColor: '#eaeaea', borderRadius: '4px' }} />
 );
-
-// Truncate long values to make them more readable
-const truncateValue = (value?: string) => {
-    if (!value) return "N/A";
-    return value.length > 50 ? `${value.slice(0, 50)}...` : value;
-};
 
 export default Transaction;

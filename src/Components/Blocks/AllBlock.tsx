@@ -10,7 +10,7 @@ import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Button from '../UI/Button';
 import Grid from '../UI/Grid';
-import SingleBlockInfo from './SingleBlock';
+import SingleBlockInfo from './SingleBlockCard';
 import { navigateToAllBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,8 +32,6 @@ const AllBlock: React.FC = () => {
         dispatch(fetchCurrentBlock(rpcUrl));
     };
 
-    console.log("allBlocksLoading", allBlocksLoading);
-    
     return (
         <div>
             <Box sx={{

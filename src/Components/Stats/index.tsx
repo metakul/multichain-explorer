@@ -44,7 +44,9 @@ function ExplorerStats() {
         }}>
             <Card>
                 <Flex >
-                    <Box>
+                    <Box sx={{
+                        padding: '8px',
+                    }}>
                         <Text>
                             {label}
                         </Text>
@@ -58,16 +60,19 @@ function ExplorerStats() {
     );
 
     const StatCardSkeleton = () => (
-        <Box style={{
+        <Box sx={{
             backgroundColor: '#ffffff',
             boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '8px',
             padding: '16px',
             height: "60px",
-            marginBottom: "20px"
+            marginBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
         }}>
             <Card>
-                <Flex gap="3" >
+                <Flex gap="3">
                     <Box>
                         <SkeletonBox width="120px" height="16px" />
                         <SkeletonBox width="80px" height="16px" />
@@ -86,7 +91,6 @@ function ExplorerStats() {
             <Box sx={{
                 display: "flex"
             }}>
-
                 <Text style={{ fontSize: "24px", fontWeight: "bold", }}>  Explorer Stats Info </Text>
                 <Button onClick={handleReload} disabled={loading}>
                     {loading ? "Loading Stats" : "Reload"}
@@ -99,10 +103,10 @@ function ExplorerStats() {
                         <>
                             <StatCard label="Total Blocks" value={stats.totalBlocks} />
                             <StatCard label="Total Addresses" value={stats.totalAddresses} />
-                            <StatCard label="Total Transactions" value={stats.totalTransactions} />
+                            <StatCard label="Total Trx" value={stats.totalTransactions} />
                             <StatCard label="Average Block Time" value={`${stats.averageBlockTime} s`} />
                             <StatCard label="Total Gas Used" value={stats.totalGasUsed} />
-                            <StatCard label="Transactions Today" value={stats.transactionsToday} />
+                            <StatCard label="Trx Today" value={stats.transactionsToday} />
                             <StatCard label="Gas Used Today" value={stats.gasUsedToday} />
                             <StatCard label="Average Gas Price" value={stats.gasPrices.average} />
                             <StatCard label="Fast Gas Price" value={stats.gasPrices.fast} />

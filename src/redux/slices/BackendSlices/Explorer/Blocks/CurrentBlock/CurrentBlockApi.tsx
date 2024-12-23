@@ -24,7 +24,6 @@ export const fetchCurrentBlock = createAsyncThunk(
                 const blockNo = (currentBlockNumber - index).toString();
                 return {
                     number: blockNo,
-                    hash: `mockHash_${blockNo}`,
                     transactions: [], // Empty transactions for mock
                     uncles: [], // Empty uncles for mock
                 };

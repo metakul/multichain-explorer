@@ -27,14 +27,21 @@ export enum PROJECTS {
 
 export enum EXPLORER_PAGE {
   EXPLORER_HOME = "/explorer",
-  Transaction = "/Transaction",
+  SINGLE_TRANSACTIONS = "/Transaction",
   SINGLE_BLOCK = "/block",
   SINGLE_ADDRESS = "/address",
 }
+
 export enum ProfileTab {
   tabTitle1 = "OverView",
   tabTitle2 = "Profile",
   tabTitle3 = "Activity",
+}
+
+export enum BlockDetailsTab {
+  tabTitle1 = "Overview",
+  tabTitle2 = "Consensus Info",
+  tabTitle3 = "MEVInfo",
 }
 
 export enum ContractType {

@@ -51,7 +51,7 @@ const Router: React.FC = () => {
           element: <Explorer />,
         },
         {
-          path: `${EXPLORER_PAGE.Transaction}/:hash`,
+          path: `${EXPLORER_PAGE.SINGLE_TRANSACTIONS}/:hash`,
           element: <Transaction />,
         },
         {

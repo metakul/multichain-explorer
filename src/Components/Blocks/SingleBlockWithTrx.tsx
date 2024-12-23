@@ -99,7 +99,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                                 }}
                             >
                                 <p>
-                                    <strong>Transaction Hash:</strong>{' '}
+                                    <strong>Trx Hash:</strong>{' '}
                                     <Text
                                         style={{
                                             color: 'blue',
