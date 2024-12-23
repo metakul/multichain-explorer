@@ -144,6 +144,7 @@ export interface Block {
   transactionsRoot?: string;
   uncles?: string[];
   transactions?: string[];
+  transactionsCount?: number;
 }
 
 export interface ITrx {

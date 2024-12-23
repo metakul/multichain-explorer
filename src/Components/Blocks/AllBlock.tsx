@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlocks, selectBlocksLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
 import { currentBlockInfo } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
-import { fetchRecentBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { getPreviousBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
@@ -24,11 +24,11 @@ const AllBlock: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchCurrentBlock(rpcUrl));
-        dispatch(fetchRecentBlocks(rpcUrl));
+        dispatch(getPreviousBlocks(rpcUrl));
     }, [dispatch, rpcUrl]);
 
     const handleReload = () => {
-        dispatch(fetchRecentBlocks(rpcUrl));
+        dispatch(getPreviousBlocks(rpcUrl));
         dispatch(fetchCurrentBlock(rpcUrl));
     };
 

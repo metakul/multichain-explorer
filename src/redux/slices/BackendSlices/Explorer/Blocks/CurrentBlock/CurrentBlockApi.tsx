@@ -16,7 +16,22 @@ export const fetchCurrentBlock = createAsyncThunk(
                     providerUrl: rpcUrl
                 },
             });
-            const currentBlock: Block = response;
+            const getTransactionCountInBlock = await Request({
+                url: "getTransactionCountInBlock",
+                method: ApiEndpoint.getTransactionCountInBlock.method,
+                data: {
+                    providerUrl: rpcUrl
+                },
+                slug:`/${response.number}`
+            });
+
+            console.log(getTransactionCountInBlock.transactionCount,);
+            
+            
+            const currentBlock: Block = {
+                ...response,
+                transactionsCount: getTransactionCountInBlock.transactionCount,
+            };
 
             // Generate mock blocks for previous 5 blocks
             const currentBlockNumber = parseInt(currentBlock.number, 10);
@@ -26,6 +41,7 @@ export const fetchCurrentBlock = createAsyncThunk(
                     number: blockNo,
                     transactions: [], // Empty transactions for mock
                     uncles: [], // Empty uncles for mock
+                    transactionsCount: 0, // Empty transactions count for mock
                 };
             });
 

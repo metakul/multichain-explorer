@@ -43,10 +43,10 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                         : "Block #N/A"}
             </Text>
             <Typography variant="body2">
-                <strong>Gas Limit:</strong> {renderContent(block?.gasLimit, 100)}
+                <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
             </Typography>
             <Typography variant="body2">
-                <strong>Size:</strong> {loading ? <Skeleton width={80} /> : block?.size ? `${block.size} bytes` : "N/A"}
+                <strong>Total Transaction :</strong> {renderContent(block?.transactionsCount, 100)}
             </Typography>
             <Typography variant="body2">
                 <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}

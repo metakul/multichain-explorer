@@ -5,15 +5,15 @@ import { addNewBlock, setBlocks, setRecentBlocksLoading } from "./RecentBlocksSl
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
 import { setBlocksInFrames, setBlocksInFramesLoading, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
 
-export const fetchRecentBlocks = createAsyncThunk(
-    'blocks/fetchRecentBlocks',
+export const getPreviousBlocks = createAsyncThunk(
+    'blocks/getPreviousBlocks',
     async (rpcUrl: string, { dispatch, rejectWithValue }) => {
         try {
             dispatch(setRecentBlocksLoading(true));
            
             const response = await Request({
-                url: "fetchRecentBlocks",
-                method: ApiEndpoint.fetchRecentBlocks.method,
+                url: "getPreviousBlocks",
+                method: ApiEndpoint.getPreviousBlocks.method,
                 data: {
                     providerUrl: rpcUrl
                 },
