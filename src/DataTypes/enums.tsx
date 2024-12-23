@@ -81,6 +81,7 @@ export enum Network {
   Amoy = "Amoy",
   Bsc = "Bsc",
   Localhost = "Localhost",
+  SONEIUM = "SONEIUM",
 }
 
 export type NetworkType = keyof typeof Network;
@@ -88,14 +89,25 @@ export type NetworkType = keyof typeof Network;
 export const networks: Record<Network, NetworkConfig> = {
   Polygon: {
     chainId: `0x${Number(137).toString(16)}`,
-    chainName: "Amoy Testnet",
+    chainName: "Polygon",
     nativeCurrency: {
       name: "MATIC",
       symbol: "MATIC",
       decimals: 18
     },
-    rpcUrls: ["https://polygon-amoy.g.alchemy.com/v2/roMKSSyXWVrSgFgBLhXoRW_-Y1zIciII"],
+    rpcUrls: ["https://polygon-mainnet.g.alchemy.com/v2/PXBhpQURgmwMghvNtc__XWxwc1NGmFHD"],
     blockExplorerUrls: ["https://polygonscan.com/"]
+  },
+  SONEIUM : {
+    chainId: `0x${Number(1946).toString(16)}`,
+    chainName: "Sonium Minato Testnet",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18
+    },
+    rpcUrls: ["https://rpc.minato.soneium.org"],
+    blockExplorerUrls: []
   },
   Amoy: {
     chainId: `0x${Number(0x13882).toString(16)}`,
