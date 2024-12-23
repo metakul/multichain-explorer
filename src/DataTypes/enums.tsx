@@ -40,7 +40,7 @@ export enum ProfileTab {
 
 export enum BlockDetailsTab {
   tabTitle1 = "Overview",
-  tabTitle2 = "Consensus Info",
+  tabTitle2 = "Blocks Trx",
   tabTitle3 = "MEVInfo",
 }
 

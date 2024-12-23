@@ -126,3 +126,6 @@ export const selectTransactionsLoadingForBlock = (blockNo: string) => (state: { 
 
 export const selectTransactionsErrorForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
     state.recentBlocksStateInFrames.transactionsByBlock[blockNo]?.error || null;
+// Selector to fetch a specific block by its number
+export const selectBlockByNumber = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
+    state.recentBlocksStateInFrames.blocks.find(block => block.number === blockNo);

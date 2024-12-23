@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Skeleton from '@mui/material/Skeleton';
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
 
@@ -19,9 +19,6 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
         return value !== undefined ? value : "N/A";
     };
 
-    console.log(loading);
-    
-
     return (
         <Box
             key={block?.hash ?? Math.random()}
@@ -33,7 +30,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
             }}
         >
             <Text
-                style={{ color: "blue", fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}
+                style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
                 onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number))}
             >
                 {loading
@@ -46,7 +43,9 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                 <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
             </Typography>
             <Typography variant="body2">
-                <strong>Total Transaction :</strong> {renderContent(block?.transactionsCount, 100)}
+                <strong>Total Transaction :</strong> {loading ? <Skeleton width={80} /> : block?.transactionsCount ? <Link href='/' sx={{
+                    fontWeight: '1000',
+               }}> {block.transactionsCount} Trx</Link> : "N/a"}
             </Typography>
             <Typography variant="body2">
                 <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
