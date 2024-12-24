@@ -52,7 +52,7 @@ console.log(method,headers);
 
     return response.data;  // Return the response data for further processing
   } catch (error) {
-
+    alert("Request error");
     console.error("Request error:", error);
     throw error;  // Re-throw the error for further handling
   }

@@ -26,10 +26,10 @@ function Transaction() {
     const error = useSelector(selectTransactionsError);
 
     useEffect(() => {
-        if (!transaction && hash) {
+        if (hash) {
             dispatch(fetchSingleTrx({ rpcUrl, hash }));
         }
-    }, [dispatch, hash, rpcUrl, transaction]);
+    }, [dispatch, hash, rpcUrl,  networkName]);
 
     if (error) return <Text>Error: {error}</Text>;
 
