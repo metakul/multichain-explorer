@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { ContractType, PROJECTS } from "../../../../DataTypes/enums";
 import Box from "../../../../Components/UI/Box";
 import Text from "../../../../Components/UI/Text";
+import { useRpc } from "../../../../contexts/RpcProviderContext";
 
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();
     const contracts = useSelector(selectAllContracts);
     const navigate = useNavigate()
+    const { networkName } = useRpc();
     // Fetch contracts when the component mounts
     useEffect(() => {
         (dispatch as AppDispatch)(fetchAllContracts());
@@ -22,7 +24,7 @@ const ContractsGrid: React.FC = () => {
 
     const navigateUser = (contract: { contractName: any }) => {
         // Use template string to replace :contractName with the actual contract name
-        const path = PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName);
+        const path = `${PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName)}/${networkName}`;
         navigate(path);
     };
     // Render contracts in a grid layout

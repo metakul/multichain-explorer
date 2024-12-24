@@ -53,7 +53,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                         cursor: 'pointer',
                     }}
                     onClick={() => navigate(
-                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}/${networkName}`
+                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
                     )}
                 >
                     {block.transactionsCount} Trx

@@ -18,21 +18,22 @@ function AddressInfo() {
     const error = useSelector(selectAddressInfoError);
 
     useEffect(() => {
-        if (addressInfo && addressInfo.address==address) {
-            return
-        }
-        else if (!addressInfo && address){
+        if (address) {
             dispatch(getAddressInfo({ rpcUrl, address }));
         }
-    }, [ address, rpcUrl, addressInfo]);
-
-    if (loading) return <Text>Loading...</Text>;
-    if (error) return <Text>Error: {error}</Text>;
+    }, [rpcUrl, dispatch]);
 
     return (
         <div>
             <h1>Address Details</h1>
-            <p>Balance: {addressInfo?.balance} ethers</p>
+            {loading ? (
+                <Text>Loading Balance</Text>
+            ) : (
+                <Text>Balance: {addressInfo?.balance} ethers</Text>
+            )}
+
+            {error && <Text>Error: {error}</Text>}
+
             <h2>Transactions</h2>
             <ul>
                 {addressInfo?.transactions && addressInfo.transactions.length > 0 ? (
