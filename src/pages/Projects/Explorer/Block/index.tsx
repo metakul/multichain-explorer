@@ -5,8 +5,13 @@ import CustomTab from '../../../../Components/UI/Tabs/tabs';
 import UserActivity from '../../../../Components/Profile/Activity';
 import BlockOverView from './BlockOverViewPage';
 import TransactionOverView from './TransactionOverViewPage.tsx';
+import { useSearchParams } from 'react-router-dom';
 
 const BlockOverViewPage = () => {
+
+    const [searchParams] = useSearchParams();
+
+    const defaultTab = searchParams.get('tab') || BlockDetailsTab.tabTitle1;
 
     const tabs = [
         { value: BlockDetailsTab.tabTitle1, content: <BlockOverView />, label: BlockDetailsTab.tabTitle1 },
@@ -16,7 +21,9 @@ const BlockOverViewPage = () => {
 
     return (
         <>
-            <CustomTab tabs={tabs} />
+            <>
+                <CustomTab tabs={tabs} defaultTab={defaultTab} />
+            </>
         </>
     )
 }

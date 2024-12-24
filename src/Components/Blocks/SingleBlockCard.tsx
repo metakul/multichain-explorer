@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Skeleton from '@mui/material/Skeleton';
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
+import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 
 interface SinglBlockInfoProps {
     block: Block;
@@ -42,10 +43,19 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
             <Typography variant="body2">
                 <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
             </Typography>
-            <Typography variant="body2">
-                <strong>Total Transaction :</strong> {loading ? <Skeleton width={80} /> : block?.transactionsCount ? <Link href='/' sx={{
-                    fontWeight: '1000',
-               }}> {block.transactionsCount} Trx</Link> : "N/a"}
+                <Typography variant="body2" display="flex" >
+                <strong>Total Transaction :   </strong> {loading ? <Skeleton width={80} /> : block?.transactionsCount ? <Typography
+                    style={{
+                        color: 'blue',
+                        fontWeight: '1000',
+                        cursor: 'pointer',
+                    }}
+                    onClick={() => navigate(
+                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}?tab=${BlockDetailsTab.tabTitle2}`
+                    )}
+                    >
+                     {block.transactionsCount} Trx
+                </Typography> : "N/a"}
             </Typography>
             <Typography variant="body2">
                 <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
