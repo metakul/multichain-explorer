@@ -1,5 +1,6 @@
 import { Pages } from "../DataTypes/enums";
 
+// todo - update the navConfig to match the pages with rpc
 
 export const navConfig = [
     {

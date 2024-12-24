@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // RpcProviderContext.ts
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { ethers } from "ethers";
 import { networks, NetworkType } from "../DataTypes/enums";
 
 interface RpcContextType {
-    networkName: NetworkType;
+    networkName: NetworkType | "Users_Chain";
     connected: boolean;
     rpcUrl: string;
     provider: ethers.JsonRpcProvider | ethers.BrowserProvider | null;
@@ -29,12 +29,18 @@ const defaultRpcContextValue: RpcContextType = {
 const RpcContext = createContext<RpcContextType>(defaultRpcContextValue);
 const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 
-export const RpcProvider = ({ children }: { children: ReactNode }) => {
+export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { children: ReactNode, initialNetworkType: NetworkType, initialRpcUrl: string }) => {
+
     const [connected, setConnected] = useState(false);
     const [rpcUrl, setRpcUrl] = useState(RPC_ENDPOINT);
-    const [networkName, setNetworkName] = useState<any>("Amoy");
+    const [networkName, setNetworkName] = useState<NetworkType | "Users_Chain">(initialNetworkType);
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
+
+    useEffect(() => {
+        setRpc(initialNetworkType, initialRpcUrl);
+    }, [initialNetworkType, initialRpcUrl]);
+
 
     // Function to set RPC provider and network
     const setRpc = (customNetworkName: NetworkType | "Users_Chain", customRpcUrl?: string) => {

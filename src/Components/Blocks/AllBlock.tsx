@@ -19,7 +19,7 @@ const AllBlock: React.FC = () => {
     const allBlocksLoading = useSelector(selectBlocksLoading);
     const currentBlock = useSelector(currentBlockInfo);
     const dispatch = useDispatch<AppDispatch>();
-    const { rpcUrl } = useRpc();
+    const { rpcUrl,networkName } = useRpc();
     const navigate=useNavigate()
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const AllBlock: React.FC = () => {
                 )}
          
             </Grid>
-            <Button onClick={() => navigateToAllBlock(navigate)}>
+            <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>
         </div>

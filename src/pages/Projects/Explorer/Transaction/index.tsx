@@ -18,7 +18,7 @@ import { EXPLORER_PAGE } from "../../../../DataTypes/enums";
 
 function Transaction() {
     const dispatch = useDispatch<AppDispatch>();
-    const { rpcUrl } = useRpc();
+    const { rpcUrl, networkName } = useRpc();
     const { hash } = useParams<{ hash: string }>();
 
     const transaction = useSelector((state: { transactionsState: TransactionsState }) => selectTransactionByHash(state, hash || ""));
@@ -39,12 +39,12 @@ function Transaction() {
             <Box style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', marginTop: '16px' }}>
                 <TrxDetailRow label="Trx Hash" value={loading ? "" : transaction?.hash} loading={loading} />
                 <TrxDetailRow label="Block Hash" value={transaction?.blockHash} loading={loading} />
-                <TrxDetailRow label="Block Number" value={transaction?.blockNumber?.toString()} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_BLOCK}/${transaction?.blockNumber}`} />
+                <TrxDetailRow label="Block Number" value={transaction?.blockNumber?.toString()} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_BLOCK}/${transaction?.blockNumber}/${networkName}`} />
                 <TrxDetailRow label="Transaction Index" value={transaction?.transactionIndex} loading={loading} />
                 <TrxDetailRow label="Type" value={transaction?.type} loading={loading} />
                 <TrxDetailRow label="Nonce" value={transaction?.nonce} loading={loading} />
-                <TrxDetailRow label="From" value={transaction?.from} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.from}`} />
-                <TrxDetailRow label="To" value={transaction?.to} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.to}`} />
+                <TrxDetailRow label="From" value={transaction?.from} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.from}/${networkName}`} />
+                <TrxDetailRow label="To" value={transaction?.to} loading={loading} navigateTo={`${EXPLORER_PAGE.SINGLE_ADDRESS}/${transaction?.to}/${networkName}`} />
                 <TrxDetailRow label="Value" value={transaction?.value?.toString()} loading={loading} />
                 <TrxDetailRow label="Gas" value={transaction?.gas} loading={loading} />
                 <TrxDetailRow label="Gas Price" value={transaction?.gasPrice} loading={loading} />

@@ -27,7 +27,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
     const transactions = useSelector(selectTransactionsForBlock(block.number));
     const loading = useSelector(selectTransactionsLoadingForBlock(block.number));
     const error = useSelector(selectTransactionsErrorForBlock(block.number));
-    const { rpcUrl } = useRpc();
+    const { rpcUrl,networkName } = useRpc();
 
     const [visibleTransactions, setVisibleTransactions] = useState(3);
 
@@ -61,7 +61,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                         marginBottom: '8px',
                         cursor: 'pointer',
                     }}
-                    onClick={() => navigateToBlock(navigate, Number(block?.number))}
+                    onClick={() => navigateToBlock(navigate, Number(block?.number), networkName)}
                 >
                     Block #{block?.number ?? 'N/A'}
                 </Text>
@@ -77,7 +77,7 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                                 cursor: 'pointer',
                             }}
                             onClick={() => navigate(
-                                `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}?tab=${BlockDetailsTab.tabTitle2}`
+                                `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
                             )}
                         >
                             {transactions.length} Trx
@@ -128,15 +128,15 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                                             fontWeight: 'bold',
                                             marginBottom: '8px',
                                         }}
-                                        onClick={() => navigateToTransaction(navigate, String(trx?.hash))}
+                                        onClick={() => navigateToTransaction(navigate, String(trx?.hash), networkName)}
                                     >
                                         {trx?.hash?.slice(0, 4)}...{trx?.hash?.slice(-4)}
                                     </Text>
                                 </p>
-                                <p onClick={() => navigateToAddress(navigate, String(trx?.from))}>
+                                <p onClick={() => navigateToAddress(navigate, String(trx?.from), networkName)}>
                                     <strong>From:</strong> {trx?.from?.slice(0, 4)}...{trx?.from?.slice(-4)}
                                 </p>
-                                <p onClick={() => navigateToAddress(navigate, String(trx?.to))}>
+                                <p onClick={() => navigateToAddress(navigate, String(trx?.to), networkName)}>
                                     <strong>To:</strong> {trx?.to?.slice(0, 4)}...{trx?.to?.slice(-4)}
                                 </p>
                                 <p><strong>Value:</strong> {trx.value}</p>

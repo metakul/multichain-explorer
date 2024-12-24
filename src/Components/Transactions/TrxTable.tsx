@@ -6,6 +6,7 @@ import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../..
 import Container from "../UI/Container";
 import CustomTable, { CustomTableHeader, CustomTableRow, CustomTableCell } from "../UI/Table";
 import Skeleton from "@mui/material/Skeleton";
+import { useRpc } from "../../contexts/RpcProviderContext";
 
 interface TrxInfoProps {
     transaction: ITrx[] | undefined;
@@ -15,7 +16,7 @@ interface TrxInfoProps {
 
 const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }) => {
     const navigate = useNavigate();
-
+    const {networkName} = useRpc()
     // Render loading skeleton
     if (loading) {
         return (
@@ -72,25 +73,25 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                     <CustomTableRow key={trx?.hash}>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToTransaction(navigate, trx?.hash)}
+                            onClick={() => navigateToTransaction(navigate, trx?.hash, networkName)}
                         >
                             {trx?.hash?.slice(0, 16)}...
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToBlock(navigate, trx?.blockNumber)}
+                            onClick={() => navigateToBlock(navigate, trx?.blockNumber, networkName)}
                         >
                             {trx?.blockNumber}
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToAddress(navigate, trx?.from)}
+                            onClick={() => navigateToAddress(navigate, trx?.from, networkName)}
                         >
                             {trx?.from?.slice(0, 8)}...{trx?.from?.slice(-8)}
                         </CustomTableCell>
                         <CustomTableCell
                             style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => navigateToAddress(navigate, trx?.to)}
+                            onClick={() => navigateToAddress(navigate, trx?.to, networkName)}
                         >
                             {trx?.to?.slice(0, 8)}...{trx?.to?.slice(-8)}
                         </CustomTableCell>
@@ -98,7 +99,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         <CustomTableCell>{(parseFloat(trx?.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
                         <CustomTableCell>
                             <EyeOpenIcon
-                                onClick={() => navigateToTransaction(navigate, trx?.hash)}
+                                onClick={() => navigateToTransaction(navigate, trx?.hash, networkName)}
                                 style={{ cursor: "pointer" }}
                             />
                         </CustomTableCell>

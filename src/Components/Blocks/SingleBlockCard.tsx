@@ -7,6 +7,7 @@ import { Typography } from '@mui/material';
 import { navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
+import { useRpc } from '../../contexts/RpcProviderContext';
 
 interface SinglBlockInfoProps {
     block: Block;
@@ -19,6 +20,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
         if (loading) return <Skeleton width={loadingWidth} />;
         return value !== undefined ? value : "N/A";
     };
+    const {networkName} = useRpc()
 
     return (
         <Box
@@ -32,7 +34,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
         >
             <Text
                 style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
-                onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number))}
+                onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number), networkName)}
             >
                 {loading
                     ? <Skeleton width={120} />
@@ -51,7 +53,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                         cursor: 'pointer',
                     }}
                     onClick={() => navigate(
-                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}?tab=${BlockDetailsTab.tabTitle2}`
+                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}/${networkName}`
                     )}
                 >
                     {block.transactionsCount} Trx
