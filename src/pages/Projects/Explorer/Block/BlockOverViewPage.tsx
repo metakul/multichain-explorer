@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchBlockInfo } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi";
 import { selectBlocks, selectBlocksLoading } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
@@ -9,14 +9,16 @@ import Box from "../../../../Components/UI/Box";
 import Text from "../../../../Components/UI/Text";
 import { Skeleton } from "@mui/material";
 import { truncateValue } from "../../../../helpers/scripts";
+import { navigateToAddress } from "../../../../helpers/navigationHelpers";
 
 function BlockOverView() {
     const { block } = useParams<{ block: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const blocks = useSelector(selectBlocks);
     const isLoading = useSelector(selectBlocksLoading);
-    const { rpcUrl } = useRpc();
+    const { rpcUrl, networkName } = useRpc();
     const blockData = blocks.find((b) => b.number == block || b.hash == block);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (block) {
@@ -37,7 +39,7 @@ function BlockOverView() {
                 <DetailRow label="Gas Used" value={blockData?.gasUsed} isLoading={isLoading} />
                 <DetailRow label="Hash" value={blockData?.hash} isLoading={isLoading} />
                 <DetailRow label="Logs Bloom" value={blockData?.logsBloom} isLoading={isLoading} />
-                <DetailRow label="Miner" value={blockData?.miner} isLoading={isLoading} />
+                <DetailRow label="Miner" value={blockData?.miner} isLoading={isLoading} navigate={() => blockData?.miner && navigateToAddress(navigate, blockData.miner, networkName)} />
                 <DetailRow label="Mix Hash" value={blockData?.mixHash} isLoading={isLoading} />
                 <DetailRow label="Nonce" value={blockData?.nonce} isLoading={isLoading} />
                 <DetailRow label="Block Number" value={blockData?.number} isLoading={isLoading} />
@@ -56,13 +58,18 @@ function BlockOverView() {
 }
 
 // DetailRow component to display label-value pairs consistently with loading state
-const DetailRow = ({ label, value, isLoading }: { label: string; value?: string; isLoading: boolean }) => (
+const DetailRow = ({ label, value, isLoading, navigate }: { label: string; value?: string; isLoading: boolean; navigate?: (value: string) => void }) => (
     <Box style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eaeaea' }}>
         <Text style={{ fontWeight: 'bold' }}>{label}</Text>
         {isLoading ? (
             <Skeleton width={150} />
         ) : (
-            <Text>{truncateValue(value)}</Text>
+            <Text
+                onClick={() => navigate && value ? navigate(value) : undefined}
+                style={{ cursor: navigate ? 'pointer' : 'default', color: navigate ? 'blue' : 'inherit' }}
+            >
+                {truncateValue(value)}
+            </Text>
         )}
     </Box>
 );
