@@ -39,6 +39,12 @@ const RpcComponent: React.FC = () => {
         handleSetCustomRpc();
     }, [selectedNetwork, rpcUrl]);
 
+    // Update URL with the new network name whenever it changes
+    useEffect(() => {
+        const newUrl = window.location.pathname.replace(/\/[A-Za-z]+$/, `/${networkName}`);
+        window.history.pushState({}, '', newUrl);
+    }, [networkName]);
+    
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
     };

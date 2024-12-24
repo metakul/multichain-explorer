@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import { networks, NetworkType } from "../DataTypes/enums";
 
 interface RpcContextType {
-    networkName: NetworkType | "Users_Chain";
+    networkName: NetworkType;
     connected: boolean;
     rpcUrl: string;
     provider: ethers.JsonRpcProvider | ethers.BrowserProvider | null;
@@ -33,7 +33,7 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
 
     const [connected, setConnected] = useState(false);
     const [rpcUrl, setRpcUrl] = useState(RPC_ENDPOINT);
-    const [networkName, setNetworkName] = useState<NetworkType | "Users_Chain">(initialNetworkType);
+    const [networkName, setNetworkName] = useState<any>(initialNetworkType);
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
