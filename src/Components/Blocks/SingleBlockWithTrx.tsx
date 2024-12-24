@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
 import { useRpc } from '../../contexts/RpcProviderContext';
-import { Skeleton } from '@mui/material'; // Importing Skeleton from Material-UI
+import { Skeleton, Typography } from '@mui/material'; // Importing Skeleton from Material-UI
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Container from '../UI/Container';
+import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 
 interface BlockInfoProps {
     block: Block;
@@ -65,7 +66,27 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                     Block #{block?.number ?? 'N/A'}
                 </Text>
                 <p><strong>Gas Limit:</strong> {block?.gasLimit ?? 'N/A'}</p>
-                <p><strong>Size:</strong> {block?.size ? `${block.size} bytes` : 'N/A'}</p>
+                <Typography variant="body2" display="flex">
+                    <strong>Total Transactions: </strong> {loading ? (
+                        <Skeleton width={80} />
+                    ) : transactions.length > 0 ? (
+                        <Typography
+                            style={{
+                                color: 'blue',
+                                fontWeight: '1000',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => navigate(
+                                `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}?tab=${BlockDetailsTab.tabTitle2}`
+                            )}
+                        >
+                            {transactions.length} Trx
+                        </Typography>
+                    ) : (
+                        "N/A"
+                    )}
+                </Typography>
+
                 <p><strong>Difficulty:</strong> {block?.difficulty ?? 'N/A'}</p>
                 <p><strong>Timestamp:</strong> {block?.timestamp ? new Date(parseInt(block.timestamp) * 1000).toLocaleString() : 'N/A'}</p>
             </Box>

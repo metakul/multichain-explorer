@@ -43,7 +43,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
             <Typography variant="body2">
                 <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
             </Typography>
-                <Typography variant="body2" display="flex" >
+            <Typography variant="body2" display="flex" >
                 <strong>Total Transaction :   </strong> {loading ? <Skeleton width={80} /> : block?.transactionsCount ? <Typography
                     style={{
                         color: 'blue',
@@ -53,8 +53,8 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                     onClick={() => navigate(
                         `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}?tab=${BlockDetailsTab.tabTitle2}`
                     )}
-                    >
-                     {block.transactionsCount} Trx
+                >
+                    {block.transactionsCount} Trx
                 </Typography> : "N/a"}
             </Typography>
             <Typography variant="body2">

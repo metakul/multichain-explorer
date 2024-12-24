@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getBlockWithTrx } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
@@ -16,9 +16,6 @@ function TransactionOverViewPage() {
     const blocks = useSelector(selectBlocks);
     const blockData = blocks.find((b) => b.number == block || b.hash == block);
 
-    console.log("blockInfo", blockData);
-    
-    
     useEffect(() => {
         if (block) {
             dispatch(getBlockWithTrx({ blockNo: block, rpcUrl }));
@@ -28,7 +25,6 @@ function TransactionOverViewPage() {
     return (
         <div>
             {blockData &&
-
                 <BlockInfo block={blockData} />
             }
         </div>
