@@ -25,7 +25,7 @@ export default function Header() {
                 textAlign: "center",
             }} >The Blockchain Explorer
                     <img
-                        width={100} height={50}
+                        width={50} height={50}
                         src="/logo.svg"
                         alt="Colm Tuite"
                     />

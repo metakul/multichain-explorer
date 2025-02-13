@@ -18,12 +18,12 @@ const Dashboard: React.FC = () => {
             <h1>Welcome to Our Projects</h1>
             <div>
                 <HomeButton onClick={() => handleNavigation(PROJECTS.CONTRACTS_HOME)}>
-                    C3I Contracts
+                Metakul Contracts
                 </HomeButton>
             </div>
             <div className="projects">
                 <HomeButton onClick={() => handleNavigation(EXPLORER_PAGE.EXPLORER_HOME)}>
-                    C3I Explorer
+                Metakul Explorer
                 </HomeButton>
             </div>
             {/* <div className="projects">

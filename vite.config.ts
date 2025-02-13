@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
         rewrite: (path) => path.replace(/^\/authApi/, '')
       },
       '/backendApi': {
-        target: "http://localhost:5000",
+        target: " https://backend-everything-37ada44e5086.herokuapp.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/backendApi/, 'v1')
       },

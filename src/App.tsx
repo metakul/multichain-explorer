@@ -4,6 +4,7 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 import { RpcProvider } from './contexts/RpcProviderContext';
 import { networks, NetworkType } from './DataTypes/enums';
+import { analytics } from './services/fireBase';
 
 const AppWrapper = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const AppWrapper = () => {
 
   // Get the RPC URL for the resolved network name
   const rpcUrl = networks[resolvedNetworkName]?.rpcUrls?.[0] || networks['Amoy'].rpcUrls[0];
-
+ console.log("analytics",analytics)
   console.log(`Current Network: ${resolvedNetworkName}`);
 
   return (
