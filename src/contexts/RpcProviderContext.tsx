@@ -32,12 +32,15 @@ const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { children: ReactNode, initialNetworkType: NetworkType, initialRpcUrl: string }) => {
 
     const [connected, setConnected] = useState(false);
-    const [rpcUrl, setRpcUrl] = useState(RPC_ENDPOINT);
+    const [rpcUrl, setRpcUrl] = useState<string>(initialRpcUrl);
     const [networkName, setNetworkName] = useState<any>(initialNetworkType);
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
     useEffect(() => {
+
+        console.log("checking rpc",rpcUrl,initialRpcUrl);
+        
         setRpc(initialNetworkType, initialRpcUrl);
     }, [initialNetworkType, initialRpcUrl]);
 
@@ -50,12 +53,16 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
             // Set the RPC provider
             if (customProvider) {
                 setProvider(customProvider);
-                setRpcUrl(customRpcUrl);
+                if (customRpcUrl) {
+                    if (customRpcUrl) {
+                        setRpcUrl(customRpcUrl);
+                    }
+                }
             } else {
                 // Default provider (MetaMask)
                 const defaultProvider = new ethers.BrowserProvider(window.ethereum);
                 setProvider(defaultProvider);
-                setRpcUrl(customNetworkName === "Users_Chain" ? customRpcUrl : networks[customNetworkName || "Polygon"].rpcUrls[0]);
+                setRpcUrl(customNetworkName === "Users_Chain" ? customRpcUrl || "" : networks[customNetworkName || "Polygon"].rpcUrls[0]);
             }
 
             // Set network
@@ -96,7 +103,10 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
 
                 // Set the provider and network details
                 setProvider(customProvider);
-                setRpcUrl(customRpcUrl);
+                if(customRpcUrl){
+
+                    setRpcUrl(customRpcUrl);
+                }
                 setNetworkName(customNetworkName);
                 setConnected(true);
             } else {
