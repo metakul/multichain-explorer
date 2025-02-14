@@ -12,7 +12,22 @@ export interface BlocksState {
 }
 
 const initialState: BlocksState = {
-    blocks: [
+    blocks: [{
+        number:"",
+        baseFeePerGas:""
+    },{
+        number:"",
+        baseFeePerGas:""
+    },{
+        number:"",
+        baseFeePerGas:""
+    },{
+        number:"",
+        baseFeePerGas:""
+    },{
+        number:"",
+        baseFeePerGas:""
+    },
     ],
     loading: false,
     error: null,

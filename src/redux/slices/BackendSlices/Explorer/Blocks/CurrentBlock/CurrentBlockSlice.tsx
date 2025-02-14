@@ -22,19 +22,32 @@ const currentblockSlice = createSlice({
     initialState,
     reducers: {
         setCurrentBlock: (state, action: PayloadAction<Block>) => {
-            state.loading = false;
-            state.currentBlock = action.payload;
-            state.error = null;
+
+            if (
+                action.payload &&
+                typeof action.payload === "object" &&
+                "hash" in action.payload &&
+                "number" in action.payload
+            ) {
+                state.currentBlock = action.payload;
+                state.loading = false;
+
+                state.error = null;
+            } else {
+                console.warn("Invalid block received:", action.payload);
+            }
         },
-        addNewBlock: (state, action: PayloadAction<Block>) => {
+        setCurrentBlockLoading: (state,action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
+        setCurrentBlockError: (state, action: PayloadAction<string>) => {
             state.loading = false;
-            state.currentBlock=action.payload
-            state.error = null;
+            state.error = action.payload;
         },
     },
 });
 
-export const { setCurrentBlock, addNewBlock } = currentblockSlice.actions;
+export const { setCurrentBlock , setCurrentBlockLoading, setCurrentBlockError} = currentblockSlice.actions;
 
 export default currentblockSlice.reducer;
 

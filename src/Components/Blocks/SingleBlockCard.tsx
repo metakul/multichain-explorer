@@ -4,23 +4,27 @@ import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Skeleton from '@mui/material/Skeleton';
 import { Typography } from '@mui/material';
-import { navigateToBlock } from '../../helpers/navigationHelpers';
+import { navigateToAddress, navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useRpc } from '../../contexts/RpcProviderContext';
 
 interface SinglBlockInfoProps {
-    block: Block;
+    block?: Block;
     loading?: boolean;
 }
 
 const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
     const navigate = useNavigate();
+    
     const renderContent = (value: string | number | undefined, loadingWidth: number) => {
         if (loading) return <Skeleton width={loadingWidth} />;
         return value !== undefined ? value : "N/A";
     };
-    const {networkName} = useRpc()
+    const { networkName } = useRpc()
+
+
+    console.log(block, "blockblock");
 
     return (
         <Box
@@ -46,7 +50,7 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
                 <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
             </Typography>
             <Typography variant="body2" display="flex" >
-                <strong>Total Transaction :   </strong> {loading ? <Skeleton width={80} /> : block?.transactionsCount ? <Typography
+                <strong>Total Transaction :   </strong> {block?.transactionsCount ? <Typography
                     style={{
                         color: 'blue',
                         fontWeight: '1000',
@@ -61,6 +65,21 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
             </Typography>
             <Typography variant="body2">
                 <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
+            </Typography>
+            <Typography variant="body2">
+                <strong>Miner:</strong>
+                    {loading
+                        ? <Skeleton width={150} />
+                        : block?.miner
+                            ? <Typography
+                               component="span"
+                                style={{ color: "blue", cursor: "pointer" }}
+                                onClick={() => block.miner && navigateToAddress(navigate, block.miner, networkName)}
+                            >
+                                {block?.miner?.slice(0, 8)}...{block?.miner?.slice(-8)}
+                            </Typography>
+                            : "N/A"}
+
             </Typography>
             <Typography variant="body2">
                 <strong>Timestamp:</strong>

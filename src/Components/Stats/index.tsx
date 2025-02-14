@@ -9,6 +9,7 @@ import Button from '../UI/Button';
 import Text from '../UI/Text';
 import Flex from '../UI/Flex';
 import Card from '../UI/Card';
+import { Typography } from '@mui/material';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();
@@ -26,37 +27,21 @@ function ExplorerStats() {
         dispatch(fetchExplorerStats({ rpcUrl }));
     };
 
-    // If there's an error,
-    if (error) return <Box style={{ margin: "auto", marginTop: "" }}>
-        <Text style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "6px" }}> Explorer Stats Info  </Text>
-        <Button onClick={handleReload} disabled={loading}>
-            {loading ? "Loading Trx" : "Reload"}
-        </Button>
-        <p>Error loading stats</p>
-    </Box>
-
     const StatCard = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
-        <Box style={{
-            backgroundColor: '#ffffff',
-            boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.1)',
-            borderRadius: '8px',
-            padding: '16px',
-        }}>
             <Card>
                 <Flex >
                     <Box sx={{
                         padding: '8px',
                     }}>
-                        <Text>
+                        <Typography style={{ fontWeight: "bold", fontSize:"14px" }}>
                             {label}
-                        </Text>
-                        <Text>
+                        </Typography>
+                        <Typography style={{  fontSize:"14px" }}>
                             {value ?? "N/A"} {/* Show N/A if value is null or undefined */}
-                        </Text>
+                        </Typography>
                     </Box>
                 </Flex>
             </Card>
-        </Box>
     );
 
     const StatCardSkeleton = () => (
@@ -64,9 +49,9 @@ function ExplorerStats() {
             backgroundColor: '#ffffff',
             boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.1)',
             borderRadius: '8px',
-            padding: '16px',
+            padding: '6px',
             height: "60px",
-            marginBottom: "20px",
+            marginBottom: "2px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -74,8 +59,8 @@ function ExplorerStats() {
             <Card>
                 <Flex gap="3">
                     <Box>
-                        <SkeletonBox width="120px" height="16px" />
-                        <SkeletonBox width="80px" height="16px" />
+                        <SkeletonBox width="120px" height="12px" />
+                        <SkeletonBox width="80px" height="12px" />
                     </Box>
                 </Flex>
             </Card>
@@ -96,7 +81,11 @@ function ExplorerStats() {
                     {loading ? "Loading Stats" : "Reload"}
                 </Button>
             </Box>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
+            {error && <Box style={{ margin: "auto", marginTop: "" }}>
+                <p>Error loading stats</p>
+            </Box>
+            }
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '6px' }}>
                 {loading
                     ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
                     : stats && (
