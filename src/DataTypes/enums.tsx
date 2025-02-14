@@ -49,31 +49,33 @@ export enum ContractType {
   Interact = "interact",
 }
 
+const backendUrl =import.meta.env.VITE_BACKEND_API_URL || "http://localhost:5003";
+
 // define endpoints here
 export const ApiEndpoint: Record<string, RequestOptions> = {
   LOGIN: { url: '/authApi/auth/user/login', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   LOGINVERIFY: { url: '/authApi/auth/user/login/verify', method: 'POST', headers: { 'Content-Type': 'application/json' } },
   RESENDLOGINOTP: { url: '/authApi/login/otp/resend', method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
-  getContractByName: { url: '/backendApi/getContractByName', method: 'GET', headers: { 'Content-Type': 'application/json' } },
-  getAllContracts: { url: '/backendApi/getContracts', method: 'GET', headers: { 'Content-Type': 'application/json' } },
-  getMyContracts: { url: '/backendApi/getMyContracts', method: 'GET', headers: { 'Content-Type': 'application/json' } },
-  saveContract: { url: '/backendApi/saveDeployedContract', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getContractByName: { url: `${backendUrl}/getContractByName`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
+  getAllContracts: { url: `${backendUrl}/getContracts`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
+  getMyContracts: { url: `${backendUrl}/getMyContracts`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
+  saveContract: { url: `${backendUrl}/saveDeployedContract`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
   //explorer
-  explorerSearch: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getLatestBlock: { url: '/backendApi/block/latest', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getPreviousBlocks: { url: '/backendApi/blocks/previous', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  explorerSearch: { url: `${backendUrl}/transaction`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getLatestBlock: { url: `${backendUrl}/block/latest`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getPreviousBlocks: { url: `${backendUrl}/blocks/previous`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
   // New endpoint for fetching transactions by block number
-  getTransactionCountInBlock: { url: '/backendApi/block/getTransactionCountInBlock', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  fetchAllTransactions: { url: '/backendApi/block/allTransactions', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  fetchSingleTrx: { url: '/backendApi/transaction', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getAddressInfo: { url: '/backendApi/address', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  fetchBlockInfo: { url: '/backendApi/block', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  fetchChainStats: { url: '/backendApi/stats', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  fetchBlocksInFrame: { url: '/backendApi/blocksInFrame', method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getBlockWithTrx: { url: '/backendApi/getBlockWithTrx', method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getTransactionCountInBlock: { url: `${backendUrl}/block/getTransactionCountInBlock`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchAllTransactions: { url: `${backendUrl}/block/allTransactions`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchSingleTrx: { url: `${backendUrl}/transaction`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getAddressInfo: { url: `${backendUrl}/address`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchBlockInfo: { url: `${backendUrl}/block`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchChainStats: { url: `${backendUrl}/stats`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  fetchBlocksInFrame: { url: `${backendUrl}/blocksInFrame`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getBlockWithTrx: { url: `${backendUrl}/getBlockWithTrx`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 
 export enum Network {
