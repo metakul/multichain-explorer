@@ -27,7 +27,6 @@ const defaultRpcContextValue: RpcContextType = {
 };
 
 const RpcContext = createContext<RpcContextType>(defaultRpcContextValue);
-const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 
 export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { children: ReactNode, initialNetworkType: NetworkType, initialRpcUrl: string }) => {
 
