@@ -23,7 +23,7 @@ export default function Header() {
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
-            }} >The Blockchain Explorer
+            }} >The Multi- Blockchain Explorer
                     <img
                         width={50} height={50}
                         src="/logo.svg"
