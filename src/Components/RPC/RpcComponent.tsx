@@ -60,7 +60,7 @@ const RpcComponent: React.FC = () => {
             style={{
                 position: "absolute",
                 right: 20,
-                top: 60,
+                top: 80,
             }}
         >
             <Box>
@@ -115,7 +115,7 @@ const RpcComponent: React.FC = () => {
                     </>
                 ) : (
                     // Just show the network name, and open the RPC component when clicked
-                    <Box onClick={toggleRpcVisibility} style={{ cursor: "pointer" }}>
+                    <Box onClick={toggleRpcVisibility} style={{ cursor: "pointer", background:"green", color:"white" }}>
                         {networkName}
                     </Box>
                 )}
