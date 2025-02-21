@@ -2,37 +2,44 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ContractData } from "../../../../interfaces/interface";
 
-// Initial state of the contracts slice
+// Define categorized contracts state
 interface ContractsState {
-    contracts: ContractData[];
+    contractsByCategory: Record<string, ContractData[]>; // Store contracts in categories
     loading: boolean;
     error: string | null;
 }
 
 const initialState: ContractsState = {
-    contracts: [],
+    contractsByCategory: {}, // Now an object with categories
     loading: false,
     error: null,
 };
 
 // Contracts slice
 const contractsSlice = createSlice({
-    name: 'contracts',
+    name: "contracts",
     initialState,
     reducers: {
-        setAllContract: (state, action: PayloadAction<ContractData[]>) => {
+        setAllContracts: (state, action: PayloadAction<Record<string, ContractData[]>>) => {
             state.loading = false;
-            state.contracts = action.payload;
+            state.contractsByCategory = action.payload; // Store categorized contracts
             state.error = null;
+        },
+        setContractsLoading: (state) => {
+            state.loading = true;
+        },
+        setContractsError: (state, action: PayloadAction<string>) => {
+            state.loading = false;
+            state.error = action.payload;
         },
     },
 });
 
-export const {  setAllContract } = contractsSlice.actions;
+export const { setAllContracts, setContractsLoading, setContractsError } = contractsSlice.actions;
 
 export default contractsSlice.reducer;
 
 // Selectors
-export const selectAllContracts = (state: { contracts: { contracts: ContractData[] } }) => state.contracts.contracts;
-export const selectContractsLoading = (state: { contracts: { loading: boolean } }) => state.contracts.loading;
-export const selectContractsError = (state: { contracts: { error: string } }) => state.contracts.error;
+export const selectAllContracts = (state: { contracts: ContractsState }) => state.contracts.contractsByCategory;
+export const selectContractsLoading = (state: { contracts: ContractsState }) => state.contracts.loading;
+export const selectContractsError = (state: { contracts: ContractsState }) => state.contracts.error;

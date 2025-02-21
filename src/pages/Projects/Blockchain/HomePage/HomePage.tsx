@@ -7,7 +7,7 @@ const ContractHomePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (
     <Container>
-      <h1>Dynamic Contract Interaction</h1>
+      <h1>Our Contracts</h1>
       <ContractsGrid />
     </Container>
   );

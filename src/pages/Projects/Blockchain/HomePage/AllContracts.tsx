@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice"; // Assuming the correct import path
+import { selectAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { AppDispatch } from "../../../../redux/store";
@@ -14,40 +14,53 @@ import { useRpc } from "../../../../contexts/RpcProviderContext";
 
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();
-    const contracts = useSelector(selectAllContracts);
-    const navigate = useNavigate()
+    const contractsByCategory = useSelector(selectAllContracts); // Now an object with categorized contracts
+    const navigate = useNavigate();
     const { networkName } = useRpc();
-    // Fetch contracts when the component mounts
+
     useEffect(() => {
         (dispatch as AppDispatch)(fetchAllContracts());
     }, []);
 
-    const navigateUser = (contract: { contractName: any }) => {
-        // Use template string to replace :contractName with the actual contract name
+    console.log(contractsByCategory);
+
+    const navigateUser = (contract: { contractName: string }) => {
         const path = `${PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName)}/${networkName}`;
         navigate(path);
     };
-    // Render contracts in a grid layout
-    return (
 
-        <Grid  rows="repeat(3, 164px)">
-            {contracts && contracts.length > 0 ? (
-                contracts.map((contract: any, index: any) => (
-                    <Box
-                        key={index}
-                        style={{
-                            border: "1px solid #ddd",
-                            borderRadius: "8px",
-                            padding: "16px",
-                        }}
-                    >
-                        <ContractInfoCard contractType={ContractType.Deploy} buttonText="Deploy" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+    return (
+        <Box>
+            {contractsByCategory && Object.keys(contractsByCategory).length > 0 ? (
+                Object.entries(contractsByCategory).map(([category, contracts]) => (
+                    <Box key={category} style={{ marginBottom: "2px" }}>
+                        <Text  style={{ marginBottom: "12px" }}>{category}</Text>
+                        <Grid >
+                            {contracts && contracts?.map((contract: any, index: number) => (
+                                <Box
+                                    key={index}
+                                    style={{
+                                        border: "1px solid #ddd",
+                                        borderRadius: "8px",
+                                        padding: "16px",
+                                    }}
+                                >
+                                    <ContractInfoCard
+                                        contractType={ContractType.Deploy}
+                                        buttonText="Deploy"
+                                        handleButtonClick={() => navigateUser(contract)}
+                                        contractInfo={contract}
+                                        cardType={"multiple"}
+                                    />
+                                </Box>
+                            ))}
+                        </Grid>
                     </Box>
                 ))
             ) : (
                 <Text>No contracts available.</Text>
             )}
-        </Grid>
+        </Box>
     );
 };
 

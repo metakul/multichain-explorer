@@ -4,7 +4,7 @@ import { ApiError, ContractData, ApiSuccess } from '../../../../interfaces/inter
 import { ApiEndpoint } from '../../../../DataTypes/enums';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { setCurrentContract } from './ContractSlice';
-import { setAllContract } from './AllContractsSlice';
+import { setAllContracts } from './AllContractsSlice';
 import { addNewDeployedContract, setMyContract } from './MyContractSlice';
 import Request from '../../../../Backend/axiosCall/apiCall';
 
@@ -40,7 +40,7 @@ export const fetchContractByName = createAsyncThunk(
 
 // Async thunk to fetch all contracts
 export const fetchAllContracts = createAsyncThunk(
-    'contracts/getAllContracts',
+    "contracts/getAllContracts",
     async (_, { rejectWithValue, dispatch }) => {
         try {
             const response = await Request({
@@ -49,23 +49,27 @@ export const fetchAllContracts = createAsyncThunk(
                 headers: ApiEndpoint.getAllContracts.headers,
             });
 
-            const contractList: ContractData[] = response.contracts;
+            // Ensure the response is structured correctly
+            const contractsByCategory: Record<string, ContractData[]> = response.contracts || {};
 
             const apiSuccess: ApiSuccess = {
                 statusCode: response.status,
-                message: 'Contracts fetched successfully',
-                data: contractList,
+                message: "Contracts fetched successfully",
+                data: contractsByCategory, // This should now be an object with categories
             };
 
-            dispatch(setAllContract(contractList))
-            
-            return apiSuccess.data; // Returning contract list data
+            dispatch(setAllContracts(contractsByCategory));
+
+            return apiSuccess.data; // Returning categorized contract data
         } catch (error) {
             const castedError = error as ApiError;
-            return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
+            return rejectWithValue(
+                typeof castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR
+            );
         }
     }
 );
+
 export const getMyContracts = createAsyncThunk(
     'contracts/getMyContracts',
     async (walletAddress:any, { rejectWithValue, dispatch }) => {
