@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice";
+import { selectAllContracts, selectContractsLoading, setContractsLoading } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { AppDispatch } from "../../../../redux/store";
@@ -11,18 +11,19 @@ import { ContractType, PROJECTS } from "../../../../DataTypes/enums";
 import Box from "../../../../Components/UI/Box";
 import Text from "../../../../Components/UI/Text";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
+import Skeleton from "@mui/material/Skeleton"; // Import Skeleton component
 
 const ContractsGrid: React.FC = () => {
     const dispatch = useDispatch();
-    const contractsByCategory = useSelector(selectAllContracts); // Now an object with categorized contracts
+    const contractsByCategory = useSelector(selectAllContracts);
+    const isLoading = useSelector(selectContractsLoading);
     const navigate = useNavigate();
     const { networkName } = useRpc();
 
     useEffect(() => {
+        (dispatch as AppDispatch)(setContractsLoading());
         (dispatch as AppDispatch)(fetchAllContracts());
     }, []);
-
-    console.log(contractsByCategory);
 
     const navigateUser = (contract: { contractName: string }) => {
         const path = `${PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName)}/${networkName}`;
@@ -31,12 +32,35 @@ const ContractsGrid: React.FC = () => {
 
     return (
         <Box>
-            {contractsByCategory && Object.keys(contractsByCategory).length > 0 ? (
+            {isLoading ? (
+                // Show Skeletons while loading
+                <>
+                    <Text style={{ marginBottom: "12px" }}>
+                        <Skeleton width={150} height={24} />
+                    </Text>
+                    <Grid>
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <Box
+                                key={index}
+                                style={{
+                                    border: "1px solid #ddd",
+                                    borderRadius: "8px",
+                                    padding: "16px",
+                                }}
+                            >
+                                <Skeleton variant="rectangular" width="100%" height={100} />
+                                <Skeleton width="60%" height={24} style={{ marginTop: 8 }} />
+                                <Skeleton width="80%" height={24} />
+                            </Box>
+                        ))}
+                    </Grid>
+                </>
+            ) : contractsByCategory && Object.keys(contractsByCategory).length > 0 ? (
                 Object.entries(contractsByCategory).map(([category, contracts]) => (
                     <Box key={category} style={{ marginBottom: "2px" }}>
-                        <Text  style={{ marginBottom: "12px" }}>{category}</Text>
-                        <Grid >
-                            {contracts && contracts?.map((contract: any, index: number) => (
+                        <Text style={{ marginBottom: "12px" }}>{category}</Text>
+                        <Grid>
+                            {contracts.map((contract: any, index: number) => (
                                 <Box
                                     key={index}
                                     style={{
