@@ -9,12 +9,13 @@ import { Block } from '../../interfaces/interface';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useRpc } from '../../contexts/RpcProviderContext';
 
-interface SinglBlockInfoProps {
+interface SingleBlockInfoProps {
     block?: Block;
     loading?: boolean;
+    isNew?: boolean; // New prop for animation
 }
 
-const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
+const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block,isNew, loading }) => {
     const navigate = useNavigate();
     
     const renderContent = (value: string | number | undefined, loadingWidth: number) => {
@@ -28,15 +29,17 @@ const SingleBlockInfo: React.FC<SinglBlockInfoProps> = ({ block, loading }) => {
 
     return (
         <Box
-            key={block?.hash ?? Math.random()}
-            style={{
-                backgroundColor: '#ffffff',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
-                padding: '16px',
-            }}
-        >
-            <Text
+        key={block?.hash ?? Math.random()}
+        className={isNew ? "new-block" : ""} // Apply animation class
+        style={{
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            padding: '16px',
+            transition: 'background-color 0.5s ease-in-out',
+        }}
+    >
+              <Text
                 style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
                 onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number), networkName)}
             >

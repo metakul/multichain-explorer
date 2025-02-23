@@ -11,13 +11,14 @@ import Button from '../UI/Button';
 import SingleBlockInfo from './SingleBlockCard';
 import { navigateToAllBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
-
+import "./SingleBlock.css"
 const AllBlock: React.FC = () => {
     const blocks = useSelector(selectBlocks);
     const allBlocksLoading = useSelector(selectBlocksLoading);
     const dispatch = useDispatch<AppDispatch>();
     const { rpcUrl, networkName } = useRpc();
     const navigate = useNavigate()
+    const [latestBlockHash, setLatestBlockHash] = useState<string | null>(null);
 
     const currentBlockLoading = useSelector(selectCurrentBlockLoading);
 
@@ -43,7 +44,11 @@ const AllBlock: React.FC = () => {
                 if (newBlock?.transactionsCount) {
                     dispatch(setNewTrxCount(newBlock?.transactionsCount)); // Update Redux state
                 }// Update Redux state
+                 // Set the latest block hash to trigger animation
+            setLatestBlockHash(newBlock.hash);
+            
                 dispatch(addNewBlock(newBlock)); // Update Redux state
+                setTimeout(() => setLatestBlockHash(null), 300);
             } catch (error) {
                 dispatch(setCurrentBlockError("Failed to parse new block"));
             }
@@ -80,8 +85,12 @@ const AllBlock: React.FC = () => {
                 }}>
                 {blocks.map((block) => (
 
-    <SingleBlockInfo key={block.hash} block={block} loading={allBlocksLoading} />
-))}
+<SingleBlockInfo
+key={block.hash}
+block={block}
+loading={allBlocksLoading}
+isNew={block.hash === latestBlockHash} // Pass isNew prop
+/>))}
 </Box>
 
                 
