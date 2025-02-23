@@ -8,12 +8,14 @@ import { selectTransactions, selectTransactionsError, selectTransactionsLoading 
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Button from '../UI/Button';
+import { clearTrxCount, selectNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
 
 function Transactions() {
     const dispatch = useDispatch<AppDispatch>();
     const { rpcUrl } = useRpc()
     const transactions = useSelector(selectTransactions);
     const loading = useSelector(selectTransactionsLoading);
+    const newTrxCount = useSelector(selectNewTrxCount);
     const error = useSelector(selectTransactionsError);
 
     useEffect(() => {
@@ -22,17 +24,22 @@ function Transactions() {
 
     const handleReload = () => {
         dispatch(fetchAllTransactions(rpcUrl)); // Dispatch the fetch action on button click
+        dispatch(clearTrxCount()); // Dispatch the fetch action on button click
     };
 
     return (
         <Box >
             <Box style={{
                 display: "flex",
+                alignContent: "center",
             }}>
                 <Text style={{ fontSize: "24px", fontWeight: "bold" }}>Recent Transactions </Text>
                 <Button onClick={handleReload} disabled={loading}>
                     {loading ? "Loading Trx" : "Reload"}
                 </Button>
+                <Text style={{  }}>
+                    {newTrxCount} Trx Since Last Reload
+                </Text>
             </Box>
             <Box style={{
                 display: "flex", flexDirection: "column", gap: "3"

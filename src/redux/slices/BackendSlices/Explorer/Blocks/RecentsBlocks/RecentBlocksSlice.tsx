@@ -7,6 +7,7 @@ import { Block } from "../../../../../../interfaces/interface";
 // Initial state of the blocks slice
 export interface BlocksState {
     blocks: Block[];
+    totalNewTrxCount:number;
     loading: boolean;
     error: string | null;
 }
@@ -29,6 +30,7 @@ const initialState: BlocksState = {
         baseFeePerGas:""
     },
     ],
+    totalNewTrxCount: 0,
     loading: false,
     error: null,
 };
@@ -49,28 +51,35 @@ const blocksSlice = createSlice({
             const blockExists = state.blocks.some(
                 (block) => block.hash === newBlock.hash || block.number === newBlock.number
             );
-
+        
             if (!blockExists) {
-                state.blocks.push(newBlock);
+                state.blocks.unshift(newBlock); // Add at index 0
                 state.error = null;
             } else {
                 state.error = "Block already exists";
             }
-
+        
             state.loading = false;
         },
         setRecentBlocksLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
+        setNewTrxCount: (state, action: PayloadAction<number>) => {
+            state.totalNewTrxCount += action.payload;
+        },
+        clearTrxCount: (state, ) => {
+            state.totalNewTrxCount =0
+        },
     },
 });
 
-export const { setBlocks, addNewBlock, setRecentBlocksLoading } = blocksSlice.actions;
+export const { setBlocks, addNewBlock,setNewTrxCount,clearTrxCount, setRecentBlocksLoading } = blocksSlice.actions;
 
 export default blocksSlice.reducer;
 
 // Selectors
 export const selectBlocks = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.blocks;
+export const selectNewTrxCount = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.totalNewTrxCount;
 export const selectBlocksLoading = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.loading;
 export const selectBlocksError = (state: { recentBlocksState: BlocksState }) => state.recentBlocksState.error;
 
