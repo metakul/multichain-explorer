@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
 import { useRpc } from "../../contexts/RpcProviderContext";
+import Box from "../UI/Box";
 import Button from "../UI/Button";
 import "./Button.css";
 import { CSSProperties } from "react";
@@ -37,7 +37,7 @@ function ConnectWalletButton({ style, ...props }: ConnectWalletButtonProps) {
                     {formatAddress(walletAddress)} Disconnect Wallet
                 </>
             ) : (
-                <Box >
+                <Box>
 
                 Connect Wallet
                 </Box>

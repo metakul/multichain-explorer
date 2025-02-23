@@ -9,7 +9,6 @@ import Button from '../UI/Button';
 import Text from '../UI/Text';
 import Flex from '../UI/Flex';
 import Card from '../UI/Card';
-import { Typography } from '@mui/material';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();
@@ -33,12 +32,12 @@ function ExplorerStats() {
                     <Box sx={{
                         padding: '8px',
                     }}>
-                        <Typography style={{ fontWeight: "bold", fontSize:"14px" }}>
+                        <Text style={{ fontWeight: "bold", fontSize:"14px" }}>
                             {label}
-                        </Typography>
-                        <Typography style={{  fontSize:"14px" }}>
+                        </Text>
+                        <Text style={{  fontSize:"14px" }}>
                             {value ?? "N/A"} {/* Show N/A if value is null or undefined */}
-                        </Typography>
+                        </Text>
                     </Box>
                 </Flex>
             </Card>

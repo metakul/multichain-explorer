@@ -24,12 +24,12 @@ const AllBlock: React.FC = () => {
 
     useEffect(() => {
         dispatch(getPreviousBlocks(rpcUrl));
-      }, [dispatch, rpcUrl]);
+    }, [dispatch, rpcUrl]);
 
     useEffect(() => {
         dispatch(setCurrentBlockLoading(true));
-        console.log("step1",currentBlockLoading);
-        
+        console.log("step1", currentBlockLoading);
+
         const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL)
 
         ws.onopen = () => {
@@ -44,9 +44,9 @@ const AllBlock: React.FC = () => {
                 if (newBlock?.transactionsCount) {
                     dispatch(setNewTrxCount(newBlock?.transactionsCount)); // Update Redux state
                 }// Update Redux state
-                 // Set the latest block hash to trigger animation
-            setLatestBlockHash(newBlock.hash);
-            
+                // Set the latest block hash to trigger animation
+                setLatestBlockHash(newBlock.hash);
+
                 dispatch(addNewBlock(newBlock)); // Update Redux state
                 setTimeout(() => setLatestBlockHash(null), 300);
             } catch (error) {
@@ -75,25 +75,20 @@ const AllBlock: React.FC = () => {
                 <Text style={{ fontSize: "24px", fontWeight: "bold" }}>Blocks Info</Text>
             </Box>
 
-                {/* Render current block info */}
-
-                {/* Render recent blocks */}
-                <Box sx={{
-                    display:"flex",
-                    flexDirection:"row",
-                    overflowX:"scroll",
-                }}>
+            {/* Render recent blocks */}
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                overflowX: "scroll",
+            }}>
                 {blocks.map((block) => (
-
-<SingleBlockInfo
-key={block.hash}
-block={block}
-loading={allBlocksLoading}
-isNew={block.hash === latestBlockHash} // Pass isNew prop
-/>))}
-</Box>
-
-                
+                    <SingleBlockInfo
+                        key={block.hash}
+                        block={block}
+                        loading={allBlocksLoading}
+                        isNew={block.hash === latestBlockHash} // Pass isNew prop
+                    />))}
+            </Box>
             <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>

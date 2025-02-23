@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import contractDescriptions from "../../Data/ContractInformation.json"
-import { Box } from "@mui/material";
+import Box from "../UI/Box";
 
 interface ContractDescriptionProps {
   contractName: string;
@@ -17,12 +17,13 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName 
   }, [contractName]);
 
   return (
-  <Box sx={{
-    py:2
-  }}>
-    {description}
-  </Box>
+    <Box sx={{
+      py: 2
+    }}>
+      {description}
+    </Box>
 
-)};
+  )
+};
 
 export default ContractDescription;

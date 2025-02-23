@@ -82,6 +82,7 @@ export enum Network {
   Polygon = "Polygon",
   Amoy = "Amoy",
   Bsc = "Bsc",
+  BASE = "BASE",
   Localhost = "Localhost",
   SONEIUM = "SONEIUM",
 }
@@ -110,6 +111,17 @@ export const networks: Record<Network, NetworkConfig> = {
     },
     rpcUrls: ["https://rpc.minato.soneium.org"],
     blockExplorerUrls: []
+  },
+  BASE : {
+    chainId: `0x${Number(8453).toString(16)}`,
+    chainName: "Base Mainnnet",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18
+    },
+    rpcUrls: ["https://mainnet.base.org"],
+    blockExplorerUrls: ["https://basescan.org"]
   },
   Amoy: {
     chainId: `0x${Number(0x13882).toString(16)}`,

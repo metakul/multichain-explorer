@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
 import { useRpc } from '../../contexts/RpcProviderContext';
-import { Skeleton, Typography } from '@mui/material'; // Importing Skeleton from Material-UI
+import { Skeleton } from '@mui/material'; // Importing Skeleton from Material-UI
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Container from '../UI/Container';
@@ -66,11 +66,11 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                     Block #{block?.number ?? 'N/A'}
                 </Text>
                 <p><strong>Gas Limit:</strong> {block?.gasLimit ?? 'N/A'}</p>
-                <Typography variant="body2" display="flex">
+                <Text variant="body2" display="flex">
                     <strong>Total Transactions: </strong> {loading ? (
                         <Skeleton width={80} />
                     ) : transactions.length > 0 ? (
-                        <Typography
+                        <Text
                             style={{
                                 color: 'blue',
                                 fontWeight: '1000',
@@ -81,11 +81,11 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
                             )}
                         >
                             {transactions.length} Trx
-                        </Typography>
+                        </Text>
                     ) : (
                         "N/A"
                     )}
-                </Typography>
+                </Text>
 
                 <p><strong>Difficulty:</strong> {block?.difficulty ?? 'N/A'}</p>
                 <p><strong>Timestamp:</strong> {block?.timestamp ? new Date(parseInt(block.timestamp) * 1000).toLocaleString() : 'N/A'}</p>

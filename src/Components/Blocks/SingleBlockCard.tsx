@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Skeleton from '@mui/material/Skeleton';
-import { Typography } from '@mui/material';
 import { navigateToAddress, navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
@@ -49,11 +48,11 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block,isNew, loading 
                         ? `Block #${block.number}`
                         : "Block #N/A"}
             </Text>
-            <Typography variant="body2">
+            <Text variant="body2">
                 <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
-            </Typography>
-            <Typography variant="body2" display="flex" >
-                <strong>Total Transaction :   </strong> {block?.transactionsCount ? <Typography
+            </Text>
+            <Text variant="body2" display="flex" >
+                <strong>Total Transaction :   </strong> {block?.transactionsCount ? <Text
                     style={{
                         color: 'blue',
                         fontWeight: '1000',
@@ -64,34 +63,34 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block,isNew, loading 
                     )}
                 >
                     {block.transactionsCount} Trx
-                </Typography> : "N/a"}
-            </Typography>
-            <Typography variant="body2">
+                </Text> : "N/a"}
+            </Text>
+            <Text variant="body2">
                 <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
-            </Typography>
-            <Typography variant="body2">
+            </Text>
+            <Text variant="body2">
                 <strong>Miner:</strong>
                     {loading
                         ? <Skeleton width={150} />
                         : block?.miner
-                            ? <Typography
+                            ? <Text
                                component="span"
                                 style={{ color: "blue", cursor: "pointer" }}
                                 onClick={() => block.miner && navigateToAddress(navigate, block.miner, networkName)}
                             >
                                 {block?.miner?.slice(0, 8)}...{block?.miner?.slice(-8)}
-                            </Typography>
+                            </Text>
                             : "N/A"}
 
-            </Typography>
-            <Typography variant="body2">
+            </Text>
+            <Text variant="body2">
                 <strong>Timestamp:</strong>
                 {loading
                     ? <Skeleton width={150} />
                     : block?.timestamp
                         ? new Date(parseInt(block.timestamp) * 1000).toLocaleString()
                         : "N/A"}
-            </Typography>
+            </Text>
         </Box>
     );
 };

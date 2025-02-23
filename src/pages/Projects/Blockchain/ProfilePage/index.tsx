@@ -1,7 +1,9 @@
 import MyContracts from "./MyContracts";
 import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
-import { Box, Container, Typography } from "@mui/material";
+import Text from "../../../../Components/UI/Text";
+import Box from "../../../../Components/UI/Box";
+import Container from "../../../../Components/UI/Container";
 
 function Web3ProfilePage() {
 
@@ -31,12 +33,12 @@ function Web3ProfilePage() {
               p:4,
               width: "80%",
             }}>
-              <Typography sx={{
+              <Text sx={{
                 textAlign: "center",
                 fontSize: "1.3rem"
               }}>
                 Welcome<br/>{walletAddress}
-              </Typography>
+              </Text>
 
             </Box>
             <Box sx={{
@@ -47,14 +49,14 @@ function Web3ProfilePage() {
               bottom:24,
               py:4,
             }}>
-              <Typography sx={{
+              <Text sx={{
                 textAlign: "center",
                 fontSize: "1.3rem"
               }}>
 
                 {/* // todo get balance based on wallet address and chainId */}
                   Total Balance: {balance} 
-              </Typography>
+              </Text>
             </Box>
           </Box>
           <MyContracts pageTitle="" userType="Owner" />
