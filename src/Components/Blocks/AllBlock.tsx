@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewBlock, selectBlocks, selectBlocksLoading, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
-import { currentBlockInfo, selectCurrentBlockLoading, setCurrentBlock, setCurrentBlockError, setCurrentBlockLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
+import { selectCurrentBlockLoading, setCurrentBlockError, setCurrentBlockLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { getPreviousBlocks } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';

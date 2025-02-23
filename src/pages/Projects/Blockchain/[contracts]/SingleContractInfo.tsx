@@ -10,7 +10,6 @@ import { ethers } from "ethers";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
 import { ContractType } from "../../../../DataTypes/enums";
 import ContractFunctionsForm from "../../../../Components/Contracts/InteractWithContract";
-import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
@@ -20,7 +19,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
 
-    const { walletAddress, connected } = useRpc();
+    const { walletAddress } = useRpc();
 
     // Fetch the single contract when the component mounts
     useEffect(() => {
