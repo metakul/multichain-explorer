@@ -6,8 +6,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useDispatch } from "react-redux";
+import { clearTrxCount } from "../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice";
 
 const RpcComponent: React.FC = () => {
+    const dispatch=useDispatch()
     const { networkName, setRpc, rpcUrl } = useRpc();
     const [customRpcUrl, /*setCustomRpcUrlState*/] = useState<string>("");
     const [selectedNetwork, setSelectedNetwork] = useState<NetworkType>(networkName);
@@ -26,6 +29,7 @@ const RpcComponent: React.FC = () => {
             setIsCustomRpc(false);
             setIsEditing(!isEditing);
         }
+        dispatch(clearTrxCount())
     };
 
     // const handleRemoveCustomRpc = () => {
