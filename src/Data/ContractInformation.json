@@ -1,0 +1,6 @@
+{
+    "MyToken": "This is an ERC-20 Token contract used for transactions.",
+    "StakingContract": "This contract handles ERC20 Staking .",
+    "Governance": "A smart contract that manages voting and governance proposals."
+  }
+  

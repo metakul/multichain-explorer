@@ -20,6 +20,7 @@ function Transactions() {
 
     useEffect(() => {
         dispatch(fetchAllTransactions(rpcUrl));
+        dispatch(clearTrxCount()); // Dispatch the fetch action on button click
     }, [dispatch, rpcUrl, transactions.length]);
 
     const handleReload = () => {
@@ -45,6 +46,7 @@ function Transactions() {
                 display: "flex", flexDirection: "column", gap: "3"
             }}
             >
+                
                 {transactions && <TransactionInfo transaction={transactions} loading={loading} error={error} />}
             </Box>
         </Box>

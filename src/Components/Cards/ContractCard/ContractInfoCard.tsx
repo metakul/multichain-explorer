@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { ContractData, DeployedContract } from "../../../interfaces/interface";
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton";
 import ConstructorInputForm from "./ConstructorInfo";
 import { ContractType } from "../../../DataTypes/enums";
 import { useRpc } from "../../../contexts/RpcProviderContext";
+import ContractDescription from "../../Contracts/ContractInformation";
 
 // Props for the component
 interface ContractInfoProps {
@@ -26,7 +26,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     buttonText,
     handleButtonClick,
 }) => {
-    const { contractName, constructor, loading, error } = contractInfo;
+    const { contractName, constructor} = contractInfo;
     const { connected } = useRpc();
 
     // State to manage constructor inputs
@@ -78,42 +78,20 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
         handleButtonClick(constructorInputs);
     };
 
-    // While data is being fetched
-    if (loading) {
-        return <div>Loading Contract</div>;
-    }
-
-    // If there is an error fetching data
-    if (error) {
-        return (
-            <AlertDialog.Root>
-                <AlertDialog.Trigger />
-                <AlertDialog.Portal>
-                    <AlertDialog.Overlay />
-                    <AlertDialog.Content>
-                        <AlertDialog.Title>Error</AlertDialog.Title>
-                        <AlertDialog.Description>
-                            {error}
-                        </AlertDialog.Description>
-                        <AlertDialog.Action>
-                            <button>OK</button>
-                        </AlertDialog.Action>
-                    </AlertDialog.Content>
-                </AlertDialog.Portal>
-            </AlertDialog.Root>
-        );
-    }
 
     return (
         <div>
             <h4>{contractName}</h4>
             {cardType === "single" && contractType === ContractType.Deploy && (
+                <>
+                <ContractDescription contractName={contractName}/>
                 <ConstructorInputForm
                     constructorParams={constructor || []}
                     constructorInputs={constructorInputs}
                     handleInputChange={handleInputChange}
                     inputErrors={inputErrors}
-                />
+                    />
+                    </>
             )}
 
             {buttonText && cardType === "single" && contractType === ContractType.Deploy ? (

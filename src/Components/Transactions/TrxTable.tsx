@@ -1,5 +1,5 @@
 import React from "react";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ITrx } from "../../interfaces/interface";
 import { useNavigate } from "react-router-dom";
 import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
@@ -98,7 +98,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         <CustomTableCell>{(trx?.value / 10 ** 18).toFixed(5)} ETH</CustomTableCell>
                         <CustomTableCell>{(parseFloat(trx?.gasPrice) / 10 ** 18).toFixed(12)}</CustomTableCell>
                         <CustomTableCell>
-                            <EyeOpenIcon
+                            <VisibilityIcon
                                 onClick={() => navigateToTransaction(navigate, trx?.hash, networkName)}
                                 style={{ cursor: "pointer" }}
                             />

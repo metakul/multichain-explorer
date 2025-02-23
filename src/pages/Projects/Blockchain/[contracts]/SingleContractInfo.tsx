@@ -69,9 +69,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
 
     return (
         <Box>
-            {!connected ? (
-                <ConnectWalletButton />
-            ) : (
+         
                 <>
                     {props.contractType == ContractType.Deploy ? (
                         <ContractInfoCard
@@ -94,7 +92,6 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                         </>
                     )}
                 </>
-            )}
         </Box>
     );
 };

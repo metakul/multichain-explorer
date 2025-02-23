@@ -23,7 +23,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const { walletAddress, rpcUrl, networkName } =useRpc()
 
   useEffect(() => {
-    (dispatch as AppDispatch)(getMyContracts(walletAddress));
+    walletAddress && (dispatch as AppDispatch)(getMyContracts(walletAddress));
   }, [dispatch, rpcUrl, walletAddress]);
 
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
