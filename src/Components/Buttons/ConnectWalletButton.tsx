@@ -1,8 +1,8 @@
 import { useRpc } from "../../contexts/RpcProviderContext";
-import Box from "../UI/Box";
 import Button from "../UI/Button";
+import Text from "../UI/Text";
 import "./Button.css";
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect } from "react";
 
 interface ConnectWalletButtonProps {
     style?: CSSProperties;
@@ -11,12 +11,18 @@ interface ConnectWalletButtonProps {
 }
 
 function ConnectWalletButton({ style, ...props }: ConnectWalletButtonProps) {
-    const { connected, walletAddress, connectToRpc, disconnectWallet, networkName } = useRpc();
+    const { connected, walletAddress,rpcUrl,setRpc, connectToRpc, disconnectWallet, networkName } = useRpc();
 
     const formatAddress = (address: string) => {
         if (!address) return "";
         return `${address.slice(0, 4)}...${address.slice(-4)}`;
     };
+
+    useEffect(() => {
+        if (rpcUrl) {
+            setRpc(networkName);
+        }
+    }, [rpcUrl, setRpc, networkName]);
 
     const handleClick = async () => {
         if (connected) {
@@ -37,10 +43,10 @@ function ConnectWalletButton({ style, ...props }: ConnectWalletButtonProps) {
                     {formatAddress(walletAddress)} Disconnect Wallet
                 </>
             ) : (
-                <Box>
+                <Text>
 
                 Connect Wallet
-                </Box>
+                </Text>
             )}
         </Button>
     );

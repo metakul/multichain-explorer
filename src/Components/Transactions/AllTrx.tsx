@@ -9,6 +9,7 @@ import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Button from '../UI/Button';
 import { clearTrxCount, selectNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
+import { ReplayCircleFilledOutlined } from '@mui/icons-material';
 
 function Transactions() {
     const dispatch = useDispatch<AppDispatch>();
@@ -33,22 +34,25 @@ function Transactions() {
             <Box style={{
                 display: "flex",
                 alignContent: "center",
+                justifyContent: "space-between",
             }}>
-                <Text style={{ fontSize: "24px", fontWeight: "bold" }}>Recent Transactions </Text>
-                <Button onClick={handleReload} disabled={loading}>
-                    {loading ? "Loading Trx" : "Reload"}
-                </Button>
-                <Text style={{  }}>
+                <Box>
+                    
+                <Text style={{ fontSize: "20px", fontWeight: "bold" }}>Recent Transactions </Text>
+                </Box>
+                <Box style={{
+                display: "flex",
+                alignContent: "center",
+            }}>
+                    {loading ? "Loading Trxs" : <ReplayCircleFilledOutlined onClick={handleReload} />}
+                <Text style={{ fontSize:"16px" }}>
                     {newTrxCount} Trx Since Last Reload
                 </Text>
+                </Box>
             </Box>
-            <Box style={{
-                display: "flex", flexDirection: "column", gap: "3"
-            }}
-            >
+          
                 
                 {transactions && <TransactionInfo transaction={transactions} loading={loading} error={error} />}
-            </Box>
         </Box>
     );
 }

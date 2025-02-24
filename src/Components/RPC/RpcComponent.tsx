@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRpc } from "../../contexts/RpcProviderContext";
 import { Network, NetworkType } from "../../DataTypes/enums";
-import Box from "../UI/Box";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -11,7 +10,7 @@ import { clearTrxCount } from "../../redux/slices/BackendSlices/Explorer/Blocks/
 
 const RpcComponent: React.FC = () => {
     const dispatch=useDispatch()
-    const { networkName, setRpc, rpcUrl } = useRpc();
+    const { networkName, setRpc,connectToRpc, rpcUrl,connected } = useRpc();
     const [customRpcUrl, /*setCustomRpcUrlState*/] = useState<string>("");
     const [selectedNetwork, setSelectedNetwork] = useState<NetworkType>(networkName);
     const [/*isCustomRpc*/, setIsCustomRpc] = useState<boolean>(false);
@@ -24,10 +23,12 @@ const RpcComponent: React.FC = () => {
             setRpc(selectedNetwork, customRpcUrl);
             setIsCustomRpc(true);
             setIsEditing(!isEditing);
+            connected && connectToRpc(selectedNetwork, customRpcUrl);
         } else {
             setRpc(selectedNetwork);
             setIsCustomRpc(false);
             setIsEditing(!isEditing);
+            connected && connectToRpc(selectedNetwork);
         }
         dispatch(clearTrxCount())
     };
@@ -40,7 +41,7 @@ const RpcComponent: React.FC = () => {
 
     // Effect to set RPC on network change
     useEffect(() => {
-        handleSetCustomRpc();
+            handleSetCustomRpc();
     }, [selectedNetwork, rpcUrl]);
 
     // Update URL with the new network name whenever it changes
@@ -59,25 +60,16 @@ const RpcComponent: React.FC = () => {
 
 
     return (
-        <Box
-            height="64px"
-            style={{
-                position: "absolute",
-                right: 20,
-                top: 80,
-            }}
-        >
-            <Box>
+        <>
                 {/* {isRpcVisible ? ( */}
                     {/* // Show the RPC component when isRpcVisible is true */}
                     <>
                         <FormControl >
-                            <InputLabel id="network-select-label">Select Network</InputLabel>
+                            {/* <InputLabel id="network-select-label">Select Network</InputLabel> */}
                             <Select
                                 labelId="network-select-label"
                                 id="network-select"
                                 value={selectedNetwork}
-                                label="Select Network"
                                 onChange={(e: SelectChangeEvent) => setSelectedNetwork(e.target.value as NetworkType)}
                             >
                                 {Object.keys(Network).map((network) => (
@@ -123,8 +115,7 @@ const RpcComponent: React.FC = () => {
                        {networkName}
                    </Box>
                 )} */}
-            </Box>
-        </Box>
+        </>
     );
 };
 

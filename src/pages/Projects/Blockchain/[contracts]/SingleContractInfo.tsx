@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchContractByName, saveNewContract } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
-import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
+import { selectContractDetails, selectSingleContractError, selectSingleContractLoading } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
@@ -18,6 +18,8 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?:string }>();
     const dispatch = useDispatch<AppDispatch>();
     const contract = useSelector(selectContractDetails);
+    const contractLoading = useSelector(selectSingleContractLoading);
+    // const contractError = useSelector(selectSingleContractError);
 
     const { walletAddress } = useRpc();
 
@@ -76,6 +78,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                             contractInfo={contract}
                             cardType="single"
                             buttonText="Deploy"
+                            isLoading={contractLoading}
                             handleButtonClick={deployContract} // Pass deploy function
                         />
                     ) : (
@@ -85,6 +88,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                                 contractInfo={contract}
                                 cardType="single"
                                 buttonText="View On Explorer"
+                                isLoading={contractLoading}
                                 handleButtonClick={viewOnExplorer} // Pass deploy function
                             />
                              <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />

@@ -6,16 +6,17 @@ import {
     Toolbar,
     IconButton,
     Stack,
-    Button,
-    Typography,
+    // Button,
+    // Typography,
 } from "@mui/material";
 import ListIcon from '@mui/icons-material/List';
 // const NAV_WIDTH = 280;
 import "./style.css"
 import { NavLink as RouterLink, useNavigate } from "react-router-dom";
 import ConnectWalletButton from "../../Components/Buttons/ConnectWalletButton";
-import { PROJECTS } from "../../DataTypes/enums";
+// import { PROJECTS } from "../../DataTypes/enums";
 import { useRpc } from "../../contexts/RpcProviderContext";
+import RpcComponent from "../../Components/RPC/RpcComponent";
 
 interface HeaderProps {
     setIsSidebarOpen: () => void;
@@ -23,8 +24,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
-    const navigate = useNavigate()
-    const { networkName } = useRpc();
+    // const navigate = useNavigate()
+    // const { networkName } = useRpc();
 
     return (
         <AppBar sx={{
@@ -53,18 +54,8 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
                     sx={{ ml: 'auto' }}
                 >
 
-                    <ConnectWalletButton style={{
-                        backgroundColor: "white",
-                    }} />
-
-                    <Button onClick={() => navigate(`${PROJECTS.WEB3_PROFILE}/${networkName}`)}>
-                        <Typography sx={{
-                            color: "white"
-                        }}>
-
-                            Profile
-                        </Typography>
-                    </Button>
+                    <ConnectWalletButton />
+                        <RpcComponent/>
                 </Stack>
             </Toolbar>
         </AppBar>

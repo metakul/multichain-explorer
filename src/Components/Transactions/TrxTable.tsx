@@ -20,7 +20,6 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
     // Render loading skeleton
     if (loading) {
         return (
-            <Container>
                 <CustomTable>
                     <CustomTableHeader>
                         <CustomTableCell>Transaction Hash</CustomTableCell>
@@ -43,7 +42,6 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         </CustomTableRow>
                     ))}
                 </CustomTable>
-            </Container>
         );
     }
 

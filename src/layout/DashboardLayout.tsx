@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "./Topbar";
-import RpcComponent from "../Components/RPC/RpcComponent";
+// import RpcComponent from "../Components/RPC/RpcComponent";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
 import navConfig from "./navConfig";
@@ -24,7 +24,7 @@ export default function DashboardLayout() {
         marginLeft: "auto",
         marginRight: "auto"
       }}>
-        <RpcComponent />
+        {/* <RpcComponent /> */}
         <Sidebar
           APP_BAR={APP_BAR}
           isSidebarOpen={isSidebarOpen}

@@ -47,5 +47,5 @@ export const selectContractDetails = (state: { singleContract: ContractData }) =
 export const selectAbi = (state: { singleContract: ContractData }) => state.singleContract.abi;
 export const selectBytecode = (state: { singleContract: ContractData }) => state.singleContract.bytecode;
 export const selectConstructorParams = (state: { singleContract: ContractData }) => state.singleContract.constructor;
-export const selectLoading = (state: { singleContract: ContractData }) => state.singleContract.loading;
-export const selectError = (state: { singleContract: ContractData }) => state.singleContract.error;
+export const selectSingleContractLoading = (state: { singleContract: ContractData }) => state.singleContract.loading;
+export const selectSingleContractError = (state: { singleContract: ContractData }) => state.singleContract.error;
