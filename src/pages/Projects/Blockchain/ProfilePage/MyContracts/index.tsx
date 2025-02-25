@@ -30,7 +30,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
     // Replace :contractName in the path with the actual contract name
     const path = PROJECTS.DEPLOYED_CONTRACT
-      // .replace(':contractName', contract.contractName)
+      .replace(':contractName', contract.contractName)
       .replace(':deployedAddress', contract.deployedAddress); // Include deployedAddress in the URL
 
     navigate(`${path}/${networkName}`);

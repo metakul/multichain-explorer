@@ -13,89 +13,110 @@ import ContractFunctionsForm from "../../../../Components/Contracts/InteractWith
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
+import MobileTabNavigation2 from ".";
+import ContractDescription from "../../../../Components/Contracts/ContractInformation";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
-    const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?:string }>();
-    const dispatch = useDispatch<AppDispatch>();
-    const contract = useSelector(selectContractDetails);
-    const contractLoading = useSelector(selectSingleContractLoading);
-    // const contractError = useSelector(selectSingleContractError);
+  const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+  const contract = useSelector(selectContractDetails);
+  const contractLoading = useSelector(selectSingleContractLoading);
+  // const contractError = useSelector(selectSingleContractError);
 
-    const { walletAddress } = useRpc();
+  const { walletAddress, connected } = useRpc();
 
-    // Fetch the single contract when the component mounts
-    useEffect(() => {
-        if (contractName) {
-            dispatch(fetchContractByName(contractName));
-        }
-    }, [contractName, dispatch]);
-
-    // Handle loading or error cases
-    if (!contract) {
-        return <Text>Loading contract data...</Text>;
+  // Fetch the single contract when the component mounts
+  useEffect(() => {
+    if (contractName) {
+      dispatch(fetchContractByName(contractName));
     }
+  }, [contractName, dispatch]);
 
-    // Function to deploy contract
-    const deployContract = async (constructorParams: any[]) => {
-        try {
-            if (!window.ethereum) throw new Error("No Ethereum wallet detected");
+  // Handle loading or error cases
+  if (!contract) {
+    return <Text>Loading contract data...</Text>;
+  }
 
-            // Request wallet connection
-            if (window && window.ethereum && window.ethereum.request) {
+  // Function to deploy contract
+  const deployContract = async (constructorParams: any[]) => {
+    try {
+      if (!window.ethereum) throw new Error("No Ethereum wallet detected");
 
-                await window?.ethereum.request({ method: "eth_requestAccounts" });
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer = await provider.getSigner();
+      // Request wallet connection
+      if (window && window.ethereum && window.ethereum.request) {
 
-                // Prepare contract for deployment
-                const factory = new ethers.ContractFactory(contract.abi, contract.bytecode as any, signer);
-                
-                // Deploy the contract
-                const deployedContract = await factory.deploy(...constructorParams);
+        await window?.ethereum.request({ method: "eth_requestAccounts" });
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
 
-                // Wait for the deployment to finish and get the address
-                await deployedContract.getAddress().then((deployedAddress) => {
-                    // Dispatch the action with the resolved contract address
-                    dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
-                })
-            }
-        } catch (error) {
-            console.error("Deployment error:", error);
-        }
-    };
+        // Prepare contract for deployment
+        const factory = new ethers.ContractFactory(contract.abi, contract.bytecode as any, signer);
 
-    const viewOnExplorer = async () => {
-        console.log("Opening Explorer for contract", deployedAddress);
+        // Deploy the contract
+        const deployedContract = await factory.deploy(...constructorParams);
+
+        // Wait for the deployment to finish and get the address
+        await deployedContract.getAddress().then((deployedAddress) => {
+          // Dispatch the action with the resolved contract address
+          dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
+        })
+      }
+    } catch (error) {
+      console.error("Deployment error:", error);
     }
+  };
 
-    return (
-        <Box>
-                <>
-                    {props.contractType == ContractType.Deploy ? (
-                        <ContractInfoCard
-                            contractType={ContractType.Deploy}
-                            contractInfo={contract}
-                            cardType="single"
-                            buttonText={ContractType.Deploy}
-                            isLoading={contractLoading}
-                            handleButtonClick={deployContract} // Pass deploy function
-                        />
-                    ) : (
-                        <>
-                            <ContractInfoCard
-                                contractType={ContractType.Interact}
-                                contractInfo={contract}
-                                cardType="single"
-                                buttonText="View On Explorer"
-                                isLoading={contractLoading}
-                                handleButtonClick={viewOnExplorer} // Pass deploy function
-                            />
-                             <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
-                        </>
-                    )}
-                </>
-        </Box>
-    );
+  const viewOnExplorer = async () => {
+    console.log("Opening Explorer for contract", deployedAddress);
+  }
+
+  const tabs = [
+    {
+      value: (
+        "OverView"
+      ),
+      content: contractName && <ContractDescription contractName={contractName} />
+      ,
+      label: "OverView",
+    },
+    {
+      value: (
+        props.contractType == ContractType.Deploy ? "Deploy" : "Explorer"
+      ),
+      content: <>
+        {props.contractType == ContractType.Deploy ? (
+          <ContractInfoCard
+            contractType={ContractType.Deploy}
+            contractInfo={contract}
+            cardType="single"
+            buttonText={ContractType.Deploy}
+            isLoading={contractLoading}
+            handleButtonClick={deployContract} // Pass deploy function
+          />
+        ) : (
+          <>
+            <ContractInfoCard
+              contractType={ContractType.Interact}
+              contractInfo={contract}
+              cardType="single"
+              buttonText="View On Explorer"
+              isLoading={contractLoading}
+              handleButtonClick={viewOnExplorer} // Pass deploy function
+            />
+            <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
+          </>
+        )},
+      </>,
+      label: "Explorer",
+    },
+  ];
+  
+  return (
+    <Box>
+      <h4>{contractName}</h4>
+      <MobileTabNavigation2 tabs={tabs} />
+    </Box>
+  );
 };
 
 export default SingleContractPage;

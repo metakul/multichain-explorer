@@ -9,9 +9,7 @@ import { useWalletBalance } from "../../../../contexts/UseWalletBalance";
 function Web3ProfilePage() {
 
   const { connected } = useRpc();
-
-  const {userBalance}=useWalletBalance() 
-
+  const {userBalance,isLoading}=useWalletBalance() 
   const { walletAddress } = useRpc()
 
   return (
@@ -40,7 +38,6 @@ function Web3ProfilePage() {
               }}>
                 Welcome<br/>{walletAddress}
               </Text>
-
             </Box>
             <Box sx={{
               border: "2px solid black",
@@ -54,9 +51,8 @@ function Web3ProfilePage() {
                 textAlign: "center",
                 fontSize: "1.3rem"
               }}>
-
                 {/* // todo get balance based on wallet address and chainId */}
-                  Total Balance: {userBalance} 
+                  Total Balance: {isLoading ? userBalance : "Loading Balance"} 
               </Text>
             </Box>
           </Box>

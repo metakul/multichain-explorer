@@ -91,10 +91,9 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
                 </>
             ) : (
                 <>
-                    <h4>{contractName}</h4>
+                        <h4>{contractName}</h4>
                     {cardType === "single" && contractType === ContractType.Deploy && (
                         <>
-                            <ContractDescription contractName={contractName} />
                             <ConstructorInputForm
                                 constructorParams={constructor || []}
                                 constructorInputs={constructorInputs}
