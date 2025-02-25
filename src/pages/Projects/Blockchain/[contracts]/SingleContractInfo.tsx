@@ -13,7 +13,7 @@ import ContractFunctionsForm from "../../../../Components/Contracts/InteractWith
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
-import MobileTabNavigation2 from ".";
+import MobileTabNavigation from "../../../../Components/UI/Tabs/MobileTabNavigation";
 import ContractDescription from "../../../../Components/Contracts/ContractInformation/ContractDescription";
 import ContractFunctions from "../../../../Components/Contracts/ContractInformation/ContractFunctions";
 import { useMediaQuery } from "@mui/material";
@@ -125,7 +125,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   return (
     <Box>
       <h4>{contractName}</h4>
-      <MobileTabNavigation2 tabs={tabs} orientation={isNonMobile ? "vertical" : "horizontal"} />
+      <MobileTabNavigation tabs={tabs} orientation={isNonMobile ? "vertical" : "horizontal"} />
     </Box>
   );
 };

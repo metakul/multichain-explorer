@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MobileTabNavigation2 from "../../../pages/Projects/Blockchain/[contracts]";
+import MobileTabNavigation from "../../UI/Tabs/MobileTabNavigation";
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 interface ContractFunctionProps {
@@ -29,7 +29,7 @@ const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi }) => {
     return (
         <Box display="flex" gap={1}>
             <Box flex={1}>
-                <MobileTabNavigation2
+                <MobileTabNavigation
                     tabs={[
                         { value: "Read", label: "Read", content: renderFunctions(readFunctions) },
                         { value: "Write", label: "Write", content: renderFunctions(writeFunctions) }
@@ -38,7 +38,7 @@ const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi }) => {
             </Box>
             {selectedFunction && (
                 <Box flex={1} p={3} border={1} borderRadius={2}>
-                    <Typography variant="h5" mb={2}>{selectedFunction.name} ({selectedFunction.stateMutability})</Typography>
+                    <Typography variant="h6" mb={2}>{selectedFunction.name} ({selectedFunction.stateMutability})</Typography>
                     
                     {selectedFunction?.inputs.length > 0 && (
                         <>

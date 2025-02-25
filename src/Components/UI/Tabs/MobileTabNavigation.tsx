@@ -10,7 +10,7 @@ interface MobileTabNavigationProps {
   orientation?:string
 }
 
-const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, position, showOutlet, orientation }) => {
+const MobileTabNavigation: React.FC<MobileTabNavigationProps> = ({ tabs, position, showOutlet, orientation }) => {
   useEffect(() => {
     if (showOutlet) {
       setValue(0);
@@ -95,4 +95,4 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({ isNonMobile, children, 
   </div>
 );
 
-export default MobileTabNavigation2;
+export default MobileTabNavigation;
