@@ -11,7 +11,6 @@ function Web3ProfilePage() {
   const { connected } = useRpc();
   const {userBalance,isLoading}=useWalletBalance() 
   const { walletAddress } = useRpc()
-
   return (
     <Container sx={{
       mt:8
@@ -52,7 +51,7 @@ function Web3ProfilePage() {
                 fontSize: "1.3rem"
               }}>
                 {/* // todo get balance based on wallet address and chainId */}
-                  Total Balance: {isLoading ? userBalance : "Loading Balance"} 
+                  Total Balance: {isLoading ? "Loading Balance" : userBalance} 
               </Text>
             </Box>
           </Box>

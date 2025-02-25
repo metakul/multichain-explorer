@@ -75,7 +75,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
       value: (
         "OverView"
       ),
-      content: contractName && <ContractDescription contractName={contractName} />
+      content: contractName && <ContractDescription contractName={contractName} deployedAddress={deployedAddress} />
       ,
       label: "OverView",
     },

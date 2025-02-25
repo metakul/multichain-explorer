@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import contractDescriptions from "../../Data/ContractInformation.json"
 import Box from "../UI/Box";
+import Text from "../UI/Text";
 
 interface ContractDescriptionProps {
   contractName: string;
+  deployedAddress?: string;
 }
 
 const descriptions: Record<string, string> = contractDescriptions;
 
 
-const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName }) => {
+const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName, deployedAddress }) => {
   const [description, setDescription] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,6 +22,10 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName 
     <Box sx={{
       py: 2
     }}>
+      {deployedAddress && <Text>
+        Contract Address: {deployedAddress}
+      </Text>
+      }
       {description}
     </Box>
 

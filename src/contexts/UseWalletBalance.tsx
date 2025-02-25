@@ -29,7 +29,7 @@ export const useWalletBalance = () => {
     };
 
     fetchBalance();
-  }, [walletAddress, provider]); // Dependencies to refetch if wallet or provider changes
+  }, [walletAddress]); 
 
   return { userBalance, isLoading, isError };
 };

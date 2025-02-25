@@ -5,7 +5,6 @@ import { selectStatsInfo, selectStatsLoading, selectStatsError } from '../../red
 import { fetchExplorerStats } from '../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import Box from '../UI/Box';
-import Button from '../UI/Button';
 import Text from '../UI/Text';
 import Flex from '../UI/Flex';
 import Card from '../UI/Card';
@@ -21,10 +20,6 @@ function ExplorerStats() {
     useEffect(() => {
         dispatch(fetchExplorerStats({ rpcUrl }));
     }, [dispatch, rpcUrl]);
-
-    const handleReload = () => {
-        dispatch(fetchExplorerStats({ rpcUrl }));
-    };
 
     const StatCard = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
             <Card>
@@ -76,9 +71,6 @@ function ExplorerStats() {
                 display: "flex"
             }}>
                 <Text style={{ fontSize: "24px", fontWeight: "bold", }}>  Explorer Stats Info </Text>
-                <Button onClick={handleReload} disabled={loading}>
-                    {loading ? "Loading Stats" : "Reload"}
-                </Button>
             </Box>
             {error && <Box style={{ margin: "auto", marginTop: "" }}>
                 <p>Error loading stats</p>
