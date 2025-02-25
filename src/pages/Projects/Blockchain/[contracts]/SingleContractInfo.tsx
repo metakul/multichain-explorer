@@ -14,7 +14,9 @@ import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
 import MobileTabNavigation2 from ".";
-import ContractDescription from "../../../../Components/Contracts/ContractInformation";
+import ContractDescription from "../../../../Components/Contracts/ContractInformation/ContractDescription";
+import ContractFunctions from "../../../../Components/Contracts/ContractInformation/ContractFunctions";
+import { useMediaQuery } from "@mui/material";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?: string }>();
@@ -22,8 +24,9 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   const contract = useSelector(selectContractDetails);
   const contractLoading = useSelector(selectSingleContractLoading);
   // const contractError = useSelector(selectSingleContractError);
+  const isNonMobile = useMediaQuery("(min-width: 766px)");
 
-  const { walletAddress, connected } = useRpc();
+  const { walletAddress } = useRpc();
 
   // Fetch the single contract when the component mounts
   useEffect(() => {
@@ -109,12 +112,20 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
       </>,
       label: "Explorer",
     },
+    {
+      value: (
+        "Functions"
+      ),
+      content: contractName && <ContractFunctions abi={contract.abi} />
+      ,
+      label: "OverView",
+    },
   ];
   
   return (
     <Box>
       <h4>{contractName}</h4>
-      <MobileTabNavigation2 tabs={tabs} />
+      <MobileTabNavigation2 tabs={tabs} orientation={isNonMobile ? "vertical" : "horizontal"} />
     </Box>
   );
 };

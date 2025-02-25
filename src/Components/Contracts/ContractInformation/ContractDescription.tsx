@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import contractDescriptions from "../../Data/ContractInformation.json"
-import Box from "../UI/Box";
-import Text from "../UI/Text";
+import contractDescriptions from "../../../Data/ContractInformation.json"
+import Box from "../../UI/Box";
+import Text from "../../UI/Text";
 
 interface ContractDescriptionProps {
   contractName: string;
@@ -20,7 +20,8 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName,
 
   return (
     <Box sx={{
-      py: 2
+      py: 2,
+      maxWidth:"80vw"
     }}>
       {deployedAddress && <Text>
         Contract Address: {deployedAddress}

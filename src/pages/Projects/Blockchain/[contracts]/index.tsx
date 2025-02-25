@@ -7,9 +7,10 @@ interface MobileTabNavigationProps {
   tabs: { value: ReactNode; content: ReactNode; label: string }[];
   position?: string;
   showOutlet?: boolean;
+  orientation?:string
 }
 
-const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, position, showOutlet }) => {
+const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, position, showOutlet, orientation }) => {
   useEffect(() => {
     if (showOutlet) {
       setValue(0);
@@ -30,8 +31,8 @@ const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, positi
   }
 
   return (
-    <Box   sx={{ flexGrow: 1, display: 'flex',
-      height:"100vh",
+    <Box   sx={{ flexGrow: 1, display: orientation=="vertical" ? 'flex' : 'block',
+      height:orientation=="vertical" ? "100vh" : "",
      }}
     >
       <Tabs
@@ -39,11 +40,11 @@ const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, positi
         onChange={handleChange}
         aria-label="mobile tabs"
         variant="scrollable"
-         orientation="vertical"
+         orientation={orientation=="vertical" ? "vertical" : "horizontal"}
         scrollButtons="auto"
         sx={{
           color: "black",
-          borderRight: "2px solid",
+          borderRight:orientation=="vertical" ? "2px solid" : "",
           pr:4
         }}
       >
@@ -54,7 +55,7 @@ const MobileTabNavigation2: React.FC<MobileTabNavigationProps> = ({ tabs, positi
             {...a11yProps(index)}
             sx={{
               '&.Mui-selected': {
-                backgroundColor: "green",
+                backgroundColor:orientation=="vertical"? "green" :"grey",
                 color: "black",
                 '& .MuiSvgIcon-root': {
                   fontSize: "2rem",

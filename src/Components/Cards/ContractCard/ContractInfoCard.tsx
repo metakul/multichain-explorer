@@ -6,7 +6,7 @@ import ConnectWalletButton from "../../Buttons/ConnectWalletButton";
 import ConstructorInputForm from "./ConstructorInfo";
 import { ContractType } from "../../../DataTypes/enums";
 import { useRpc } from "../../../contexts/RpcProviderContext";
-import ContractDescription from "../../Contracts/ContractInformation";
+import ContractDescription from "../../Contracts/ContractInformation/ContractDescription";
 import Button from "../../UI/Button";
 
 // Props for the component
