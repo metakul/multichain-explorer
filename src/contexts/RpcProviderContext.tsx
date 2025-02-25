@@ -95,6 +95,7 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
                             });
                         } else throw switchError;
                     });
+                    setConnected(true);
                 } else {
                     setConnected(false);
                     return;
@@ -103,11 +104,11 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
                 // Set the provider and network details
                 setProvider(customProvider);
                 if(customRpcUrl){
+                    setConnected(true);
 
                     setRpcUrl(customRpcUrl);
                 }
                 setNetworkName(customNetworkName);
-                setConnected(true);
             } else {
                 // Fallback: switch using MetaMask without a custom RPC URL
                 if (window.ethereum) {

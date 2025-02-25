@@ -21,7 +21,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const myContractsLoading = useSelector(selectContractsLoading)
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const { walletAddress, rpcUrl, networkName } =useRpc()
+  const { walletAddress, rpcUrl, networkName } = useRpc()
 
   useEffect(() => {
     walletAddress && (dispatch as AppDispatch)(getMyContracts(walletAddress));
@@ -30,14 +30,14 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
     // Replace :contractName in the path with the actual contract name
     const path = PROJECTS.DEPLOYED_CONTRACT
-      .replace(':contractName', contract.contractName)
+      // .replace(':contractName', contract.contractName)
       .replace(':deployedAddress', contract.deployedAddress); // Include deployedAddress in the URL
 
     navigate(`${path}/${networkName}`);
   };
   return (
-      <Container style={{
-      }}>
+    <Container style={{
+    }}>
       <CustomHeading placeholder={props.pageTitle} />
       <Grid
         container
@@ -59,7 +59,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"}  isLoading={myContractsLoading}/>
+              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} isLoading={myContractsLoading} />
             </Box>
           ))
         ) : (

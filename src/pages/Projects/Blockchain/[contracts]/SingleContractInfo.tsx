@@ -70,7 +70,6 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
 
     return (
         <Box>
-         
                 <>
                     {props.contractType == ContractType.Deploy ? (
                         <ContractInfoCard

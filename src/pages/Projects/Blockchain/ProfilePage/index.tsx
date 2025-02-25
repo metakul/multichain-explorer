@@ -4,12 +4,13 @@ import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
 import Container from "../../../../Components/UI/Container";
+import { useWalletBalance } from "../../../../contexts/UseWalletBalance";
 
 function Web3ProfilePage() {
 
   const { connected } = useRpc();
 
-  const balance="145.01"
+  const {userBalance}=useWalletBalance() 
 
   const { walletAddress } = useRpc()
 
@@ -55,7 +56,7 @@ function Web3ProfilePage() {
               }}>
 
                 {/* // todo get balance based on wallet address and chainId */}
-                  Total Balance: {balance} 
+                  Total Balance: {userBalance} 
               </Text>
             </Box>
           </Box>

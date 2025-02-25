@@ -20,15 +20,12 @@ const AllBlock: React.FC = () => {
     const navigate = useNavigate()
     const [latestBlockHash, setLatestBlockHash] = useState<string | null>(null);
 
-    const currentBlockLoading = useSelector(selectCurrentBlockLoading);
-
     useEffect(() => {
         dispatch(getPreviousBlocks(rpcUrl));
     }, [dispatch, rpcUrl]);
 
     useEffect(() => {
         dispatch(setCurrentBlockLoading(true));
-        console.log("step1", currentBlockLoading);
 
         const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL)
 

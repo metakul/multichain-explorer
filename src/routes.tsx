@@ -1,6 +1,6 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
-import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
+// import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
 import { ContractType, EXPLORER_PAGE, Pages, PROJECTS } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/DashboardLayout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contracts]/SingleContractInfo";
@@ -37,10 +37,10 @@ const Router: React.FC<RouterProps> = () => {
           path: `${PROJECTS.CONTRACTS_HOME}/:networkName`,
           element: <ContractHomePage />,
         },
-        {
-          path: `${Pages.PROFILE}/:networkName`,
-          element: <ProfilePage />,
-        },
+        // {
+        //   path: `${Pages.PROFILE}/:networkName`,
+        //   element: <ProfilePage />,
+        // },
         {
           path: `${PROJECTS.SINGLE_CONTRACT}/:networkName`,
           element: <SingleContractPage contractType={ContractType.Deploy} />,
