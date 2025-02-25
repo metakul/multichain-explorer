@@ -52,7 +52,6 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR }) => {
                     }}
                     sx={{ ml: 'auto' }}
                 >
-
                     <ConnectWalletButton />
                         <RpcComponent/>
                 </Stack>

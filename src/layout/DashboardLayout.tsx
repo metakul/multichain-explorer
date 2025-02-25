@@ -4,14 +4,14 @@ import Header from "./Topbar";
 // import RpcComponent from "../Components/RPC/RpcComponent";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import navConfig from "./navConfig";
+import { useNavConfig } from "./navConfig";
 import Box from "../Components/UI/Box";
 import Container from "../Components/UI/Container";
 
 export default function DashboardLayout() {
   const APP_BAR = "64px"
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const navConfig = useNavConfig();
   const handleSideBarState = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
