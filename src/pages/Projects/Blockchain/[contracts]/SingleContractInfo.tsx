@@ -35,6 +35,18 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     }
   }, [contractName, dispatch]);
 
+  const renderSolidityCode = (abi: any[]) => {
+    if (!abi) return "No ABI available.";
+  
+    return abi
+      .filter((item) => item.type === "function")
+      .map(
+        (fn) =>
+          `function ${fn.name}(${fn.inputs.map((i: { type: any; name: any; }) => `${i.type} ${i.name}`).join(", ")}) external ${fn.stateMutability !== "nonpayable" ? fn.stateMutability : ""};`
+      )
+      .join("\n");
+  };
+  
   // Handle loading or error cases
   if (!contract) {
     return <Text>Loading contract data...</Text>;
@@ -119,6 +131,17 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
       content: contractName && <ContractFunctions abi={contract.abi} />
       ,
       label: "OverView",
+    },
+    {
+      value: "Interface",
+      content: (
+        <Box>
+          <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
+            {renderSolidityCode(contract.abi)}
+          </Text>
+        </Box>
+      ),
+      label: "Interface",
     },
   ];
   
