@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchContractByName, saveNewContract } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
-import { selectContractDetails, selectSingleContractError, selectSingleContractLoading } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
+import { selectContractDetails, selectSingleContractLoading } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { ethers } from "ethers";
@@ -77,7 +77,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
                             contractType={ContractType.Deploy}
                             contractInfo={contract}
                             cardType="single"
-                            buttonText="Deploy"
+                            buttonText={ContractType.Deploy}
                             isLoading={contractLoading}
                             handleButtonClick={deployContract} // Pass deploy function
                         />

@@ -4,7 +4,7 @@ import { VerificationProps } from '../../../../../interfaces/CompInterfaces';
 import CustomHeading from '../../../../../Components/UI/Typogrpahy/Text/Heading';
 import Grid from '../../../../../Components/UI/Grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
+import { selectContractsLoading, selectMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
 import { AppDispatch } from '../../../../../redux/store';
 import { getMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
 import ContractInfoCard from '../../../../../Components/Cards/ContractCard/ContractInfoCard';
@@ -18,6 +18,7 @@ import Text from '../../../../../Components/UI/Text';
 const MyContracts: React.FC<VerificationProps> = (props) => {
 
   const myContracts = useSelector(selectMyContracts)
+  const myContractsLoading = useSelector(selectContractsLoading)
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const { walletAddress, rpcUrl, networkName } =useRpc()
@@ -58,7 +59,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"}  isLoading={myContractsLoading}/>
             </Box>
           ))
         ) : (

@@ -12,10 +12,9 @@ import {
 import ListIcon from '@mui/icons-material/List';
 // const NAV_WIDTH = 280;
 import "./style.css"
-import { NavLink as RouterLink, useNavigate } from "react-router-dom";
+import { NavLink as RouterLink } from "react-router-dom";
 import ConnectWalletButton from "../../Components/Buttons/ConnectWalletButton";
 // import { PROJECTS } from "../../DataTypes/enums";
-import { useRpc } from "../../contexts/RpcProviderContext";
 import RpcComponent from "../../Components/RPC/RpcComponent";
 
 interface HeaderProps {

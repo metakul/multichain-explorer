@@ -7,7 +7,6 @@ import { AppDispatch } from '../../redux/store';
 import { selectTransactions, selectTransactionsError, selectTransactionsLoading } from '../../redux/slices/BackendSlices/Explorer/Transactions/AllTrxSlice';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
-import Button from '../UI/Button';
 import { clearTrxCount, selectNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
 import { ReplayCircleFilledOutlined } from '@mui/icons-material';
 

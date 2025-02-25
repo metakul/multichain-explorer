@@ -75,6 +75,7 @@ const ContractsGrid: React.FC = () => {
                                         handleButtonClick={() => navigateUser(contract)}
                                         contractInfo={contract}
                                         cardType={"multiple"}
+                                        isLoading={isLoading}
                                     />
                                 </Box>
                             ))}

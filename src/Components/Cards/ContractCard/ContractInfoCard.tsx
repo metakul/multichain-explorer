@@ -7,6 +7,7 @@ import ConstructorInputForm from "./ConstructorInfo";
 import { ContractType } from "../../../DataTypes/enums";
 import { useRpc } from "../../../contexts/RpcProviderContext";
 import ContractDescription from "../../Contracts/ContractInformation";
+import Button from "../../UI/Button";
 
 // Props for the component
 interface ContractInfoProps {
@@ -105,13 +106,13 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
 
                     {buttonText && cardType === "single" && contractType === ContractType.Deploy ? (
                         connected ? (
-                            <button onClick={handleClick}>{buttonText}</button>
+                            <Button onClick={handleClick}>{buttonText}</Button>
                         ) : (
                             <ConnectWalletButton />
                         )
                     ) : (
                         <>
-                            <button onClick={handleButtonClick}>{buttonText}</button>
+                            <Button onClick={handleButtonClick}>{buttonText}</Button>
                         </>
                     )}
 
