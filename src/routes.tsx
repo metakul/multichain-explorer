@@ -2,7 +2,7 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 // import ProfilePage from "./pages/ProtecTedPages/Profile/Profile";
 import { ContractType, EXPLORER_PAGE, Pages, PROJECTS } from "./DataTypes/enums";
-import DashboardOutlet from "./layout/DashboardLayout";
+import DashboardOutlet from "./layout/layout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contracts]/SingleContractInfo";
 import Web3ProfilePage from "./pages/Projects/Blockchain/ProfilePage";
 import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
