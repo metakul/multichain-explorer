@@ -79,12 +79,17 @@ const AllBlock: React.FC = () => {
                 overflowX: "scroll",
             }}>
                 {blocks.map((block) => (
+                    <>
                     <SingleBlockInfo
                         key={block.hash}
                         block={block}
                         loading={allBlocksLoading}
                         isNew={block.hash === latestBlockHash} // Pass isNew prop
-                    />))}
+                        />
+                        
+                        </>
+                        )
+                        )}
             </Box>
             <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks

@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectStatsInfo, selectStatsLoading, selectStatsError } from '../../redux/slices/BackendSlices/Explorer/ExplorerStatsSlice';
 import { fetchExplorerStats } from '../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice';
+import { setExplorerStats } from '../../redux/slices/BackendSlices/Explorer/ExplorerStatsSlice';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
@@ -17,25 +18,58 @@ function ExplorerStats() {
     const loading = useSelector(selectStatsLoading);
     const error = useSelector(selectStatsError);
 
+    const [lastUpdated, setLastUpdated] = useState<number>(Date.now()); // Track latest update
+
     useEffect(() => {
         dispatch(fetchExplorerStats({ rpcUrl }));
+
+        const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
+
+        ws.onopen = () => {
+            console.log('WebSocket for stats connected');
+            ws.send(JSON.stringify({ type: 'STATS_INIT', rpcUrl }));
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const updatedStats = JSON.parse(event.data);
+                if (updatedStats.type === 'STATS_UPDATE') {
+                    dispatch(setExplorerStats(updatedStats.stats));
+                    setLastUpdated(Date.now());  // Trigger animation on update
+                }
+            } catch (error) {
+                console.error('Failed to parse stats update:', error);
+            }
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error for stats:', error);
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket for stats closed');
+        };
+
+        return () => {
+            ws.close();
+        };
     }, [dispatch, rpcUrl]);
 
     const StatCard = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
-            <Card>
-                <Flex >
-                    <Box sx={{
-                        padding: '8px',
-                    }}>
-                        <Text style={{ fontWeight: "bold", fontSize:"14px" }}>
-                            {label}
-                        </Text>
-                        <Text style={{  fontSize:"14px" }}>
-                            {value ?? "N/A"} {/* Show N/A if value is null or undefined */}
-                        </Text>
-                    </Box>
-                </Flex>
-            </Card>
+        <Card key={`${label}-${lastUpdated}`}>  {/* Force re-render to trigger animation */}
+            <Flex>
+                <Box
+                    sx={{ padding: '8px' }}
+                >
+                    <Text style={{ fontWeight: "bold", fontSize: "14px" }}>
+                        {label}
+                    </Text>
+                    <Text style={{ fontSize: "14px" }}>
+                        {value ?? "N/A"} {/* Show N/A if value is null or undefined */}
+                    </Text>
+                </Box>
+            </Flex>
+        </Card>
     );
 
     const StatCardSkeleton = () => (
@@ -81,18 +115,18 @@ function ExplorerStats() {
                     ? Array.from({ length: 8 }).map((_, index) => <StatCardSkeleton key={index} />)
                     : stats && (
                         <>
-                            <StatCard label="Total Blocks" value={stats.totalBlocks} />
-                            <StatCard label="Total Addresses" value={stats.totalAddresses} />
-                            <StatCard label="Total Trx" value={stats.totalTransactions} />
-                            <StatCard label="Average Block Time" value={`${stats.averageBlockTime} s`} />
-                            <StatCard label="Total Gas Used" value={stats.totalGasUsed} />
-                            <StatCard label="Trx Today" value={stats.transactionsToday} />
-                            <StatCard label="Gas Used Today" value={stats.gasUsedToday} />
-                            <StatCard label="Average Gas Price" value={stats.gasPrices.average} />
-                            <StatCard label="Fast Gas Price" value={stats.gasPrices.fast} />
-                            <StatCard label="Slow Gas Price" value={stats.gasPrices.slow} />
-                            <StatCard label="Static Gas Price" value={stats.staticGasPrice} />
-                            <StatCard label="Network Utilization" value={`${stats.networkUtilizationPercentage}%`} />
+                            <StatCard label="Total Blocks" value={stats?.totalBlocks} />
+                            <StatCard label="Total Addresses" value={stats?.totalAddresses} />
+                            <StatCard label="Total Trx" value={stats?.totalTransactions} />
+                            <StatCard label="Average Block Time" value={`${stats?.averageBlockTime} s`} />
+                            <StatCard label="Total Gas Used" value={stats?.totalGasUsed} />
+                            <StatCard label="Trx Today" value={stats?.transactionsToday} />
+                            <StatCard label="Gas Used Today" value={stats?.gasUsedToday} />
+                            <StatCard label="Average Gas Price" value={stats?.gasPrices?.average} />
+                            <StatCard label="Fast Gas Price" value={stats?.gasPrices?.fast} />
+                            <StatCard label="Slow Gas Price" value={stats?.gasPrices?.slow} />
+                            <StatCard label="Static Gas Price" value={stats?.staticGasPrice} />
+                            <StatCard label="Network Utilization" value={`${stats?.networkUtilizationPercentage}%`} />
                         </>
                     )}
             </div>

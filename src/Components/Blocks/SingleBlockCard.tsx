@@ -23,70 +23,82 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
     };
     const { networkName } = useRpc()
     return (
-        <Box
-            key={block?.hash ?? Math.random()}
-            className={isNew ? "new-block" : ""} // Apply animation class
-            style={{
-                backgroundColor: '#ffffff',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
-                padding: '16px',
-                transition: 'background-color 0.5s ease-in-out',
-            }}
-        >
-            <Text
-                style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
-                onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number), networkName)}
+        <Box sx={{
+            display: "flex",
+            flexDirection: "row "
+        }}>
+            <Box
+                key={block?.hash ?? Math.random()}
+                className={isNew ? "new-block" : ""} // Apply animation class
+                style={{
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    transition: 'background-color 0.5s ease-in-out',
+                }}
             >
-                {loading
-                    ? <Skeleton width={120} />
-                    : block?.number !== undefined
-                        ? `Block #${block.number}`
-                        : "Block #N/A"}
-            </Text>
-            <Text variant="body2">
-                <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
-            </Text>
-            <Text variant="body2" display="flex" >
-                <strong>Total Transaction :   </strong> {block?.transactionsCount ? <Text
-                    style={{
-                        color: 'blue',
-                        fontWeight: '1000',
-                        cursor: 'pointer',
-                    }}
-                    onClick={() => navigate(
-                        `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
-                    )}
+                <Text
+                    style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
+                    onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number), networkName)}
                 >
-                    {block.transactionsCount} Trx
-                </Text> : "N/a"}
-            </Text>
-            <Text variant="body2">
-                <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
-            </Text>
-            <Text variant="body2">
-                <strong>Miner:</strong>
-                {loading
-                    ? <Skeleton width={150} />
-                    : block?.miner
-                        ? <Text
-                            component="span"
-                            style={{ color: "blue", cursor: "pointer" }}
-                            onClick={() => block.miner && navigateToAddress(navigate, block.miner, networkName)}
-                        >
-                            {block?.miner?.slice(0, 8)}...{block?.miner?.slice(-8)}
-                        </Text>
-                        : "N/A"}
+                    {loading
+                        ? <Skeleton width={120} />
+                        : block?.number !== undefined
+                            ? `Block #${block.number}`
+                            : "Block #N/A"}
+                </Text>
+                <Text variant="body2">
+                    <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
+                </Text>
+                <Text variant="body2" display="flex" >
+                    <strong>Total Trx :   </strong> {block?.transactionsCount ? <Text
+                        style={{
+                            color: 'blue',
+                            fontWeight: '1000',
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => navigate(
+                            `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
+                        )}
+                    >
+                        {block.transactionsCount} Trx
+                    </Text> : "N/a"}
+                </Text>
+                <Text variant="body2">
+                    <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
+                </Text>
+                <Text variant="body2">
+                    <strong>Miner:</strong>
+                    {loading
+                        ? <Skeleton width={150} />
+                        : block?.miner
+                            ? <Text
+                                component="span"
+                                style={{ color: "blue", cursor: "pointer" }}
+                                onClick={() => block.miner && navigateToAddress(navigate, block.miner, networkName)}
+                            >
+                                {block?.miner?.slice(0, 6)}...{block?.miner?.slice(-6)}
+                            </Text>
+                            : "N/A"}
 
-            </Text>
-            <Text variant="body2">
-                <strong>Timestamp:</strong>
-                {loading
-                    ? <Skeleton width={150} />
-                    : block?.timestamp
-                        ? new Date(parseInt(block.timestamp) * 1000).toLocaleString()
-                        : "N/A"}
-            </Text>
+                </Text>
+                <Text variant="body2">
+                    <strong>Timestamp:</strong>
+                    {loading
+                        ? <Skeleton width={150} />
+                        : block?.timestamp
+                            ? new Date(parseInt(block.timestamp) * 1000).toLocaleString()
+                            : "N/A"}
+                </Text>
+            </Box>
+            <Box sx={{
+                width: "40px",
+                height: "8px",
+                background: "blue",
+                position: "relative",
+                top: 80
+            }} />
         </Box>
     );
 };

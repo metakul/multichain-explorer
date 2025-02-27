@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MobileTabNavigation from "../../UI/Tabs/MobileTabNavigation";
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { Box, Typography} from "@mui/material";
 import ContractInteraction from "./ContractInteraction";
 
 interface ContractFunctionProps {

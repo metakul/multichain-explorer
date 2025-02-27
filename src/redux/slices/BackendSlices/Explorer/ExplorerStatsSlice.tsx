@@ -21,7 +21,10 @@ const explorerStatsSlice = createSlice({
     reducers: {
         setExplorerStats: (state, action: PayloadAction<NetworkStats>) => {
             state.loading = false;
-            state.stats = action.payload;
+            state.stats = {
+                ...state.stats,
+                ...action.payload, // Only update the provided fields, keep old values
+            };
             state.error = null;
         },
         setExplorerStatsLoading: (state, action: PayloadAction<boolean>) => {
