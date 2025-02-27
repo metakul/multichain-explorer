@@ -72,9 +72,7 @@ const AllBlocks: React.FC = () => {
                     </Button>
                     <Text style={{ margin: '0 16px' }}>Page {currentPage}</Text>
                     <Button onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
-          
                 </Box>
-                
             </Box>
         </div>
     );

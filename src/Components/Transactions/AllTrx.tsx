@@ -36,22 +36,21 @@ function Transactions() {
                 justifyContent: "space-between",
             }}>
                 <Box>
-                    
-                <Text style={{ fontSize: "20px", fontWeight: "bold" }}>Recent Transactions </Text>
+                    <Text style={{ fontSize: "20px", fontWeight: "bold" }}>Recent Transactions </Text>
                 </Box>
                 <Box style={{
-                display: "flex",
-                alignContent: "center",
-            }}>
-                    {loading ? "Loading Trxs" : <ReplayCircleFilledOutlined onClick={handleReload} />}
-                <Text style={{ fontSize:"16px" }}>
-                    {newTrxCount} Trx Since Last Reload
-                </Text>
+                    display: "flex",
+                    alignContent: "center",
+                }}>
+                    <Text style={{ fontSize: "12px" }}>
+                        {newTrxCount} New Trx
+                    </Text>
+                    {loading ? "" : <ReplayCircleFilledOutlined onClick={handleReload} />}
                 </Box>
             </Box>
-          
-                
-                {transactions && <TransactionInfo transaction={transactions} loading={loading} error={error} />}
+            {transactions &&
+                <TransactionInfo transaction={transactions} loading={loading} error={error} />
+            }
         </Box>
     );
 }

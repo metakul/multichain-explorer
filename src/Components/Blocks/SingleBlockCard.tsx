@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
-import Text from '../UI/Text';
-import Skeleton from '@mui/material/Skeleton';
 import { navigateToAddress, navigateToBlock } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
-import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useRpc } from '../../contexts/RpcProviderContext';
+import { getColors } from '../../layout/Theme/themes';
+import { getRelativeTime } from '../../helpers/getRelativeTime';
+import BlockCardInfo from '../Cards/BlockCard'; // Import the reusable component
+import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
+import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 
 interface SingleBlockInfoProps {
     block?: Block;
@@ -16,89 +18,123 @@ interface SingleBlockInfoProps {
 
 const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading }) => {
     const navigate = useNavigate();
+    const { networkName } = useRpc();
+    const [isVisible, setIsVisible] = useState(false);
 
-    const renderContent = (value: string | number | undefined, loadingWidth: number) => {
-        if (loading) return <Skeleton width={loadingWidth} />;
-        return value !== undefined ? value : "N/A";
+    // Trigger animation when the block is new
+    useEffect(() => {
+        if (isNew) {
+            setIsVisible(true);
+            const timer = setTimeout(() => setIsVisible(false), 1000); // Reset after 1 second
+            return () => clearTimeout(timer);
+        }
+    }, [isNew]);
+
+    /**
+     * Calculates the gas usage percentage.
+     * @param gasUsed - The gas used.
+     * @param gasLimit - The gas limit.
+     * @returns number
+     */
+    const calculateGasUsagePercentage = (gasUsed?: string, gasLimit?: string) => {
+        if (!gasUsed || !gasLimit) return 0;
+        return (Number(gasUsed) / Number(gasLimit)) * 100;
     };
-    const { networkName } = useRpc()
+
+    const naviagteToBlock=()=>{
+        block?.number && navigateToBlock(navigate, Number(block.number), networkName)
+    }
+    const naviagteToBlockWithTrx=()=>{
+        block?.number && navigate(
+            `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
+        )
+    }
+    const navigateToMiner=()=>{
+        block?.miner && navigateToAddress(navigate, block.miner, networkName)
+    }
+
     return (
-        <Box sx={{
-            display: "flex",
-            flexDirection: "row "
-        }}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                py: 2,
+                position: 'relative',
+                transition: 'transform 0.3s ease-in-out',
+                transform: isVisible ? 'scale(1.05)' : 'scale(1)',
+            }}
+        >
+            {/* Block Card */}
             <Box
                 key={block?.hash ?? Math.random()}
-                className={isNew ? "new-block" : ""} // Apply animation class
-                style={{
-                    backgroundColor: '#ffffff',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                sx={{
+                    backgroundColor: getColors().primary[900],
+                    boxShadow: '8px 4px 8px rgba(0, 0, 0, 0.1)',
                     borderRadius: '8px',
                     padding: '16px',
+                    border: '1px solid',
                     transition: 'background-color 0.5s ease-in-out',
+                    width: '100%',
                 }}
             >
-                <Text
-                    style={{ color: "blue", fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}
-                    onClick={() => !loading && block?.number && navigateToBlock(navigate, Number(block.number), networkName)}
-                >
-                    {loading
-                        ? <Skeleton width={120} />
-                        : block?.number !== undefined
-                            ? `Block #${block.number}`
-                            : "Block #N/A"}
-                </Text>
-                <Text variant="body2">
-                    <strong>Gas Used:</strong> {renderContent(block?.gasUsed, 100)}
-                </Text>
-                <Text variant="body2" display="flex" >
-                    <strong>Total Trx :   </strong> {block?.transactionsCount ? <Text
-                        style={{
-                            color: 'blue',
-                            fontWeight: '1000',
-                            cursor: 'pointer',
-                        }}
-                        onClick={() => navigate(
-                            `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
-                        )}
-                    >
-                        {block.transactionsCount} Trx
-                    </Text> : "N/a"}
-                </Text>
-                <Text variant="body2">
-                    <strong>Difficulty:</strong> {renderContent(block?.difficulty, 100)}
-                </Text>
-                <Text variant="body2">
-                    <strong>Miner:</strong>
-                    {loading
-                        ? <Skeleton width={150} />
-                        : block?.miner
-                            ? <Text
-                                component="span"
-                                style={{ color: "blue", cursor: "pointer" }}
-                                onClick={() => block.miner && navigateToAddress(navigate, block.miner, networkName)}
-                            >
-                                {block?.miner?.slice(0, 6)}...{block?.miner?.slice(-6)}
-                            </Text>
-                            : "N/A"}
+                {/* Block Number */}
+                <BlockCardInfo
+                    value={`Block #${block?.number}`}
+                    loading={loading}
+                    icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                    fontSize="16px"
+                    fontWeight="bold"
+                    navigateTo={naviagteToBlock}
+                />
 
-                </Text>
-                <Text variant="body2">
-                    <strong>Timestamp:</strong>
-                    {loading
-                        ? <Skeleton width={150} />
-                        : block?.timestamp
-                            ? new Date(parseInt(block.timestamp) * 1000).toLocaleString()
-                            : "N/A"}
-                </Text>
+                {/* Gas Used with Progress Bar */}
+                <BlockCardInfo
+                    label="Gas Used"
+                    value={block?.gasUsed}
+                    loading={loading}
+                    icon={<ContentPasteGoSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
+                    progressValue={calculateGasUsagePercentage(block?.gasUsed, block?.gasLimit)}
+                    showProgressBar
+                />
+
+                {/* Total Transactions */}
+                <BlockCardInfo
+                    label="Total Trx"
+                    value={block?.transactionsCount}
+                    loading={loading}
+                    navigateTo={naviagteToBlockWithTrx}
+                    icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
+
+                />
+
+                {/* Miner */}
+                <BlockCardInfo
+                    label="Miner"
+                    value={block?.miner}
+                    loading={loading}
+                    navigateTo={navigateToMiner}
+                    icon={<MinorCrashRounded width={16} height={16} fill={getColors().blueAccent[400]} />}
+                />
+
+                {/* Timestamp */}
+                <BlockCardInfo
+                    label="Timestamp"
+                    value={block?.timestamp ? getRelativeTime(block.timestamp) : 'N/A'}
+                    loading={loading}
+                    icon={<PunchClock width={16} height={16} fill={getColors().blueAccent[400]} />}
+                />
             </Box>
-            <Box sx={{
-                width: "40px",
-                height: "8px",
-                background: "blue",
-                position: "relative",
-                top: 80
-            }} />
+
+            {/* Decorative Line */}
+            <Box
+                sx={{
+                    width: '40px',
+                    height: '8px',
+                    background: getColors().yellowAccent[900],
+                    position: 'relative',
+                    top: 80,
+                }}
+            />
         </Box>
     );
 };

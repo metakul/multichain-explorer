@@ -1,5 +1,6 @@
 import React from "react";
 import { Table, TableHead,  TableRow, TableCell, TableProps, TableContainer, Paper } from "@mui/material";
+import { getColors } from "../../../layout/Theme/themes";
 
 interface CustomTableProps extends TableProps {
     children: React.ReactNode;
@@ -7,7 +8,9 @@ interface CustomTableProps extends TableProps {
 
 const CustomTable: React.FC<CustomTableProps> = ({ children, ...props }) => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{
+            background:getColors().primary[900]
+        }}>
             <Table {...props}>
                 {children}
             </Table>

@@ -1,9 +1,12 @@
-@keyframes blink {
-    0% { background-color: #d1e8ff; }
-    50% { background-color: #ffffff; }
-    100% { background-color: #d1e8ff; }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .new-block {
-    animation: blink 1s ease-in-out 3;
+    animation: fadeIn 1s ease-in-out;
 }

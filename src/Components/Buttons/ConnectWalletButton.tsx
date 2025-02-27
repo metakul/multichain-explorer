@@ -1,7 +1,6 @@
 import { useRpc } from "../../contexts/RpcProviderContext";
 import Button from "../UI/Button";
 import Text from "../UI/Text";
-import "./Button.css";
 import { CSSProperties, useEffect } from "react";
 
 interface ConnectWalletButtonProps {

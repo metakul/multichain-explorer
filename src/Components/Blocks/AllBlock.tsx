@@ -65,7 +65,7 @@ const AllBlock: React.FC = () => {
 
 
     return (
-        <div>
+        <Box >
             <Box sx={{
                 display: "flex"
             }}>
@@ -77,24 +77,22 @@ const AllBlock: React.FC = () => {
                 display: "flex",
                 flexDirection: "row",
                 overflowX: "scroll",
+                mb: 1,
+                pl:2
             }}>
                 {blocks.map((block) => (
-                    <>
                     <SingleBlockInfo
                         key={block.hash}
                         block={block}
                         loading={allBlocksLoading}
                         isNew={block.hash === latestBlockHash} // Pass isNew prop
-                        />
-                        
-                        </>
-                        )
-                        )}
+                    />
+                ))}
             </Box>
             <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>
-        </div>
+        </Box>
     );
 };
 

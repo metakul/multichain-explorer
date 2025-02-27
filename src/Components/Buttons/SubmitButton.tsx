@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./Button.css";
 import Button from "../UI/Button";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

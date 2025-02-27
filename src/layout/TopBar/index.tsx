@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR, isNonMobile 
           onClick={() => navigate("/")}
           sx={{ cursor: "pointer", mt: 2 }}
         >
-          <img src={`/thaicoin.png`} alt="logo" className="" style={{
+          <img src={`/logo.svg`} alt="logo" className="" style={{
             width:"48px"
           }}/>
         </Box>
@@ -89,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, APP_BAR, isNonMobile 
         >
           <div className="switch" data-ison={isOn} onClick={toggleSwitch} style={{
             background: theme.palette.grey[900],
-            border: "2px solid",
+            border: "1px solid",
             borderColor: theme.palette.grey[100],
           }}>
             <motion.div className="handle" layout transition={spring} style={{

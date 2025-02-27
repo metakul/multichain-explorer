@@ -7,6 +7,7 @@ import Container from "../UI/Container";
 import CustomTable, { CustomTableHeader, CustomTableRow, CustomTableCell } from "../UI/Table";
 import Skeleton from "@mui/material/Skeleton";
 import { useRpc } from "../../contexts/RpcProviderContext";
+import { getColors } from "../../layout/Theme/themes";
 
 interface TrxInfoProps {
     transaction: ITrx[] | undefined;
@@ -70,25 +71,25 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                 {transaction && transaction.map((trx: ITrx) => (
                     <CustomTableRow key={trx?.hash}>
                         <CustomTableCell
-                            style={{ color: "blue", cursor: "pointer" }}
+                            style={{ color: getColors().blueAccent[500], cursor: "pointer" }}
                             onClick={() => navigateToTransaction(navigate, trx?.hash, networkName)}
                         >
                             {trx?.hash?.slice(0, 16)}...
                         </CustomTableCell>
                         <CustomTableCell
-                            style={{ color: "blue", cursor: "pointer" }}
+                            style={{ color: getColors().blueAccent[500], cursor: "pointer" }}
                             onClick={() => navigateToBlock(navigate, trx?.blockNumber, networkName)}
                         >
                             {trx?.blockNumber}
                         </CustomTableCell>
                         <CustomTableCell
-                            style={{ color: "blue", cursor: "pointer" }}
+                            style={{ color: getColors().blueAccent[500], cursor: "pointer" }}
                             onClick={() => navigateToAddress(navigate, trx?.from, networkName)}
                         >
                             {trx?.from?.slice(0, 8)}...{trx?.from?.slice(-8)}
                         </CustomTableCell>
                         <CustomTableCell
-                            style={{ color: "blue", cursor: "pointer" }}
+                            style={{ color: getColors().blueAccent[500], cursor: "pointer" }}
                             onClick={() => navigateToAddress(navigate, trx?.to, networkName)}
                         >
                             {trx?.to?.slice(0, 8)}...{trx?.to?.slice(-8)}

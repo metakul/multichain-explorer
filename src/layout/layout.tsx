@@ -5,17 +5,17 @@ import Header from "./TopBar";
 
 import "./global.css";
 import MiniDrawer from "./Navigation";
-import {useNavConfig} from "./navConfig";
+import { useNavConfig } from "./navConfig";
 
 // home page tabs
 import { Outlet } from "react-router-dom";
 
 
 import Footer from "./Footer";
-import Topbar from "./TopBar/Topbar";
+import Topbar from "./TopBar";
 
 export default function DashboardLayout() {
-  const navConfig=useNavConfig()
+  const navConfig = useNavConfig()
   const isNonMobile = useMediaQuery("(min-width: 768px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [, setShowOutlet] = useState<boolean>(false);
@@ -25,31 +25,33 @@ export default function DashboardLayout() {
   };
   return (
     <Box>
- 
- <Topbar APP_BAR={APP_BAR}
-            isNonMobile={isNonMobile}
-            setIsSidebarOpen={handleSideBarState}/>
-          <Header
-            APP_BAR={APP_BAR}
-            isNonMobile={isNonMobile}
-            setIsSidebarOpen={handleSideBarState}
-          />
-          <MiniDrawer
-            APP_BAR={APP_BAR}
-            setShowOutlet={setShowOutlet}
-            isNonMobile={isNonMobile}
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={handleSideBarState}
-            navConfig={navConfig}
-          />
-          <Box
-            sx={{
-              pl:isNonMobile ? 10 : 0,
-            }}
-          >
-            <Outlet />
-          <Footer />
-          </Box>
+
+      <Topbar APP_BAR={APP_BAR}
+        isNonMobile={isNonMobile}
+        setIsSidebarOpen={handleSideBarState} />
+      <Header
+        APP_BAR={APP_BAR}
+        isNonMobile={isNonMobile}
+        setIsSidebarOpen={handleSideBarState}
+      />
+      <MiniDrawer
+        APP_BAR={APP_BAR}
+        setShowOutlet={setShowOutlet}
+        isNonMobile={isNonMobile}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={handleSideBarState}
+        navConfig={navConfig}
+      />
+      <Box
+        sx={{
+          mt: 12,
+          pl: isNonMobile ? 10 : 0,
+
+        }}
+      >
+        <Outlet />
+        <Footer />
+      </Box>
 
 
     </Box>
