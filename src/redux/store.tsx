@@ -11,7 +11,7 @@ import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlo
 import transactionsState from "./slices/BackendSlices/Explorer/Transactions/AllTrxSlice"
 import addressInfoState from "./slices/BackendSlices/Explorer/Address/AddressInfoSlice"
 import { useDispatch } from 'react-redux'
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 const store = configureStore({
   reducer: {
     auth:authReducer,

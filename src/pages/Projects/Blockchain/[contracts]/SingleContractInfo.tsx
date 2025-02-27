@@ -135,7 +135,23 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     {
       value: "Interface",
       content: (
-        <Box>
+        <Box sx={{
+          maxWidth:"80vw"
+        }}>
+          <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
+            {renderSolidityCode(contract.abi)}
+          </Text>
+        </Box>
+      ),
+      label: "Interface",
+    },
+    {
+      value: "Transactions",
+      content: (
+        <Box
+        sx={{
+          maxWidth:"80vw"
+        }}>
           <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
             {renderSolidityCode(contract.abi)}
           </Text>

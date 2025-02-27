@@ -28,15 +28,14 @@ const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi }) => {
     );
 
     return (
-        <Box display="flex" gap={1}>
-            <Box flex={1}>
+        <Box display="flex" gap={1} sx={{
+        }}>
                 <MobileTabNavigation
                     tabs={[
                         { value: "Read", label: "Read", content: renderFunctions(readFunctions) },
                         { value: "Write", label: "Write", content: renderFunctions(writeFunctions) }
                     ]}
                 />
-            </Box>
             {selectedFunction && (
                       <ContractInteraction selectedFunction={selectedFunction} />
             )}

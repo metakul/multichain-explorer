@@ -31,7 +31,7 @@ const MobileTabNavigation: React.FC<MobileTabNavigationProps> = ({ tabs, positio
   }
 
   return (
-    <Box   sx={{ flexGrow: 1, display: orientation=="vertical" ? 'flex' : 'block',
+    <Box   sx={{ display: orientation=="vertical" ? 'flex' : 'block',
       height:orientation=="vertical" ? "100vh" : "",
      }}
     >
@@ -39,13 +39,15 @@ const MobileTabNavigation: React.FC<MobileTabNavigationProps> = ({ tabs, positio
         value={value}
         onChange={handleChange}
         aria-label="mobile tabs"
-        variant="scrollable"
+        variant={orientation=="vertical" ? "standard" : "scrollable"}
          orientation={orientation=="vertical" ? "vertical" : "horizontal"}
         scrollButtons="auto"
         sx={{
           color: "black",
           borderRight:orientation=="vertical" ? "2px solid" : "",
-          pr:4
+          pr:orientation=="vertical" ? 2 : 2,
+          p:0,
+          width:orientation=="vertical" ? "150px" : "auto",
         }}
       >
         {tabs.map(({ value }, index) => (
@@ -82,7 +84,7 @@ interface CustomTabPanelProps {
   position?: string;
 }
 
-const CustomTabPanel: React.FC<CustomTabPanelProps> = ({ isNonMobile, children, value, index, position }) => (
+const CustomTabPanel: React.FC<CustomTabPanelProps> = ({ isNonMobile, children, value, index }) => (
   <div
     role="tabpanel"
     hidden={value !== index}
@@ -91,7 +93,7 @@ const CustomTabPanel: React.FC<CustomTabPanelProps> = ({ isNonMobile, children, 
     style={{
     }}
   >
-    {value === index && <Box className={` ${position === "top" ? "pt-2" : ""}`} sx={{ pl: isNonMobile ? 3 : 0 }}>{children}</Box>}
+    {value === index && <Box sx={{ pl: isNonMobile ? 2 : 2 }}>{children}</Box>}
   </div>
 );
 
