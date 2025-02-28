@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { getBlockWithTrx } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../../../redux/store';
-import BlockInfo from '../../../../Components/Blocks/SingleBlockWithTrx';
 import { selectBlocksForCurrentPage } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import SingleBlockInfo from '../../../../Components/Blocks/SingleBlockCard';
 function TransactionOverViewPage() {
 
     const { block } = useParams<{ block: string }>();
@@ -24,7 +24,7 @@ selectBlocksForCurrentPage
     return (
         <div>
             {blockData &&
-                <BlockInfo block={blockData} />
+                <SingleBlockInfo block={blockData} showTrx={true} />
             }
         </div>
     )

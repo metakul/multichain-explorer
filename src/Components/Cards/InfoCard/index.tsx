@@ -17,6 +17,7 @@ interface InfoBoxProps {
     fontSize?: string; // Optional font size
     fontWeight?: string; // Optional font weight
     showProgressBar?: boolean; // Whether to show the progress bar
+    error?: string | null; // Optional error message
 }
 
 const InfoCard: React.FC<InfoBoxProps> = ({
@@ -30,6 +31,7 @@ const InfoCard: React.FC<InfoBoxProps> = ({
     fontSize = '14px',
     fontWeight = 'normal',
     showProgressBar = false,
+    error
 }) => {
     /**
      * Renders content with a loading skeleton if data is not available.
@@ -84,6 +86,9 @@ const InfoCard: React.FC<InfoBoxProps> = ({
                             {renderContent(truncateText(value), loadingWidth)}
                         </> 
                         }
+                        {error && <>
+                            {error}
+                        </>}
                     </Text>
                 ) : (
                     <Text
@@ -97,6 +102,9 @@ const InfoCard: React.FC<InfoBoxProps> = ({
                         {renderContent(truncateText(value), loadingWidth)}
                         </> 
                         }
+                         {error && <>
+                            {error}
+                        </>}
                     </Text>
                 )}
 

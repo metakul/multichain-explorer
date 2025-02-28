@@ -9,19 +9,23 @@ import { getRelativeTime } from '../../helpers/getRelativeTime';
 import InfoCard from '../Cards/InfoCard'; // Import the reusable component
 import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectTransactionsErrorForBlock, selectTransactionsForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import Text from '../UI/Text';
+import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { AppDispatch } from '../../redux/store';
 
 interface SingleBlockInfoProps {
     block?: Block;
     loading?: boolean;
     isNew?: boolean; // New prop for animation
+    showTrx?:boolean
 }
 
-const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading }) => {
+const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block,showTrx, isNew, loading }) => {
     const navigate = useNavigate();
-    const { networkName } = useRpc();
+    const dispatch = useDispatch<AppDispatch>();
+    const { networkName ,rpcUrl} = useRpc();
     const [isVisible, setIsVisible] = useState(false);
     const [visibleTransactions, setVisibleTransactions] = useState(3);
     const loadMoreTransactions = () => {
@@ -34,11 +38,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
     // Trigger animation when the block is new
     useEffect(() => {
         setIsVisible(true);
-
-        if (isNew) {
-            setIsVisible(true);
-            const timer = setTimeout(() => setIsVisible(false), 1000); // Reset after 1 second
-            return () => clearTimeout(timer);
+        if(showTrx && block?.number){
+            dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
         }
     }, [isNew]);
 
@@ -71,7 +72,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
             sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                py: 2,
+                pb: 2,
                 position: 'relative',
                 transition: 'transform 0.3s ease-in-out',
                 transform: isVisible ? 'scale(1)' : 'scale(0.8)',
@@ -106,6 +107,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                             fontSize="16px"
                             fontWeight="bold"
                             navigateTo={naviagteToBlock}
+                            error={error}
                         />
 
                         {/* Gas Used with Progress Bar */}
@@ -116,6 +118,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                             icon={<ContentPasteGoSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
                             progressValue={calculateGasUsagePercentage(block?.gasUsed, block?.gasLimit)}
                             showProgressBar
+                            error={error}
+
                         />
 
                         {/* Total Transactions */}
@@ -125,6 +129,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                             loading={loading}
                             navigateTo={naviagteToBlockWithTrx}
                             icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
+                            error={error}
+
 
                         />
 
@@ -135,6 +141,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                             loading={loading}
                             navigateTo={navigateToMiner}
                             icon={<MinorCrashRounded width={16} height={16} fill={getColors().blueAccent[400]} />}
+                            error={error}
+
                         />
 
                         {/* Timestamp */}
@@ -143,12 +151,12 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                             value={block?.timestamp ? getRelativeTime(block.timestamp) : 'N/A'}
                             loading={loading}
                             icon={<PunchClock width={16} height={16} fill={getColors().blueAccent[400]} />}
+                            error={error}
+
                         />
                     </Box>
                 }
-
-                <Box>
-
+                { showTrx &&
                     <Box style={{ borderLeft: '1px solid black' }}>
                         {transactions &&
                             transactions.slice(0, visibleTransactions).map((trx) => (
@@ -168,7 +176,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                                         icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
                                         fontSize="20px"
                                         fontWeight="bold"
-                                        navigateTo={() => navigateToTransaction(navigate, String(trx?.hash), networkName)}
+                                        navigateTo={() => navigateToTransaction(navigate, String(block.number), networkName)}
                                     />
                                     <InfoCard
                                         label="Trx Hash:"
@@ -221,17 +229,9 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                         {transactions?.length === 0 && !loading && (
                             <Text>No Transaction in the Block</Text>
                         )}
-
                     </Box>
-                    {transactions && visibleTransactions < transactions.length && (
-                        <button onClick={loadMoreTransactions} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
-                            Load More
-                        </button>
-                    )}
-                    {transactions?.length === 0 && !loading && (
-                        <Text>No Transaction in the Block</Text>
-                    )}
-                </Box>
+                  
+                } 
             </Box>
             {/* Decorative Line */}
             <Box

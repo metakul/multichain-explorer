@@ -22,7 +22,7 @@ const Explorer: React.FC = () => {
       <Search />
       <ExplorerStats/>
       <HeroSection />
-      <AllBlock />
+      <AllBlock showTrx={false} />
       <Transactions/>
     </Box>
   );

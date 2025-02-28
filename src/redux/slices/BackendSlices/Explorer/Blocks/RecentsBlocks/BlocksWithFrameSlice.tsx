@@ -20,7 +20,13 @@ interface BlockTransactionsState {
 }
 
 const initialState: BlocksState = {
-    blocks: [],
+    blocks: [{
+        number:""
+    },
+    {
+        number:""
+    },
+],
     transactionsByBlock: {},
     loading: false,
     error: null,
