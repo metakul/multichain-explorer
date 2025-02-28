@@ -39,20 +39,14 @@ console.log(method,headers);
 
     const response = await axios(axiosConfig);
 
-    // Log response data for debugging
-    console.log("Response Data:", response.data);
-
     // Handle unsuccessful response
     if (response.status < 200 || response.status >= 300) {
       const errorText = response.data?.error || response.data?.message  || "Unexpected error occurred.";
       throw new Error(errorText);
     }
 
-      
-
     return response.data;  // Return the response data for further processing
   } catch (error) {
-    alert("Request error");
     console.error("Request error:", error);
     throw error;  // Re-throw the error for further handling
   }

@@ -31,8 +31,6 @@ export const fetchBlocksInFrame = createAsyncThunk(
     async({ rpcUrl, startBlock, blocksPerPage }: { rpcUrl: string, startBlock:string, blocksPerPage:string }, { dispatch, rejectWithValue }) => {
         try {
             dispatch(setBlocksInFramesLoading(true));
-console.log("fetching blcoks");
-console.log(rpcUrl, startBlock, blocksPerPage );
 
             const response = await Request({
                 url: "fetchBlocksInFrame",
@@ -43,8 +41,6 @@ console.log(rpcUrl, startBlock, blocksPerPage );
                     blocksPerPage: blocksPerPage
                 },
             });
-            console.log("response",response);
-            
             const blocks: Block[] = response;
             dispatch(setBlocksInFrames(blocks));
             dispatch(setBlocksInFramesLoading(false));

@@ -40,7 +40,10 @@ const InfoCard: React.FC<InfoBoxProps> = ({
      * @returns JSX.Element
      */
     const renderContent = (value: string | number | undefined, loadingWidth: number) => {
-        if (loading || value === undefined) {
+        
+        const shouldShowSkeleton = loading || value === undefined || value === "#" || value === "N/A" || (label && !value);
+
+        if (shouldShowSkeleton) {
             return <span style={{ width: loadingWidth }}><Skeleton /></span>;
         }
         return <span>{value}</span>;
@@ -82,10 +85,9 @@ const InfoCard: React.FC<InfoBoxProps> = ({
                         }}
                         onClick={() => navigateTo()}
                     >
-                        {value && <>
-                            {renderContent(truncateText(value), loadingWidth)}
+                         <>
+                            {renderContent(value !== undefined ? truncateText(value) : value, loadingWidth)}
                         </> 
-                        }
                         {error && <>
                             {error}
                         </>}
@@ -98,13 +100,10 @@ const InfoCard: React.FC<InfoBoxProps> = ({
                             width:80
                         }}
                     >
-                        {value && <>
-                        {renderContent(truncateText(value), loadingWidth)}
+                         <>
+                        {renderContent(value !== undefined ? truncateText(value) : value, loadingWidth)}
                         </> 
-                        }
-                         {error && <>
-                            {error}
-                        </>}
+                        
                     </Text>
                 )}
 

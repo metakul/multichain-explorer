@@ -11,7 +11,7 @@ import SingleBlockInfo from './SingleBlockCard';
 import { navigateToAllBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import "./SingleBlock.css";
-import { addNewBlock, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { addNewBlock, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import { Block } from '../../interfaces/interface';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 
@@ -42,6 +42,11 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
             fetchLatestFrame();
         }
     }, [showTrx, blocks.length]);
+    useEffect(() => {
+        if (showTrx) {
+            fetchLatestFrame();
+        }
+    }, [currentBlock]);
 
     // --- WebSocket setup (only if not showing transactions view) ---
     useEffect(() => {
@@ -61,15 +66,13 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
             blocksPerPage: blocksPerPage.toString()
         }));
     };
-
+    
     const startWebSocket = () => {
         stopWebSocket();  // Ensure no duplicate connections
 
         const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
         wsRef.current = ws;
-
         dispatch(setCurrentBlockLoading(true));
-
         ws.onopen = () => {
             console.log('WebSocket connected');
             ws.send(JSON.stringify({ type: 'INIT', rpcUrl }));
@@ -77,6 +80,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
 
         ws.onmessage = (event) => {
             try {
+                dispatch(setBlocksInFramesLoading(true));
+
                 const newBlock: Block = JSON.parse(event.data);
                 if (newBlock?.transactionsCount) {
                     dispatch(setNewTrxCount(newBlock.transactionsCount));
@@ -85,6 +90,7 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                     setLatestBlockHash(newBlock.hash);
                 }
                 dispatch(addNewBlock(newBlock));
+                dispatch(setBlocksInFramesLoading(false));
                 setTimeout(() => setLatestBlockHash(null), 300);
             } catch (error) {
                 dispatch(setCurrentBlockError('Failed to parse new block data'));
@@ -189,9 +195,10 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
         <Box>
             <Box sx={{ display: 'flex',justifyContent:"space-between" }}>
                 <Text style={{ fontSize: '24px', fontWeight: 'bold' }}>Blocks Info</Text>
-                <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
+              {!showTrx &&  <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>
+              }
             {showTrx && (
                 <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
                     {renderPageNumbers()}

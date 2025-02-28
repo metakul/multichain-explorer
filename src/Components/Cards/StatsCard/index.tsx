@@ -15,7 +15,7 @@ const StatCard = ({ label, value,loading }: { label: string; value: string | num
         marginBottom: "2px",
         borderColor: getColors().primary[100],
         maxWidth: "200px",
-        maxHeight: "60px"
+        maxHeight: "100px"
 
     }}>  {/* Force re-render to trigger animation */}
         <Flex>

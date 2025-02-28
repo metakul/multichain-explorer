@@ -20,20 +20,27 @@ interface BlockTransactionsState {
 }
 
 const initialState: BlocksState = {
-    blocks: [{
-        number:""
+    blocks: [
+        { number: "", baseFeePerGas: "" },
+        { number: "", baseFeePerGas: "" },
+        { number: "", baseFeePerGas: "" },
+        { number: "", baseFeePerGas: "" },
+        { number: "", baseFeePerGas: "" },
+    ],
+    transactionsByBlock: {
+        "": {
+            transactions: ["","",""],
+            loading: false,
+            error: null
+        },
     },
-    {
-        number:""
-    },
-],
-    transactionsByBlock: {},
     loading: false,
     error: null,
     currentPage: 1,
     blocksPerPage: 10,
-    totalNewTrxCount:0
+    totalNewTrxCount: 0
 };
+
 
 // Blocks slice
 const blocksSlice = createSlice({
