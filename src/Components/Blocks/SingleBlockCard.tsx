@@ -67,7 +67,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
         block?.miner && navigateToAddress(navigate, block.miner, networkName)
     }
 
-
     return (
         <Box
             sx={{
@@ -228,7 +227,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                             )}
                         </Box>
                     </>
-
                 }
             </Box>
             {/* Decorative Line */}

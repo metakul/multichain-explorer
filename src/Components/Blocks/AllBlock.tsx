@@ -56,7 +56,7 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
         return () => {
             stopWebSocket();
         };
-    }, [showTrx, currentPage]);
+    }, [showTrx,rpcUrl, currentPage]);
 
     const fetchLatestFrame = () => {
         const startBlock =  Number(currentBlock?.number) - (currentPage - 1) * blocksPerPage
