@@ -31,7 +31,7 @@ const initialState: BlocksState = {
     loading: false,
     error: null,
     currentPage: 1,
-    blocksPerPage: 5,
+    blocksPerPage: 10,
     totalNewTrxCount:0
 };
 
