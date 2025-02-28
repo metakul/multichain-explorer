@@ -39,7 +39,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
      */
     const renderContent = (value: string | number | undefined, loadingWidth: number) => {
         if (loading || value === undefined) {
-            return <Text sx={{ width: loadingWidth }}><Skeleton /></Text>;
+            return <span style={{ width: loadingWidth }}><Skeleton /></span>;
         }
         return <span>{value}</span>;
     };
@@ -51,7 +51,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
      * @returns string
      */
 
-    const truncateText = (text: string | number, maxLength = 12) => {
+    const truncateText = (text: string | number, maxLength = 18) => {
         if (typeof text === 'string' && text.length > maxLength) {
             const firstPart = text.slice(0, 6);
             const lastPart = text.slice(-4);

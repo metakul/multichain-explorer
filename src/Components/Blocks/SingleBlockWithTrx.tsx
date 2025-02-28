@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { navigateToAddress, navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
+import { navigateToAddress, navigateToTransaction } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import { Block } from '../../interfaces/interface';
 import {
@@ -15,7 +15,7 @@ import { Skeleton } from '@mui/material'; // Importing Skeleton from Material-UI
 import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Container from '../UI/Container';
-import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
+import SingleBlockInfo from './SingleBlockCard';
 
 interface BlockInfoProps {
     block: Block;
@@ -43,55 +43,8 @@ const BlockInfo: React.FC<BlockInfoProps> = ({ block }) => {
 
     return (
         <Container style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-            <Box
-                key={block.number}
-                style={{
-                    backgroundColor: '#ffffff',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    marginBottom: '16px',
-                }}
-            >
-                <Text
-                    style={{
-                        color: 'blue',
-                        fontSize: '18px',
-                        fontWeight: 'bold',
-                        marginBottom: '8px',
-                        cursor: 'pointer',
-                    }}
-                    onClick={() => navigateToBlock(navigate, Number(block?.number), networkName)}
-                >
-                    Block #{block?.number ?? 'N/A'}
-                </Text>
-                <p><strong>Gas Limit:</strong> {block?.gasLimit ?? 'N/A'}</p>
-                <Text variant="body2" display="flex">
-                    <strong>Total Transactions: </strong> {loading ? (
-                        <Skeleton width={80} />
-                    ) : transactions.length > 0 ? (
-                        <Text
-                            style={{
-                                color: 'blue',
-                                fontWeight: '1000',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => navigate(
-                                `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
-                            )}
-                        >
-                            {transactions.length} Trx
-                        </Text>
-                    ) : (
-                        "N/A"
-                    )}
-                </Text>
-
-                <p><strong>Difficulty:</strong> {block?.difficulty ?? 'N/A'}</p>
-                <p><strong>Timestamp:</strong> {block?.timestamp ? new Date(parseInt(block.timestamp) * 1000).toLocaleString() : 'N/A'}</p>
-            </Box>
-
-            <div style={{ background: 'black', width: '40px', height: '2px' }}></div>
+            
+            <SingleBlockInfo block={block} />
             <Box style={{ borderLeft: '1px solid black', maxWidth: "600px" }}>
                 <div style={{ padding: '16px', marginLeft: '16px' }}>
                     {loading ? (

@@ -23,6 +23,8 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>();
   const contract = useSelector(selectContractDetails);
   const contractLoading = useSelector(selectSingleContractLoading);
+  console.log(contractLoading);
+  
   // const contractError = useSelector(selectSingleContractError);
   const isNonMobile = useMediaQuery("(min-width: 766px)");
 
@@ -105,7 +107,6 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
             contractInfo={contract}
             cardType="single"
             buttonText={ContractType.Deploy}
-            isLoading={contractLoading}
             handleButtonClick={deployContract} // Pass deploy function
           />
         ) : (
@@ -115,7 +116,6 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
               contractInfo={contract}
               cardType="single"
               buttonText="View On Explorer"
-              isLoading={contractLoading}
               handleButtonClick={viewOnExplorer} // Pass deploy function
             />
             <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />

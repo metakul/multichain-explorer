@@ -16,21 +16,24 @@ interface TrxInfoProps {
 }
 
 const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }) => {
+    // Move all hooks to the top
     const navigate = useNavigate();
-    const {networkName} = useRpc()
+    const { networkName } = useRpc();
+
     // Render loading skeleton
     if (loading) {
         return (
-                <CustomTable>
-                    <CustomTableHeader>
-                        <CustomTableCell>Transaction Hash</CustomTableCell>
-                        <CustomTableCell>Block</CustomTableCell>
-                        <CustomTableCell>From</CustomTableCell>
-                        <CustomTableCell>To</CustomTableCell>
-                        <CustomTableCell>Value</CustomTableCell>
-                        <CustomTableCell>Txn Fee</CustomTableCell>
-                        <CustomTableCell>View Txn</CustomTableCell>
-                    </CustomTableHeader>
+            <CustomTable>
+                <CustomTableHeader>
+                    <CustomTableCell>Transaction Hash</CustomTableCell>
+                    <CustomTableCell>Block</CustomTableCell>
+                    <CustomTableCell>From</CustomTableCell>
+                    <CustomTableCell>To</CustomTableCell>
+                    <CustomTableCell>Value</CustomTableCell>
+                    <CustomTableCell>Txn Fee</CustomTableCell>
+                    <CustomTableCell>View Txn</CustomTableCell>
+                </CustomTableHeader>
+                <tbody>
                     {[...Array(10)].map((_, index) => (
                         <CustomTableRow key={index}>
                             <CustomTableCell><Skeleton variant="text" width={120} /></CustomTableCell>
@@ -42,7 +45,8 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                             <CustomTableCell><Skeleton variant="circular" width={24} height={24} /></CustomTableCell>
                         </CustomTableRow>
                     ))}
-                </CustomTable>
+                </tbody>
+            </CustomTable>
         );
     }
 
@@ -58,16 +62,17 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
 
     // Render actual transactions
     return (
-            <CustomTable>
-                <CustomTableHeader>
-                    <CustomTableCell>Transaction Hash</CustomTableCell>
-                    <CustomTableCell>Block</CustomTableCell>
-                    <CustomTableCell>From</CustomTableCell>
-                    <CustomTableCell>To</CustomTableCell>
-                    <CustomTableCell>Value</CustomTableCell>
-                    <CustomTableCell>Txn Fee</CustomTableCell>
-                    <CustomTableCell>View Txn</CustomTableCell>
-                </CustomTableHeader>
+        <CustomTable>
+            <CustomTableHeader>
+                <CustomTableCell>Transaction Hash</CustomTableCell>
+                <CustomTableCell>Block</CustomTableCell>
+                <CustomTableCell>From</CustomTableCell>
+                <CustomTableCell>To</CustomTableCell>
+                <CustomTableCell>Value</CustomTableCell>
+                <CustomTableCell>Txn Fee</CustomTableCell>
+                <CustomTableCell>View Txn</CustomTableCell>
+            </CustomTableHeader>
+            <tbody>
                 {transaction && transaction.map((trx: ITrx) => (
                     <CustomTableRow key={trx?.hash}>
                         <CustomTableCell
@@ -104,7 +109,8 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                         </CustomTableCell>
                     </CustomTableRow>
                 ))}
-            </CustomTable>
+            </tbody>
+        </CustomTable>
     );
 };
 

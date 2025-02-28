@@ -52,6 +52,7 @@ function BlockOverView() {
                 <DetailRow label="Total Difficulty" value={blockData?.totalDifficulty} isLoading={isLoading} />
                 <DetailRow label="Transactions Root" value={blockData?.transactionsRoot} isLoading={isLoading} />
                 <DetailRow label="Transactions" value={blockData?.transactions?.join(", ")} isLoading={isLoading} />
+                
             </Box>
         </Box>
     );

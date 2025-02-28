@@ -9,8 +9,8 @@ import Box from '../UI/Box';
 import Text from '../UI/Text';
 import Grid from '../UI/Grid';
 import StatCard from '../Cards/StatsCard';
-import { Card, CardActionArea, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
-import { getColors } from '../../layout/Theme/themes';
+import { useMediaQuery } from '@mui/material';
+// import { getColors } from '../../layout/Theme/themes';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();
@@ -90,7 +90,7 @@ function ExplorerStats() {
                     <StatCard label="Static Gas Price" value={stats?.staticGasPrice} loading={loading} />
                     {/* <StatCard label="Network Utilization" value={`${stats?.networkUtilizationPercentage}%`} /> */}
                 </Grid>
-                <Box sx={{
+                {/* <Box sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     flexDirection: "row"
@@ -176,7 +176,7 @@ function ExplorerStats() {
                         </CardActionArea>
                     </Card>
 
-                </Box>
+                </Box> */}
             </Box>
         </Box>
 

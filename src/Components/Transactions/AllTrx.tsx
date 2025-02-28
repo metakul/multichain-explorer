@@ -21,7 +21,7 @@ function Transactions() {
     useEffect(() => {
         dispatch(fetchAllTransactions(rpcUrl));
         dispatch(clearTrxCount()); // Dispatch the fetch action on button click
-    }, [dispatch, rpcUrl, transactions.length]);
+    }, [dispatch, rpcUrl]);
 
     const handleReload = () => {
         dispatch(fetchAllTransactions(rpcUrl)); // Dispatch the fetch action on button click

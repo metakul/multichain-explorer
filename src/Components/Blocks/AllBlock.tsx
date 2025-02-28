@@ -22,7 +22,9 @@ const AllBlock: React.FC = () => {
 
     useEffect(() => {
         dispatch(getPreviousBlocks(rpcUrl));
-    }, [dispatch, rpcUrl]);
+        console.log("sdnsdn");
+        
+    }, [rpcUrl]);
 
     useEffect(() => {
         dispatch(setCurrentBlockLoading(true));
@@ -80,9 +82,9 @@ const AllBlock: React.FC = () => {
                 mb: 1,
                 pl:2
             }}>
-                {blocks.map((block) => (
+                {blocks.map((block,index) => (
                     <SingleBlockInfo
-                        key={block.hash}
+                        key={index}
                         block={block}
                         loading={allBlocksLoading}
                         isNew={block.hash === latestBlockHash} // Pass isNew prop

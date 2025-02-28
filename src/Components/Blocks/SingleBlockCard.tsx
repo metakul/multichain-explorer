@@ -79,7 +79,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
             >
                 {/* Block Number */}
                 <BlockCardInfo
-                    value={`Block #${block?.number}`}
+                    label="Block"
+                    value={`#${block?.number}`}
                     loading={loading}
                     icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
                     fontSize="16px"

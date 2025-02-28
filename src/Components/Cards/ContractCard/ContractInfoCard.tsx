@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import Skeleton from "@mui/material/Skeleton"; // Import MUI Skeleton
 import { ContractData, DeployedContract } from "../../../interfaces/interface";
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton";
 import ConstructorInputForm from "./ConstructorInfo";
@@ -15,7 +14,6 @@ interface ContractInfoProps {
     cardType: "multiple" | "single";
     contractType: ContractType;
     buttonText: string;
-    isLoading: boolean;
     handleButtonClick: (constructorParams: any) => void;
 }
 
@@ -28,7 +26,6 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     cardType,
     contractType,
     buttonText,
-    isLoading,
     handleButtonClick,
 }) => {
     const { contractName, constructor } = contractInfo;
@@ -80,18 +77,8 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
 
     return (
         <div>
-            {isLoading ? (
-                <>
-                    <Skeleton variant="text" width={200} height={30} />
-                    <Skeleton variant="rectangular" width="100%" height={150} />
-                    {cardType === "single" && contractType === ContractType.Deploy && (
-                        <Skeleton variant="rectangular" width="100%" height={50} />
-                    )}
-                    <Skeleton variant="rectangular" width={120} height={40} />
-                </>
-            ) : (
-                <>
-                        <h4>{contractName}</h4>
+        
+             <h4>{contractName}</h4>
                     {cardType === "single" && contractType === ContractType.Deploy && (
                         <>
                             <ConstructorInputForm
@@ -116,8 +103,6 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
                     )}
 
                     {cardType === "single" && contractType === ContractType.Interact && <>Ready To Interact with</>}
-                </>
-            )}
         </div>
     );
 };

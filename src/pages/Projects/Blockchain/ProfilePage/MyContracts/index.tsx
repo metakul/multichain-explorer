@@ -19,6 +19,8 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
 
   const myContracts = useSelector(selectMyContracts)
   const myContractsLoading = useSelector(selectContractsLoading)
+  console.log(myContractsLoading);
+  
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const { walletAddress, rpcUrl, networkName } = useRpc()
@@ -59,7 +61,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} isLoading={myContractsLoading} />
+              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
             </Box>
           ))
         ) : (

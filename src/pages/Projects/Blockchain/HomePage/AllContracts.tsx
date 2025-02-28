@@ -36,10 +36,10 @@ const ContractsGrid: React.FC = () => {
                 // Show Skeletons while loading
                 <>
                     <Text style={{ marginBottom: "12px" }}>
-                        <Skeleton width={150} height={24} />
+                        <Skeleton width={150} height={28} />
                     </Text>
                     <Grid>
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        {Array.from({ length: 2 }).map((_, index) => (
                             <Box
                                 key={index}
                                 style={{
@@ -48,9 +48,13 @@ const ContractsGrid: React.FC = () => {
                                     padding: "16px",
                                 }}
                             >
-                                <Skeleton variant="rectangular" width="100%" height={100} />
-                                <Skeleton width="60%" height={24} style={{ marginTop: 8 }} />
-                                <Skeleton width="80%" height={24} />
+                                <Skeleton width="40%" height={20} sx={{
+                                    mt:3
+                                }} />
+                                <Skeleton variant="rectangular" width="80px" height={40} sx={{
+                                    borderRadius: "4px",
+                                    marginTop: "16px",
+                                }} />
                             </Box>
                         ))}
                     </Grid>
@@ -66,7 +70,7 @@ const ContractsGrid: React.FC = () => {
                                     style={{
                                         border: "1px solid #ddd",
                                         borderRadius: "8px",
-                                        padding: "16px",
+                                        padding: "18px",
                                     }}
                                 >
                                     <ContractInfoCard
@@ -75,7 +79,6 @@ const ContractsGrid: React.FC = () => {
                                         handleButtonClick={() => navigateUser(contract)}
                                         contractInfo={contract}
                                         cardType={"multiple"}
-                                        isLoading={isLoading}
                                     />
                                 </Box>
                             ))}
