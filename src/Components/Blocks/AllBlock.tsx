@@ -192,6 +192,11 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                 <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>
+            {showTrx && (
+                <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
+                    {renderPageNumbers()}
+                </Box>
+            )}
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll', marginBottom: 2, paddingLeft: 0 }}>
@@ -206,15 +211,6 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                 ))}
             </Box>
 
-            <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
-                View All Blocks
-            </Button>
-
-            {showTrx && (
-                <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
-                    {renderPageNumbers()}
-                </Box>
-            )}
         </Box>
     );
 };
