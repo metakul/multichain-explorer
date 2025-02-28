@@ -7,8 +7,8 @@ import { AppDispatch } from '../../redux/store';
 import { selectTransactions, selectTransactionsError, selectTransactionsLoading } from '../../redux/slices/BackendSlices/Explorer/Transactions/AllTrxSlice';
 import Box from '../UI/Box';
 import Text from '../UI/Text';
-import { clearTrxCount, selectNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
 import { ReplayCircleFilledOutlined } from '@mui/icons-material';
+import { clearTrxCount, selectNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 
 function Transactions() {
     const dispatch = useDispatch<AppDispatch>();

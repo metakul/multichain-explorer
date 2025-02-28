@@ -1,40 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Request from "../../../../../../Backend/axiosCall/apiCall";
 import { ApiError, Block } from "../../../../../../interfaces/interface";
-import { addNewBlock, setBlocks, setRecentBlocksLoading } from "./RecentBlocksSlice";
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
-import { setBlocksInFrames, setBlocksInFramesLoading, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
+import { addNewBlock, setBlocksInFrames, setBlocksInFramesLoading, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
 
-export const getPreviousBlocks = createAsyncThunk(
-    'blocks/getPreviousBlocks',
-    async (rpcUrl: string, { dispatch, rejectWithValue }) => {
-        try {
-            dispatch(setRecentBlocksLoading(true));
-           
-            const response = await Request({
-                url: "getPreviousBlocks",
-                method: ApiEndpoint.getPreviousBlocks.method,
-                data: {
-                    providerUrl: rpcUrl
-                },
-                slug:"/5",
-            });
-            const blocks: Block[] = response; 
-            dispatch(setBlocks(blocks));
-            dispatch(setRecentBlocksLoading(false));
-        } catch (error) {
-            dispatch(setRecentBlocksLoading(false));
-            const castedError = error as ApiError
-            return rejectWithValue(castedError.error || "Failed to fetch blocks");
-        }
-    }
-);
 
 export const fetchBlockInfo = createAsyncThunk(
     'blocks/fetchBlockInfo',
     async ({ rpcUrl, blockNo }: { rpcUrl: string, blockNo: string }, { dispatch, rejectWithValue }) => {
         try {
-            dispatch(setRecentBlocksLoading(true));
             const response = await Request({
                 url: "fetchBlockInfo",
                 method: ApiEndpoint.fetchBlockInfo.method,
@@ -45,9 +19,7 @@ export const fetchBlockInfo = createAsyncThunk(
             });
             const blockInfo: Block = response;
             dispatch(addNewBlock(blockInfo));
-            dispatch(setRecentBlocksLoading(false));
         } catch (error) {
-            dispatch(setRecentBlocksLoading(false));
             const castedError = error as ApiError
             return rejectWithValue(castedError.error || "Failed to fetch recent Blocks");
         }
@@ -59,6 +31,8 @@ export const fetchBlocksInFrame = createAsyncThunk(
     async({ rpcUrl, startBlock, blocksPerPage }: { rpcUrl: string, startBlock:string, blocksPerPage:string }, { dispatch, rejectWithValue }) => {
         try {
             dispatch(setBlocksInFramesLoading(true));
+console.log("fetching blcoks");
+console.log(rpcUrl, startBlock, blocksPerPage );
 
             const response = await Request({
                 url: "fetchBlocksInFrame",
@@ -69,6 +43,8 @@ export const fetchBlocksInFrame = createAsyncThunk(
                     blocksPerPage: blocksPerPage
                 },
             });
+            console.log("response",response);
+            
             const blocks: Block[] = response;
             dispatch(setBlocksInFrames(blocks));
             dispatch(setBlocksInFramesLoading(false));

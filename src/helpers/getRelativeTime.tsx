@@ -1,8 +1,8 @@
 // utils/getRelativeTime.ts
-export const getRelativeTime = (timestamp: string): string => {
-    const now = new Date();
-    const blockTime = new Date(timestamp);
-    const timeDifference = now.getTime() - blockTime.getTime(); // Difference in milliseconds
+export const getRelativeTime = (unixTimestamp: string): string => {
+    const now = Date.now(); // Current time in milliseconds
+    const blockTime = Number(unixTimestamp) * 1000; // Convert Unix timestamp to milliseconds
+    const timeDifference = now - blockTime; // Difference in milliseconds
 
     // Convert time difference to seconds, minutes, hours, etc.
     const seconds = Math.floor(timeDifference / 1000);

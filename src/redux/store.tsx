@@ -5,7 +5,6 @@ import explorerStatsInfo from "./slices/BackendSlices/Explorer/ExplorerStatsSlic
 import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
 import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
-import recentBlocksState from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice"
 import recentBlocksStateInFrames from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice"
 import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice"
 import transactionsState from "./slices/BackendSlices/Explorer/Transactions/AllTrxSlice"
@@ -20,7 +19,6 @@ const store = configureStore({
     singleContract:singleContract,
     deployedContracts: deployedContracts,
     explorerSearchResult:explorerSlice,
-    recentBlocksState: recentBlocksState,
     currentBlockState: currentBlockState,
     transactionsState: transactionsState,
     addressInfo: addressInfoState,

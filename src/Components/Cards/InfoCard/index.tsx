@@ -19,11 +19,11 @@ interface InfoBoxProps {
     showProgressBar?: boolean; // Whether to show the progress bar
 }
 
-const BlockCardInfo: React.FC<InfoBoxProps> = ({
+const InfoCard: React.FC<InfoBoxProps> = ({
     label,
     value,
     loading = false,
-    loadingWidth = 100,
+    loadingWidth = 80,
     navigateTo,
     icon,
     progressValue,
@@ -53,7 +53,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
 
     const truncateText = (text: string | number, maxLength = 18) => {
         if (typeof text === 'string' && text.length > maxLength) {
-            const firstPart = text.slice(0, 6);
+            const firstPart = text.slice(0, 5);
             const lastPart = text.slice(-4);
             return `${firstPart}...${lastPart}`;
         }
@@ -62,10 +62,13 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
 
 
     return (
-        <Box sx={{ marginBottom: '8px' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ marginBottom: '4px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 0 }}>
+               <Box sx={{display:"flex",m:0, p:0}}>
                 {icon && <span>{icon}</span>}
                 {label && <strong>{label}:</strong>}
+                
+               </Box>
                 {navigateTo ? (
                     <Text
                         sx={{
@@ -73,7 +76,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
                             fontWeight,
                             cursor: "pointer",
                             fontSize,
-                            width:100
+                            width:80
                         }}
                         onClick={() => navigateTo()}
                     >
@@ -87,7 +90,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
                         sx={{
                             fontWeight,
                             fontSize,
-                            width:100
+                            width:80
                         }}
                     >
                         {value && <>
@@ -105,7 +108,7 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
                     sx={{
                         height: '8px',
                         borderRadius: '4px',
-                        marginTop: '4px',
+                        marginTop: '2px',
                         backgroundColor: getColors().primary[700],
                         '& .MuiLinearProgress-bar': {
                             backgroundColor: getColors().blueAccent[400],
@@ -117,4 +120,4 @@ const BlockCardInfo: React.FC<InfoBoxProps> = ({
     );
 };
 
-export default BlockCardInfo;
+export default InfoCard;

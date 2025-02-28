@@ -10,6 +10,7 @@ export interface BlocksState {
     error: string | null;
     currentPage: number; // Pagination state
     blocksPerPage: number; // Blocks per page
+    totalNewTrxCount:number;
 }
 
 interface BlockTransactionsState {
@@ -25,6 +26,7 @@ const initialState: BlocksState = {
     error: null,
     currentPage: 1,
     blocksPerPage: 5,
+    totalNewTrxCount:0
 };
 
 // Blocks slice
@@ -36,6 +38,22 @@ const blocksSlice = createSlice({
             state.loading = false;
             state.blocks = action.payload;
             state.error = null;
+        },
+        addNewBlock: (state, action: PayloadAction<Block>) => {
+            const newBlock = action.payload;
+            // Check if a block with the same hash or number already exists
+            const blockExists = state.blocks.some(
+                (block) => block.hash === newBlock.hash || block.number === newBlock.number
+            );
+        
+            if (!blockExists) {
+                state.blocks.unshift(newBlock); // Add at index 0
+                state.error = null;
+            } else {
+                state.error = "Block already exists";
+            }
+        
+            state.loading = false;
         },
         setBlocksInFrames: (state, action: PayloadAction<Block[]>) => {
             const newBlocks = action.payload;
@@ -62,6 +80,12 @@ const blocksSlice = createSlice({
         },
         setBlocksPerPage: (state, action: PayloadAction<number>) => {
             state.blocksPerPage = action.payload;
+        },
+        setNewTrxCount: (state, action: PayloadAction<number>) => {
+            state.totalNewTrxCount += action.payload;
+        },
+        clearTrxCount: (state, ) => {
+            state.totalNewTrxCount =0
         },
         setTransactionsLoading: (state, action: PayloadAction<string>) => {
             const blockNo = action.payload;
@@ -96,7 +120,7 @@ const blocksSlice = createSlice({
     },
 });
 
-export const { setBlocks, setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
+export const { setBlocks,addNewBlock,setNewTrxCount, clearTrxCount,setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
     setTransactionsSuccess,
     setTransactionsError, } = blocksSlice.actions;
 
@@ -108,6 +132,7 @@ export const selectBlocksLoadingInFrames = (state: { recentBlocksStateInFrames: 
 export const selectBlocksErrorInFrames = (state: { recentBlocksStateInFrames: BlocksState }) => state.recentBlocksStateInFrames.error;
 export const selectCurrentPage = (state: { recentBlocksStateInFrames: BlocksState }) => state.recentBlocksStateInFrames.currentPage;
 export const selectBlocksPerPage = (state: { recentBlocksStateInFrames: BlocksState }) => state.recentBlocksStateInFrames.blocksPerPage;
+export const selectNewTrxCount = (state: { recentBlocksStateInFrames: BlocksState }) => state.recentBlocksStateInFrames.totalNewTrxCount;
 
 // New selector to fetch blocks for the current page
 export const selectBlocksForCurrentPage = (state: { recentBlocksStateInFrames: BlocksState }) => {
@@ -115,7 +140,6 @@ export const selectBlocksForCurrentPage = (state: { recentBlocksStateInFrames: B
     const startIndex = (currentPage - 1) * blocksPerPage;
     return blocks.slice(startIndex, startIndex + blocksPerPage);
 };
-
 
 // Redux slice - selectors
 export const selectTransactionsForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>

@@ -5,15 +5,14 @@ import { getBlockWithTrx } from '../../../../redux/slices/BackendSlices/Explorer
 import { useRpc } from '../../../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../../../redux/store';
 import BlockInfo from '../../../../Components/Blocks/SingleBlockWithTrx';
-import { selectBlocks } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice';
-
+import { selectBlocksForCurrentPage } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 function TransactionOverViewPage() {
 
     const { block } = useParams<{ block: string }>();
     const dispatch = useDispatch<AppDispatch>()
     const { rpcUrl } = useRpc();
-
-    const blocks = useSelector(selectBlocks);
+selectBlocksForCurrentPage
+    const blocks = useSelector(selectBlocksForCurrentPage);
     const blockData = blocks.find((b) => b.number == block || b.hash == block);
 
     useEffect(() => {

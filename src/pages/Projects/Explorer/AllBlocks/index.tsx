@@ -15,7 +15,7 @@ import Box from '../../../../Components/UI/Box';
 import Button from '../../../../Components/UI/Button';
 
 const AllBlocks: React.FC = () => {
-    const blocksPerPage=5
+    const blocksPerPage=10
     const currentPage = useSelector(selectCurrentPage);
     const blocks = useSelector(selectBlocksForCurrentPage);
     const allBlocksLoading = useSelector(selectBlocksLoadingInFrames);
@@ -58,22 +58,23 @@ const AllBlocks: React.FC = () => {
             display:"flex",
             justifyContent:"center",
             flexDirection:"column",
+            overflow:"scroll"
         }}>
             <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>All Blocks Info</Text>
-            <Box>
-                {!allBlocksLoading && blocks && blocks.length > 0 ? (
-                    blocks.map((block) => <BlockInfo key={block.hash} block={block} />)
-                ) : (
-                    <p>No blocks found</p>
-                )}
-                <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+            <Box 
+                style={{ display: 'flex', justifyContent: 'center', marginTop: '16px',
+                    flexDirection:"row",
+            }}>
+                
+                {blocks.map((block) => <BlockInfo key={block.hash} block={block} />)}
+            </Box>
+                <Box style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', }}>
                     <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                         Previous
                     </Button>
                     <Text style={{ margin: '0 16px' }}>Page {currentPage}</Text>
                     <Button onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
                 </Box>
-            </Box>
         </div>
     );
 };

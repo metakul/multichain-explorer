@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchBlockInfo } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi";
-import { selectBlocks, selectBlocksLoading } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksSlice";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { AppDispatch } from "../../../../redux/store";
 import Box from "../../../../Components/UI/Box";
@@ -10,12 +9,13 @@ import Text from "../../../../Components/UI/Text";
 import { Skeleton } from "@mui/material";
 import { truncateValue } from "../../../../helpers/scripts";
 import { navigateToAddress } from "../../../../helpers/navigationHelpers";
+import { selectBlocksInFrames, selectBlocksLoadingInFrames } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice";
 
 function BlockOverView() {
     const { block } = useParams<{ block: string }>();
     const dispatch = useDispatch<AppDispatch>();
-    const blocks = useSelector(selectBlocks);
-    const isLoading = useSelector(selectBlocksLoading);
+    const blocks = useSelector(selectBlocksInFrames);
+    const isLoading = useSelector(selectBlocksLoadingInFrames);
     const { rpcUrl, networkName } = useRpc();
     const blockData = blocks.find((b) => b.number == block || b.hash == block);
     const navigate = useNavigate();

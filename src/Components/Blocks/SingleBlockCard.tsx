@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
-import { navigateToAddress, navigateToBlock } from '../../helpers/navigationHelpers';
+import { navigateToAddress, navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
 import { Block } from '../../interfaces/interface';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { getColors } from '../../layout/Theme/themes';
 import { getRelativeTime } from '../../helpers/getRelativeTime';
-import BlockCardInfo from '../Cards/BlockCard'; // Import the reusable component
+import InfoCard from '../Cards/InfoCard'; // Import the reusable component
 import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
+import { useSelector } from 'react-redux';
+import { selectTransactionsErrorForBlock, selectTransactionsForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import Text from '../UI/Text';
 
 interface SingleBlockInfoProps {
     block?: Block;
@@ -20,9 +23,18 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
     const navigate = useNavigate();
     const { networkName } = useRpc();
     const [isVisible, setIsVisible] = useState(false);
+    const [visibleTransactions, setVisibleTransactions] = useState(3);
+    const loadMoreTransactions = () => {
+        setVisibleTransactions((prev) => prev + 5);
+    };
+    const error = block && useSelector(selectTransactionsErrorForBlock(block.number));
+
+    const transactions = block && useSelector(selectTransactionsForBlock(block.number));
 
     // Trigger animation when the block is new
     useEffect(() => {
+        setIsVisible(true);
+
         if (isNew) {
             setIsVisible(true);
             const timer = setTimeout(() => setIsVisible(false), 1000); // Reset after 1 second
@@ -41,17 +53,18 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
         return (Number(gasUsed) / Number(gasLimit)) * 100;
     };
 
-    const naviagteToBlock=()=>{
+    const naviagteToBlock = () => {
         block?.number && navigateToBlock(navigate, Number(block.number), networkName)
     }
-    const naviagteToBlockWithTrx=()=>{
+    const naviagteToBlockWithTrx = () => {
         block?.number && navigate(
             `${EXPLORER_PAGE.SINGLE_BLOCK}/${block.number}/${networkName}?tab=${BlockDetailsTab.tabTitle2}`
         )
     }
-    const navigateToMiner=()=>{
+    const navigateToMiner = () => {
         block?.miner && navigateToAddress(navigate, block.miner, networkName)
     }
+
 
     return (
         <Box
@@ -61,71 +74,165 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, isNew, loading
                 py: 2,
                 position: 'relative',
                 transition: 'transform 0.3s ease-in-out',
-                transform: isVisible ? 'scale(1.05)' : 'scale(1)',
+                transform: isVisible ? 'scale(1)' : 'scale(0.8)',
             }}
         >
-            {/* Block Card */}
             <Box
-                key={block?.hash ?? Math.random()}
-                sx={{
-                    backgroundColor: getColors().primary[900],
-                    boxShadow: '8px 4px 8px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    border: '1px solid',
-                    transition: 'background-color 0.5s ease-in-out',
-                    width: '100%',
-                }}
-            >
-                {/* Block Number */}
-                <BlockCardInfo
-                    label="Block"
-                    value={`#${block?.number}`}
-                    loading={loading}
-                    icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
-                    fontSize="16px"
-                    fontWeight="bold"
-                    navigateTo={naviagteToBlock}
-                />
+                style={{
+                    display: 'flex', justifyContent: 'center', marginTop: '16px',
+                    flexDirection: "column",
+                }}>
 
-                {/* Gas Used with Progress Bar */}
-                <BlockCardInfo
-                    label="Gas Used"
-                    value={block?.gasUsed}
-                    loading={loading}
-                    icon={<ContentPasteGoSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
-                    progressValue={calculateGasUsagePercentage(block?.gasUsed, block?.gasLimit)}
-                    showProgressBar
-                />
+                {/* Block Card */}
+                {block?.number &&
+                    <Box
+                        key={block?.hash ?? Math.random()}
+                        sx={{
+                            backgroundColor: getColors().primary[900],
+                            boxShadow: '8px 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '8px',
+                            padding: '8px',
+                            border: '1px solid',
+                            transition: 'background-color 0.5s ease-in-out',
+                            width: '100%',
+                        }}
+                    >
+                        {/* Block Number */}
+                        <InfoCard
+                            label="Block"
+                            value={` #${block?.number}`}
+                            loading={loading}
+                            icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                            fontSize="16px"
+                            fontWeight="bold"
+                            navigateTo={naviagteToBlock}
+                        />
 
-                {/* Total Transactions */}
-                <BlockCardInfo
-                    label="Total Trx"
-                    value={block?.transactionsCount}
-                    loading={loading}
-                    navigateTo={naviagteToBlockWithTrx}
-                    icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
+                        {/* Gas Used with Progress Bar */}
+                        <InfoCard
+                            label="Gas Used"
+                            value={block?.gasUsed}
+                            loading={loading}
+                            icon={<ContentPasteGoSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
+                            progressValue={calculateGasUsagePercentage(block?.gasUsed, block?.gasLimit)}
+                            showProgressBar
+                        />
 
-                />
+                        {/* Total Transactions */}
+                        <InfoCard
+                            label="Total Trx"
+                            value={block?.transactionsCount}
+                            loading={loading}
+                            navigateTo={naviagteToBlockWithTrx}
+                            icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
 
-                {/* Miner */}
-                <BlockCardInfo
-                    label="Miner"
-                    value={block?.miner}
-                    loading={loading}
-                    navigateTo={navigateToMiner}
-                    icon={<MinorCrashRounded width={16} height={16} fill={getColors().blueAccent[400]} />}
-                />
+                        />
 
-                {/* Timestamp */}
-                <BlockCardInfo
-                    label="Timestamp"
-                    value={block?.timestamp ? getRelativeTime(block.timestamp) : 'N/A'}
-                    loading={loading}
-                    icon={<PunchClock width={16} height={16} fill={getColors().blueAccent[400]} />}
-                />
+                        {/* Miner */}
+                        <InfoCard
+                            label="Miner"
+                            value={block?.miner}
+                            loading={loading}
+                            navigateTo={navigateToMiner}
+                            icon={<MinorCrashRounded width={16} height={16} fill={getColors().blueAccent[400]} />}
+                        />
+
+                        {/* Timestamp */}
+                        <InfoCard
+                            label="Timestamp"
+                            value={block?.timestamp ? getRelativeTime(block.timestamp) : 'N/A'}
+                            loading={loading}
+                            icon={<PunchClock width={16} height={16} fill={getColors().blueAccent[400]} />}
+                        />
+                    </Box>
+                }
+
+                <Box>
+
+                    <Box style={{ borderLeft: '1px solid black' }}>
+                        {transactions &&
+                            transactions.slice(0, visibleTransactions).map((trx) => (
+                                <div
+                                    key={trx.hash}
+                                    style={{
+                                        marginBottom: '12px',
+                                        padding: '8px',
+                                        border: '1px solid #ddd',
+                                        borderRadius: '4px',
+                                    }}
+                                >
+                                    <InfoCard
+                                        label="Block"
+                                        value={` #${block?.number}`}
+                                        loading={loading}
+                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                                        fontSize="20px"
+                                        fontWeight="bold"
+                                        navigateTo={() => navigateToTransaction(navigate, String(trx?.hash), networkName)}
+                                    />
+                                    <InfoCard
+                                        label="Trx Hash:"
+                                        value={trx.hash}
+                                        loading={loading}
+                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                                        fontSize="12px"
+                                        fontWeight="bold"
+                                        navigateTo={() => navigateToAddress(navigate, String(trx.from), networkName)}
+
+                                    />
+                                    <InfoCard
+                                        label="From"
+                                        value={trx.from}
+                                        loading={loading}
+                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                                        fontSize="12px"
+                                        fontWeight="bold"
+                                        navigateTo={() => navigateToAddress(navigate, String(trx.from), networkName)}
+
+                                    />
+                                    <InfoCard
+                                        label="To"
+                                        value={trx.to}
+                                        loading={loading}
+                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                                        fontSize="12px"
+                                        fontWeight="bold"
+                                        navigateTo={() => navigateToAddress(navigate, String(trx.to), networkName)}
+                                    />
+                                    <InfoCard
+                                        label="Value"
+                                        value={trx.value}
+                                        loading={loading}
+                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
+                                        fontSize="12px"
+                                        fontWeight="bold"
+                                    />
+
+                                    <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
+                                </div>
+                            ))
+                        }
+
+                        {transactions && visibleTransactions < transactions?.length && (
+                            <button onClick={loadMoreTransactions} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
+                                Load More
+                            </button>
+                        )}
+                        {transactions?.length === 0 && !loading && (
+                            <Text>No Transaction in the Block</Text>
+                        )}
+
+                    </Box>
+                    {transactions && visibleTransactions < transactions.length && (
+                        <button onClick={loadMoreTransactions} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
+                            Load More
+                        </button>
+                    )}
+                    {transactions?.length === 0 && !loading && (
+                        <Text>No Transaction in the Block</Text>
+                    )}
+                </Box>
             </Box>
-
             {/* Decorative Line */}
             <Box
                 sx={{
