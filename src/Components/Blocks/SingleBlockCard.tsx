@@ -72,14 +72,15 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
             sx={{
                 display: 'flex',
                 flexDirection: 'row',
+                pb: 2,
                 position: 'relative',
                 transition: 'transform 0.5s ease-in-out, opacity 0.3s ease-in-out',
-                transform: isVisible ? 'translateX(0) scale(1)' : 'translateX(-50px) scale(0.8)',
+                transform: isVisible ? 'translateX(-20) scale(1)' : 'translateX(-100px) scale(0.8)',
                 opacity: isVisible ? 1 : 0,
             }}
         >
             <Box style={{
-                    display: 'flex', marginTop: '20px',
+                    display: 'flex', marginTop: '16px',
                     flexDirection: "column",
                 }}>
                 {/* Block Card */}
@@ -153,15 +154,15 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                 </Box>
                 {showTrx &&
                     <>
-                          <Box
-                sx={{
-                    width: '40px',
-                    height: '8px',
-                    background: getColors().yellowAccent[900],
-                    position: 'relative',
-                    top: 80,
-                }}
-            />
+                        <Box
+                            sx={{
+                                width: '20px',
+                                height: '80px',
+                                background: getColors().yellowAccent[900],
+                                position: 'relative',
+                                left: "45%"
+                            }}
+                        />
                         <Box style={{ borderLeft: '1px solid black' }}>
                             {transactions && transactions.slice(0, visibleTransactions).map((trx) => (
                                 <div
@@ -229,16 +230,15 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                 }
             </Box>
             {/* Decorative Line */}
-         
-               <Box
-                            sx={{
-                                width: '8px',
-                                height: '150px',
-                                background: getColors().yellowAccent[900],
-                                position: 'relative',
-                                right:"15%"
-                            }}
-                        />
+            <Box
+                sx={{
+                    width: '40px',
+                    height: '8px',
+                    background: getColors().yellowAccent[900],
+                    position: 'relative',
+                    top: 80,
+                }}
+            />
         </Box>
     );
 };

@@ -17,14 +17,9 @@ const Explorer: React.FC = () => {
     }}>
       <TopCard/>
       <ExplorerStats />
-      <Box sx={{
-        display:"flex",
-        gap: "20px"
-      }}>
-
+    
       <AllBlock showTrx={false} />
       <Transactions />
-      </Box>
     </Box>
   );
 };

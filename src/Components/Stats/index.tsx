@@ -72,9 +72,15 @@ function ExplorerStats() {
     }, [dispatch, rpcUrl]);
 
     return (
-        <Box sx={{ marginTop: "0px", padding: isNonMobile ? "20px" : "8px",
-           
-         }}>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: isNonMobile ? "row" : "column",
+                justifyContent: "center",
+                padding: isNonMobile ? "20px" : "8px"
+
+            }}
+        >
             <Text
                 sx={{
                     fontSize: { xs: "16px", sm: "20px", md: "24px" },
@@ -85,21 +91,12 @@ function ExplorerStats() {
             >
                 Explorer Stats Info
             </Text>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: isNonMobile ? "row" : "column",
-                    justifyContent:"center",
-                   
-                }}
-            >
-                {/* Stats Section */}
-           
-                    <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />
+            {/* Stats Section */}
 
-                {/* Charts Section */}
-                    <ChartGrid gasPriceData={gasPriceData} />
-            </Box>
+            <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />
+
+            {/* Charts Section */}
+            <ChartGrid gasPriceData={gasPriceData} />
         </Box>
     );
 }

@@ -207,7 +207,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                 </Box>
             )}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', overflowX: 'scroll', marginBottom: 4, paddingLeft: 0,maxHeight:"700px" }}>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll', marginBottom: 2, paddingLeft: 0 }}>
                 {showTrx && blocks.map((block) => (
                     <SingleBlockInfo
                         key={block.hash}
@@ -227,6 +228,7 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                     />
                 ))}
             </Box>
+
         </Box>
     );
 };
