@@ -21,7 +21,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
     const { networkName } = useRpc();
 
     // Render loading skeleton
-    if (loading) {
+    if (error || loading) {
         return (
             <CustomTable>
                 <CustomTableHeader>
@@ -48,16 +48,6 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                 </tbody>
             </CustomTable>
         );
-    }
-
-    // Render error message if there's an error
-    if (error) {
-        return <Container>{error}</Container>;
-    }
-
-    // Render no transaction message if no data
-    if (transaction && transaction.length === 0) {
-        return <Container>No Transactions Found</Container>;
     }
 
     // Render actual transactions
@@ -110,6 +100,10 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error }
                     </CustomTableRow>
                 ))}
             </tbody>
+              
+    {transaction && transaction.length === 0 &&
+        <Container>No Transactions Found</Container>
+    }
         </CustomTable>
     );
 };

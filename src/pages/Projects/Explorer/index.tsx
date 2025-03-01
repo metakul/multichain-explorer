@@ -1,14 +1,11 @@
 import React from 'react';
 
-import Header from '../../../Components/Headers/ExplorerHeader.js';
-import Search from '../../../Components/Search/search.js';
-import HeroSection from '../../../Components/Cards/ExplorerCard/heroSection.js';
 import AllBlock from '../../../Components/Blocks/AllBlock.js';
 import Transactions from '../../../Components/Transactions/AllTrx.js';
 import ExplorerStats from '../../../Components/Stats/index.js';
-import { useMediaQuery } from '@mui/material';
+import { Container, useMediaQuery } from '@mui/material';
 import Box from '../../../Components/UI/Box/index.js';
-
+import TopCard from '../../../Components/Cards/HomeCard/SearchBoxCard.js';
 
 //  Explorer Page
 const Explorer: React.FC = () => {
@@ -16,14 +13,12 @@ const Explorer: React.FC = () => {
 
   return (
     <Box sx={{
-      px:isNonMobile ? 4 : 2
+      px: isNonMobile ? 4 : 2
     }}>
-      <Header />
-      <Search />
-      <ExplorerStats/>
-      <HeroSection />
+      <TopCard/>
+      <ExplorerStats />
       <AllBlock showTrx={false} />
-      <Transactions/>
+      <Transactions />
     </Box>
   );
 };

@@ -32,11 +32,9 @@ function AddressInfo() {
                 <Text>Balance: {addressInfo?.balance} ethers</Text>
             )}
 
-            {error && <Text>Error: {error}</Text>}
-
             <h2>Transactions</h2>
             <ul>
-                {addressInfo?.transactions && addressInfo.transactions.length > 0 ? (
+                {!error && addressInfo?.transactions && addressInfo.transactions.length > 0 ? (
                     addressInfo.transactions.map((trx, index) => (
                         <li key={index}>
                             Transaction {index + 1}: {trx}

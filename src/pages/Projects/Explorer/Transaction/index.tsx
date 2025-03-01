@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import {
     selectTransactionsLoading,
-    selectTransactionsError,
     selectTransactionByHash,
     TransactionsState
 } from "../../../../redux/slices/BackendSlices/Explorer/Transactions/AllTrxSlice";
@@ -23,7 +22,6 @@ function Transaction() {
 
     const transaction = useSelector((state: { transactionsState: TransactionsState }) => selectTransactionByHash(state, hash || ""));
     const loading = useSelector(selectTransactionsLoading);
-    const error = useSelector(selectTransactionsError);
 
     useEffect(() => {
         if (hash) {
@@ -31,7 +29,6 @@ function Transaction() {
         }
     }, [dispatch, hash, rpcUrl,  networkName]);
 
-    if (error) return <Text>Error: {error}</Text>;
 
     return (
         <Box style={{ marginTop: "120px" }}>

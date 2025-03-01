@@ -11,7 +11,7 @@ import SingleBlockInfo from './SingleBlockCard';
 import { navigateToAllBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import "./SingleBlock.css";
-import { addNewBlock, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { addNewBlock, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, selectHomePageBlocks, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import { Block } from '../../interfaces/interface';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 
@@ -25,6 +25,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
     const navigate = useNavigate();
 
     const blocks = useSelector(selectBlocksForCurrentPage);
+    const homePageBlocks = useSelector(selectHomePageBlocks);
+    
     const allBlocksLoading = useSelector(selectBlocksLoadingInFrames);
     const blocksPerPage = useSelector(selectBlocksPerPage);
     const currentPage = useSelector(selectCurrentPage);
@@ -207,7 +209,16 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll', marginBottom: 2, paddingLeft: 0 }}>
-                {blocks.map((block) => (
+                {showTrx && blocks.map((block) => (
+                    <SingleBlockInfo
+                        key={block.hash}
+                        block={block}
+                        loading={allBlocksLoading}
+                        isNew={block.hash === latestBlockHash}
+                        showTrx={showTrx}
+                    />
+                ))}
+                {homePageBlocks.map((block) => (
                     <SingleBlockInfo
                         key={block.hash}
                         block={block}

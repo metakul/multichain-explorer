@@ -96,7 +96,7 @@ const InfoCard: React.FC<InfoBoxProps> = ({
                             {renderContent(value !== undefined ? truncateText(value) : value, loadingWidth)}
                         </> 
                         {error && <>
-                            {error}
+                            Oho, Its Us
                         </>}
                     </Text>
                 ) : (

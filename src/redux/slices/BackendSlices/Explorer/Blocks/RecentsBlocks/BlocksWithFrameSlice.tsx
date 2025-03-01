@@ -153,6 +153,10 @@ export const selectBlocksForCurrentPage = (state: { recentBlocksStateInFrames: B
     const startIndex = (currentPage - 1) * blocksPerPage;
     return blocks.slice(startIndex, startIndex + blocksPerPage);
 };
+export const selectHomePageBlocks = (state: { recentBlocksStateInFrames: BlocksState }) => {
+    const { blocks} = state.recentBlocksStateInFrames;
+    return blocks
+};
 
 // Redux slice - selectors
 export const selectTransactionsForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>

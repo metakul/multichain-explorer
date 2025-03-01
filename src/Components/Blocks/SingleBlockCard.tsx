@@ -6,7 +6,7 @@ import { Block } from '../../interfaces/interface';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { getColors } from '../../layout/Theme/themes';
 import { getRelativeTime } from '../../helpers/getRelativeTime';
-import InfoCard from '../Cards/InfoCard';
+import InfoCard from '../Cards/BlockInfoCard';
 import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useDispatch, useSelector } from 'react-redux';

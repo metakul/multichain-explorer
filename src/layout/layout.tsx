@@ -25,7 +25,6 @@ export default function DashboardLayout() {
   };
   return (
     <Box>
-
       <Topbar APP_BAR={APP_BAR}
         isNonMobile={isNonMobile}
         setIsSidebarOpen={handleSideBarState} />
@@ -45,15 +44,13 @@ export default function DashboardLayout() {
       <Box
         sx={{
           mt: 12,
-          pl: isNonMobile ? 10 : 0,
-
+          pl: isNonMobile ? 6 : 0,
+          mx:4
         }}
       >
         <Outlet />
         <Footer />
       </Box>
-
-
     </Box>
   );
 }
