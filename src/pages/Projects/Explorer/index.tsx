@@ -3,7 +3,7 @@ import React from 'react';
 import AllBlock from '../../../Components/Blocks/AllBlock.js';
 import Transactions from '../../../Components/Transactions/AllTrx.js';
 import ExplorerStats from '../../../Components/Stats/index.js';
-import { Container, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import Box from '../../../Components/UI/Box/index.js';
 import TopCard from '../../../Components/Cards/HomeCard/SearchBoxCard.js';
 

@@ -72,7 +72,7 @@ function ExplorerStats() {
     }, [dispatch, rpcUrl]);
 
     return (
-        <Box sx={{ marginTop: "10px", padding: "20px",
+        <Box sx={{ marginTop: "0px", padding: "20px",
            
          }}>
             <Text

@@ -1,7 +1,6 @@
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import Search from '../../Search/search';
+import Box from '../../UI/Box';
 
 export default function TopCard() {
     const theme = useTheme();
@@ -13,7 +12,7 @@ export default function TopCard() {
                 flexDirection: "column",
                 justifyContent: "center",
                 gap: "16px",
-                py: "24px",
+                py: "2px",
                 borderRadius: "16px",
                 boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
                 width: "100%",

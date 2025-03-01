@@ -9,6 +9,7 @@ import { ITrx } from "../../interfaces/interface";
 import TransactionInfo from "../Transactions/TrxTable";
 import Button from "../UI/Button";
 import TextField from "../UI/TextField";
+import Box from "../UI/Box";
 
 export default function Search() {
 
@@ -35,8 +36,9 @@ export default function Search() {
 
     return (
         <div >
-            <div style={{
-                display: "flex"
+            <Box sx={{
+                display: "flex",
+                px:4
             }}>
                 <TextField
                     type="text"
@@ -57,7 +59,7 @@ export default function Search() {
                 {showResult && <Button onClick={closeSearch}>
                     Close
                 </Button>}
-            </div>
+            </Box>
             <div>
                 {showResult  && <TransactionInfo transaction={[transaction] as ITrx[]} loading={loading} error={error}/>}
             </div>
