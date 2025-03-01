@@ -45,7 +45,7 @@ export default function DashboardLayout() {
         sx={{
           mt: 12,
           pl: isNonMobile ? 6 : 0,
-          mx:4
+          mx:isNonMobile ? 4 : 0
         }}
       >
         <Outlet />

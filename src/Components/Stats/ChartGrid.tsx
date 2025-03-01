@@ -9,6 +9,9 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
     return (
         <Box
             sx={{
+                py:2,
+                px:1,
+                mt:2,
                 display: "flex",
                 width: "100%",
                 maxWidth:"768px",

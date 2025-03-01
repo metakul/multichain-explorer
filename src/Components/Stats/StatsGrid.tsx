@@ -15,7 +15,7 @@ function StatsGrid({ stats, loading }: StatsGridProps) {
     return (
         <Box sx={{
             borderRadius: "12px",
-            py:4,
+            py:2,
             px:1,
             mr:2,
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
