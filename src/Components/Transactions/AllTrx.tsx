@@ -36,7 +36,7 @@ function Transactions() {
                 justifyContent: "space-between",
             }}>
                 <Box>
-                    <Text style={{ fontSize: "20px", fontWeight: "bold" }}>Recent Transactions </Text>
+                    <Text sx={{ fontSize: { xs: "16px",sm:"20px", md: "24px" }, fontWeight: "bold" }}>Recent Transactions </Text>
                 </Box>
                 <Box style={{
                     display: "flex",

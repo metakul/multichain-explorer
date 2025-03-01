@@ -193,8 +193,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
 
     return (
         <Box>
-            <Box sx={{ display: 'flex',justifyContent:"space-between" }}>
-                <Text style={{ fontSize: '24px', fontWeight: 'bold' }}>Blocks Info</Text>
+            <Box sx={{ display: 'flex',justifyContent:"space-between", alignItems:"center" }}>
+                <Text sx={{fontSize: { xs: "16px",sm:"20px", md: "24px" }, fontWeight: 'bold' }}>Blocks Info</Text>
               {!showTrx &&  <Button onClick={() => navigateToAllBlock(navigate, networkName)}>
                 View All Blocks
             </Button>

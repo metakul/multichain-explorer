@@ -61,7 +61,7 @@ function ExplorerStats() {
     return (
         <Box style={{ margin: "auto" }}>
 
-            <Text style={{ fontSize: "24px", fontWeight: "bold", }}> Explorer Stats Info </Text>
+            <Text sx={{  fontSize: { xs: "16px",sm:"20px", md: "24px" }, fontWeight: "bold", }}> Explorer Stats Info </Text>
             {error && <Box style={{ margin: "auto", marginTop: "" }}>
                 <p>Error loading stats</p>
             </Box>
@@ -84,7 +84,7 @@ function ExplorerStats() {
                     <StatCard label="Total Gas Used" value={stats?.totalGasUsed} loading={loading} />
                     <StatCard label="Trx Today" value={stats?.transactionsToday} loading={loading} />
                     <StatCard label="Gas Used Today" value={stats?.gasUsedToday} loading={loading} />
-                    <StatCard label="Average Gas Price" value={stats?.gasPrices?.average} loading={loading} />
+                    <StatCard label="Average Gas" value={stats?.gasPrices?.average} loading={loading} />
                     <StatCard label="Fast Gas Price" value={stats?.gasPrices?.fast} loading={loading} />
                     {/* <StatCard label="Slow Gas Price" value={stats?.gasPrices?.slow} /> */}
                     <StatCard label="Static Gas Price" value={stats?.staticGasPrice} loading={loading} />

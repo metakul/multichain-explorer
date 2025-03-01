@@ -5,6 +5,7 @@ import Box from '../../UI/Box';
 import Text from '../../UI/Text';
 import LinearProgress from '@mui/material/LinearProgress';
 import { getColors } from '../../../layout/Theme/themes';
+import { Typography } from '@mui/material';
 
 interface InfoBoxProps {
     label?: string; // Optional label
@@ -24,7 +25,7 @@ const InfoCard: React.FC<InfoBoxProps> = ({
     label,
     value,
     loading = false,
-    loadingWidth = 80,
+    loadingWidth = 60,
     navigateTo,
     icon,
     progressValue,
@@ -46,7 +47,9 @@ const InfoCard: React.FC<InfoBoxProps> = ({
         if (shouldShowSkeleton) {
             return <span style={{ width: loadingWidth }}><Skeleton /></span>;
         }
-        return <span>{value}</span>;
+        return <Typography sx={{
+            fontSize: { sm: "12px", md: "14px" }
+        }} >{value}</Typography>;
     };
 
     /**
@@ -58,7 +61,7 @@ const InfoCard: React.FC<InfoBoxProps> = ({
 
     const truncateText = (text: string | number, maxLength = 18) => {
         if (typeof text === 'string' && text.length > maxLength) {
-            const firstPart = text.slice(0, 5);
+            const firstPart = text.slice(0, 4);
             const lastPart = text.slice(-4);
             return `${firstPart}...${lastPart}`;
         }
@@ -67,11 +70,15 @@ const InfoCard: React.FC<InfoBoxProps> = ({
 
 
     return (
-        <Box sx={{ marginBottom: '4px' }}>
+        <Box sx={{ marginBottom: '1px' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 0 }}>
                <Box sx={{display:"flex",m:0, p:0}}>
-                {icon && <span>{icon}</span>}
-                {label && <strong>{label}:</strong>}
+                {icon && <Typography sx={{
+                    fontSize: { sm: "12px", md: "14px" }
+                }} >{icon}</Typography>}
+                {label && <Typography sx={{
+                    fontSize: { sm: "12px", md: "14px" }
+                }}> {label}:</Typography>}
                 
                </Box>
                 {navigateTo ? (

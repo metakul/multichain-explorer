@@ -7,7 +7,7 @@ import Flex from '../../UI/Flex';
 
 
 
-const StatCard = ({ label, value,loading }: { label: string; value: string | number | null | undefined;loading:boolean }) => (
+const StatCard = ({ label, value, loading }: { label: string; value: string | number | null | undefined; loading: boolean }) => (
     <Card sx={{
         backgroundColor: getColors().primary[900],
         borderRadius: '8px',
@@ -22,14 +22,19 @@ const StatCard = ({ label, value,loading }: { label: string; value: string | num
             <Box
                 sx={{ padding: '8px' }}
             >
-                <Text style={{ fontWeight: "bold", fontSize: "14px" }}>
+                <Text sx={{
+                    fontWeight: "bold",
+                    fontSize: { xs: "12px", md: "14px" }
+                }}>
                     {label}
                 </Text>
                 {loading ? (
                     <Skeleton width="120px" height="18px" />
                 ) : (
-                    <Text style={{ fontWeight: "bold", fontSize: "14px" }}>
-                        {value}
+                    <Text sx={{
+                        fontWeight: "",
+                        fontSize: { xs: "12px", md: "14px" }
+                    }}>    {value}
                     </Text>
                 )}
             </Box>

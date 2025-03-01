@@ -1,5 +1,6 @@
 // import { useEffect, useState } from "react";
 // import axios from "axios";
+import { Typography } from "@mui/material";
 import Box from "../UI/Box";
 
 
@@ -18,18 +19,19 @@ export default function Header() {
 
     return (
         <Box>
-            <h3 style={{
+            <Typography style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
+                fontWeight:"bold"
             }} >The Multi- Blockchain Explorer
                     <img
-                        width={50} height={50}
+                        width={40} height={40}
                         src="/logo.svg"
                         alt="Colm Tuite"
                     />
-            </h3>
+            </Typography>
         </Box>
     );
 }
