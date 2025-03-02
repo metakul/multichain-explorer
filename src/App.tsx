@@ -32,7 +32,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-    <Provider store={store}>
+    <Provider store={store} stabilityCheck="never">
       <BrowserRouter>
         <AppWrapper />
       </BrowserRouter>

@@ -23,9 +23,6 @@ export const fetchCurrentBlock = createAsyncThunk(
                 },
                 slug:`/${response.number}`
             });
-
-            console.log(getTransactionCountInBlock.transactionCount,);
-            
             
             const currentBlock: Block = {
                 ...response,
