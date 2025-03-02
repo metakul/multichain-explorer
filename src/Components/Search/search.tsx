@@ -1,44 +1,70 @@
 import { SetStateAction, useState } from "react";
 import SubmitButton from "../Buttons/SubmitButton";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../redux/store";
-import { fetchSearchResult } from "../../redux/slices/BackendSlices/Explorer/ExplorerApiSlice";
 import { useRpc } from "../../contexts/RpcProviderContext";
-import { selectSearchResultError, selectSearchResultLoading, selectTransactionBySearchInput } from "../../redux/slices/BackendSlices/Explorer/ExplorerResultSlice";
-import { ITrx } from "../../interfaces/interface";
-import TransactionInfo from "../Transactions/TrxTable";
-import Button from "../UI/Button";
 import TextField from "../UI/TextField";
 import Box from "../UI/Box";
+import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
+import { useNavigate } from "react-router-dom";
 
 export default function Search() {
 
-    const dispatch = useDispatch<AppDispatch>();
-    
-    const [showResult, setShowResult] = useState(false);
+    const navigate = useNavigate();
+
     const [searchInput, setSearchInput] = useState("");
-    const { rpcUrl } = useRpc()
-    const loading = useSelector(selectSearchResultLoading);
-    const error = useSelector(selectSearchResultError);
-    const transaction: ITrx | undefined = useSelector(selectTransactionBySearchInput(searchInput));
+    const { networkName } = useRpc()
 
     const changeHandler = (e: { target: { value: SetStateAction<string> } }) => {
         setSearchInput(e.target.value);
     };
 
+    function detectInputType(input: string): "transaction" | "address" | "smart-contract" | "block" | "unknown" {
+        if (/^0x[a-fA-F0-9]{64}$/.test(input)) {
+            return "transaction";
+        } 
+        if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
+            // Could be address or smart contract - you'd need an on-chain check to see if it's a contract.
+            return "address";
+        } 
+        if (/^\d+$/.test(input)) {
+            return "block";
+        }
+        return "unknown";
+    }
+
+
     const handleSearch = async () => {
-        setShowResult(true)
-        dispatch(fetchSearchResult({ searchInput, rpcUrl }));
+        const type = detectInputType(searchInput);
+    
+        if (type === "unknown") {
+            alert("Please enter a valid transaction hash, address, or block number.");
+            return;
+        }
+    
+        if (type === "transaction") {
+            navigateToTransaction(navigate, searchInput, networkName);
+            return;  // No need to dispatch or showResult
+        }
+    
+        if (type === "block") {
+            const blockNumber = parseInt(searchInput, 10);
+            navigateToBlock(navigate, blockNumber, networkName)
+            return;
+        }
+    
+        if (type === "address") {
+
+            navigateToAddress(navigate, searchInput, networkName);
+            return;
+        }
     };
-    const closeSearch = async () => {
-        setShowResult(false);
-    };
+    
 
     return (
         <div >
             <Box sx={{
                 display: "flex",
-                px:4
+                px:4,
+                mb:2
             }}>
                 <TextField
                     type="text"
@@ -56,13 +82,7 @@ export default function Search() {
                 <SubmitButton onClick={handleSearch} variant="surface" buttonText="Search">
                    Search
                 </SubmitButton>
-                {showResult && <Button onClick={closeSearch}>
-                    Close
-                </Button>}
             </Box>
-            <div>
-                {showResult  && <TransactionInfo transaction={[transaction] as ITrx[]} loading={loading} error={error}/>}
-            </div>
         </div>
     );
 }
