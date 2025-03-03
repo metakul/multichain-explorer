@@ -120,7 +120,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                     {/* Total Transactions */}
                     <InfoCard
                         label="Total Trx"
-                        value={block?.transactionsCount}
+                        value={block && block.number && block?.transactionsCount || block &&  block.number && transactions?.length }
                         loading={loading}
                         navigateTo={naviagteToBlockWithTrx}
                         icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}

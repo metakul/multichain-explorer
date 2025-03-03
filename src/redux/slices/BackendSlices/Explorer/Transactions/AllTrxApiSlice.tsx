@@ -16,7 +16,7 @@ export const fetchAllTransactions = createAsyncThunk(
                 url: "fetchAllTransactions",
                 method: ApiEndpoint.fetchAllTransactions.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 slug:"/10"
             });
@@ -41,7 +41,7 @@ export const fetchSingleTrx = createAsyncThunk(
                 url: "fetchSingleTrx",
                 method: ApiEndpoint.fetchSingleTrx.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 slug:`/${hash}`
             });

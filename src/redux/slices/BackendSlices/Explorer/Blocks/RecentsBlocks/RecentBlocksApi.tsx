@@ -13,7 +13,7 @@ export const fetchBlockInfo = createAsyncThunk(
                 url: "fetchBlockInfo",
                 method: ApiEndpoint.fetchBlockInfo.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 slug: `/${blockNo}`
             });
@@ -28,7 +28,7 @@ export const fetchBlockInfo = createAsyncThunk(
 
 export const fetchBlocksInFrame = createAsyncThunk(
     'blocks/fetchBlocksInFrame',
-    async({ rpcUrl, startBlock, blocksPerPage }: { rpcUrl: string, startBlock:string, blocksPerPage:string }, { dispatch, rejectWithValue }) => {
+    async({ rpcUrl, startBlock, blocksPerPage,transactionRequired }: { rpcUrl: string, startBlock:string, blocksPerPage:string,transactionRequired?:boolean }, { dispatch, rejectWithValue }) => {
         try {
             dispatch(setBlocksInFramesLoading(true));
 
@@ -36,14 +36,21 @@ export const fetchBlocksInFrame = createAsyncThunk(
                 url: "fetchBlocksInFrame",
                 method: ApiEndpoint.fetchBlocksInFrame.method,
                 data: {
-                    providerUrl: rpcUrl,
+                    rpcUrl: rpcUrl,
                     startBlock: startBlock,
-                    blocksPerPage: blocksPerPage
+                    blocksPerPage: blocksPerPage,
+                    transactionRequired:transactionRequired
                 },
             });
             const blocks: Block[] = response;
+
             dispatch(setBlocksInFrames(blocks));
             dispatch(setBlocksInFramesLoading(false));
+
+            for(let i=0; i<blocks.length;i++ ){
+                dispatch(setTransactionsSuccess({blockNo: blocks[i].number, transactions: ["","",""], }));
+            }
+
 
         } catch (error) {
             dispatch(setBlocksInFramesLoading(false));
@@ -66,7 +73,7 @@ export const getBlockWithTrx = createAsyncThunk(
                 url: "getBlockWithTrx",
                 method: ApiEndpoint.getBlockWithTrx.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 slug: `/${blockNo}`
             });

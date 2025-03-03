@@ -74,10 +74,7 @@ function ExplorerStats() {
         ws.onclose = () => {
             console.log('WebSocket for stats closed');
         };
-
-        return () => {
-            ws.close();
-        };
+     
     }, [dispatch, rpcUrl]);
 
     return (

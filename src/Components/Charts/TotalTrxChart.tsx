@@ -17,7 +17,6 @@ interface Props {
 
 const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
     const isNonMobile = useMediaQuery("(min-width: 768px)");
-    console.log(dailyTrxData,"dailyTrxData");
     
     const chartWidth = isNonMobile ? 350 : 230;
     const chartHeight = isNonMobile ? 300 : 250;

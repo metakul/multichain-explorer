@@ -15,7 +15,7 @@ export const getAddressInfo = createAsyncThunk(
                 url: "getAddressInfo",
                 method: ApiEndpoint.getAddressInfo.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 slug: `/${address}`
             });

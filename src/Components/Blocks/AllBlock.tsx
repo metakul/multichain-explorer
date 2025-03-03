@@ -54,8 +54,9 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
         const startBlock =  Number(blocks[0].number) - (currentPage - 1) * blocksPerPage
         dispatch(fetchBlocksInFrame({
             rpcUrl,
-            startBlock: startBlock.toString(),
-            blocksPerPage: blocksPerPage.toString()
+            startBlock:currentPage==1 ? "latest" : startBlock.toString(),
+            blocksPerPage: blocksPerPage.toString(),
+            transactionRequired:showTrx ? true : false
         }));
     };
     
@@ -80,6 +81,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                 if (newBlock.hash) {
                     setLatestBlockHash(newBlock.hash);
                 }
+                console.log("added");
+                
                 dispatch(addNewBlock(newBlock));
                 dispatch(setBlocksInFramesLoading(false));
                 setTimeout(() => setLatestBlockHash(null), 300);
@@ -118,11 +121,13 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
         const latestBlockNumber = Number(blocks[0]?.number);
     
         const startBlock = latestBlockNumber - ((newPage - 1) * blocksPerPage);
-    
+console.log(startBlock,"startBlock");
+
         dispatch(fetchBlocksInFrame({
             rpcUrl,
-            startBlock: startBlock.toString(),
-            blocksPerPage: blocksPerPage.toString()
+            startBlock:currentPage==1 ? "latest" : startBlock.toString(),
+            blocksPerPage: blocksPerPage.toString(),
+            transactionRequired:showTrx ? true : false
         }));
     };
     

@@ -16,7 +16,7 @@ export const fetchExplorerStats = createAsyncThunk(
                 url: "fetchChainStats",
                 method: ApiEndpoint.fetchChainStats.method,
                 data: {
-                    providerUrl: rpcUrl
+                    rpcUrl: rpcUrl
                 },
                 headers: ApiEndpoint.fetchChainStats.headers,
             });
