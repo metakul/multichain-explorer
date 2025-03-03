@@ -7,10 +7,12 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useDispatch } from "react-redux";
 import { clearTrxCount } from "../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice";
+import Box from "../UI/Box";
+import { getColors } from "../../layout/Theme/themes";
 
 const RpcComponent: React.FC = () => {
-    const dispatch=useDispatch()
-    const { networkName, setRpc,connectToRpc, rpcUrl,connected } = useRpc();
+    const dispatch = useDispatch()
+    const { networkName, setRpc, connectToRpc, rpcUrl, connected } = useRpc();
     const [customRpcUrl, /*setCustomRpcUrlState*/] = useState<string>("");
     const [selectedNetwork, setSelectedNetwork] = useState<NetworkType>(networkName);
     const [/*isCustomRpc*/, setIsCustomRpc] = useState<boolean>(false);
@@ -41,7 +43,7 @@ const RpcComponent: React.FC = () => {
 
     // Effect to set RPC on network change
     useEffect(() => {
-            handleSetCustomRpc();
+        handleSetCustomRpc();
     }, [selectedNetwork, rpcUrl]);
 
     // Update URL with the new network name whenever it changes
@@ -49,7 +51,7 @@ const RpcComponent: React.FC = () => {
         const newUrl = window.location.pathname.replace(/\/[A-Za-z]+$/, `/${networkName}`);
         window.history.pushState({}, '', newUrl);
     }, [networkName]);
-    
+
     // const handleEditToggle = () => {
     //     setIsEditing(!isEditing);
     // };
@@ -61,27 +63,39 @@ const RpcComponent: React.FC = () => {
 
     return (
         <>
-                {/* {isRpcVisible ? ( */}
-                    {/* // Show the RPC component when isRpcVisible is true */}
-                    <>
-                        <FormControl >
-                            {/* <InputLabel id="network-select-label">Select Network</InputLabel> */}
-                            <Select
-                                labelId="network-select-label"
-                                id="network-select"
-                                value={selectedNetwork}
-                                onChange={(e: SelectChangeEvent) => setSelectedNetwork(e.target.value as NetworkType)}
+            {/* {isRpcVisible ? ( */}
+            {/* // Show the RPC component when isRpcVisible is true */}
+            <Box>
+                <FormControl >
+                    {/* <InputLabel id="network-select-label">Select Network</InputLabel> */}
+                    <Select
+                        labelId="network-select-label"
+                        id="network-select"
+                        value={selectedNetwork}
+                        onChange={(e: SelectChangeEvent) => setSelectedNetwork(e.target.value as NetworkType)}
+                    >
+                        {Object.keys(Network).map((network) => (
+                            <MenuItem
+                                key={network}
+                                value={network as NetworkType}
+                                selected={selectedNetwork === network} // Assuming selectedNetwork is the currently selected network
+                                sx={{
+                                    backgroundColor: selectedNetwork === network ? getColors().primary[200] : getColors().grey[700],
+                                    '&:hover': {
+                                        backgroundColor: getColors().grey[100],
+                                        color: getColors().primary[900],
+                                        opacity: 0.8, // Add a slight opacity change on hover
+                                    },
+                                }}
                             >
-                                {Object.keys(Network).map((network) => (
-                                    <MenuItem key={network} value={network as NetworkType}>
-                                        {Network[network as NetworkType].charAt(0).toUpperCase() +
-                                            Network[network as NetworkType].slice(1)}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                                {Network[network as NetworkType].charAt(0).toUpperCase() +
+                                    Network[network as NetworkType].slice(1)}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
 
-                        {/* <Box>
+                {/* <Box>
                             <input
                                 type="text"
                                 value={customRpcUrl}
@@ -96,7 +110,7 @@ const RpcComponent: React.FC = () => {
                             </button>
                         </Box> */}
 
-                        {/* <Box>
+                {/* <Box>
                             <div>
                                 {isCustomRpc ? (
                                     <>
@@ -108,9 +122,9 @@ const RpcComponent: React.FC = () => {
                                 )}
                             </div>
                         </Box> */}
-                    </>
-                 {/* Just show the network name, and open the RPC component when clicked */}
-                {/* ) : (
+            </Box>
+            {/* Just show the network name, and open the RPC component when clicked */}
+            {/* ) : (
                    <Box onClick={toggleRpcVisibility} style={{ cursor: "pointer", background:"green", color:"white" }}>
                        {networkName}
                    </Box>
