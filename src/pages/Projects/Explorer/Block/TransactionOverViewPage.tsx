@@ -11,7 +11,6 @@ function TransactionOverViewPage() {
     const { block } = useParams<{ block: string }>();
     const dispatch = useDispatch<AppDispatch>()
     const { rpcUrl } = useRpc();
-selectBlocksForCurrentPage
     const blocks = useSelector(selectBlocksForCurrentPage);
     const blockData = blocks.find((b) => b.number == block || b.hash == block);
 
@@ -24,7 +23,7 @@ selectBlocksForCurrentPage
     return (
         <div>
             {blockData &&
-                <SingleBlockInfo block={blockData} showTrx={true} />
+                <SingleBlockInfo block={blockData} showTrx={true} isSingleBlock={true} />
             }
         </div>
     )

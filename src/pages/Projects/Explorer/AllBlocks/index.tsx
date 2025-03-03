@@ -3,7 +3,7 @@ import React from 'react';
 
 import AllBlock from '../../../../Components/Blocks/AllBlock';
 
-const AllBlocks: React.FC = () => {
+const AllBlocksPage: React.FC = () => {
     return (
         <div style={{
         }}>
@@ -12,4 +12,4 @@ const AllBlocks: React.FC = () => {
     );
 };
 
-export default AllBlocks;
+export default AllBlocksPage;

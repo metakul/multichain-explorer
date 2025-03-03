@@ -3,11 +3,11 @@
 import { BlockDetailsTab } from '../../../../DataTypes/enums'
 import CustomTab from '../../../../Components/UI/Tabs/tabs';
 import UserActivity from '../../../../Components/Profile/Activity';
-import BlockOverView from './BlockOverViewPage';
+import BlockOverView from './BlockOverView';
 import TransactionOverView from './TransactionOverViewPage.tsx';
 import { useSearchParams } from 'react-router-dom';
 
-const BlockOverViewPage = () => {
+const SingleBlockPage = () => {
 
     const [searchParams] = useSearchParams();
 
@@ -28,4 +28,4 @@ const BlockOverViewPage = () => {
     )
 }
 
-export default BlockOverViewPage
+export default SingleBlockPage

@@ -62,19 +62,21 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   getMyContracts: { url: `${backendUrl}/getMyContracts`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
   saveContract: { url: `${backendUrl}/saveDeployedContract`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
-  //explorer
-  explorerSearch: { url: `${backendUrl}/transaction`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getLatestBlock: { url: `${backendUrl}/block/latest`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
-  getPreviousBlocks: { url: `${backendUrl}/blocks/previous`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
-
   // New endpoint for fetching transactions by block number
   getTransactionCountInBlock: { url: `${backendUrl}/block/getTransactionCountInBlock`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+ 
   fetchAllTransactions: { url: `${backendUrl}/block/allTransactions`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+ 
   fetchSingleTrx: { url: `${backendUrl}/transaction`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  
   getAddressInfo: { url: `${backendUrl}/address`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  
   fetchBlockInfo: { url: `${backendUrl}/block`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  
   fetchChainStats: { url: `${backendUrl}/stats`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  
   fetchBlocksInFrame: { url: `${backendUrl}/blocksInFrame`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  
   getBlockWithTrx: { url: `${backendUrl}/getBlockWithTrx`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 };
 

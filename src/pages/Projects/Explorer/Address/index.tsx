@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { selectAddressInfoError, selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
 import Text from "../../../../Components/UI/Text";
 
-function AddressInfo() {
+function AddressInfoPage() {
     const { address } = useParams<{ address: string }>(); // Retrieve the address parameter
 
     const dispatch = useDispatch<AppDispatch>();
@@ -48,4 +48,4 @@ function AddressInfo() {
     );
 }
 
-export default AddressInfo;
+export default AddressInfoPage;

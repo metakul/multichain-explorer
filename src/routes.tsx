@@ -9,11 +9,11 @@ import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
 import Dashboard from "./pages/Dashbaord";
 import Explorer from "./pages/Projects/Explorer";
 import Transaction from "./pages/Projects/Explorer/Transaction";
-import SingleBlock from "./pages/Projects/Explorer/Block";
-import AddressInfo from "./pages/Projects/Explorer/Address";
-import AllBLocks from "./pages/Projects/Explorer/AllBlocks";
+import SingleBlockPage from "./pages/Projects/Explorer/Block";
 import SwaggerDocumentation from "./pages/Projects/Swagger";
 import TransactionPage from "./pages/Projects/Explorer/Transaction";
+import AddressInfoPage from "./pages/Projects/Explorer/Address";
+import AllBlocksPage from "./pages/Projects/Explorer/AllBlocks";
 
 interface RouterProps {
   networkName: string;
@@ -64,15 +64,15 @@ const Router: React.FC<RouterProps> = () => {
         },
         {
           path: `${EXPLORER_PAGE.SINGLE_BLOCK}/:block/:networkName`,
-          element: <SingleBlock />,
+          element: <SingleBlockPage />,
         },
         {
           path: `${EXPLORER_PAGE.SINGLE_ADDRESS}/:address/:networkName`,
-          element: <AddressInfo />,
+          element: <AddressInfoPage />,
         },
         {
           path: `${Pages.BLOCKS}/:networkName`,
-          element: <AllBLocks />,
+          element: <AllBlocksPage />,
         },
         {
           path: `${Pages.TRANSACTIONS}/:networkName`,

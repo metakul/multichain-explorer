@@ -44,6 +44,7 @@ export const fetchBlocksInFrame = createAsyncThunk(
             const blocks: Block[] = response;
             dispatch(setBlocksInFrames(blocks));
             dispatch(setBlocksInFramesLoading(false));
+
         } catch (error) {
             dispatch(setBlocksInFramesLoading(false));
             const castedError = error as ApiError

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { currentBlockInfo, setCurrentBlockError, setCurrentBlockLoading } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice';
 import { fetchBlocksInFrame } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { AppDispatch } from '../../redux/store';
@@ -13,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import "./SingleBlock.css";
 import { addNewBlock, resetState, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, selectHomePageBlocks, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import { Block } from '../../interfaces/interface';
-import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 
 interface AllBlockProps {
     showTrx: boolean;
@@ -30,7 +28,6 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
     const allBlocksLoading = useSelector(selectBlocksLoadingInFrames);
     const blocksPerPage = useSelector(selectBlocksPerPage);
     const currentPage = useSelector(selectCurrentPage);
-    const currentBlock = useSelector(currentBlockInfo);
 
     const [latestBlockHash, setLatestBlockHash] = useState<string | null>(null);
     const [totalBlocks] = useState<number>(1000);  // Consider replacing with actual fetched total if available
@@ -38,8 +35,7 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
     const wsRef = useRef<WebSocket | null>(null);
 
     useEffect(() => {
-            dispatch(fetchCurrentBlock(rpcUrl)); // Fetch current block for the new RPC
-            fetchLatestFrame(); // Fetch blocks for the current page
+            fetchLatestFrame();
             dispatch(resetState());
     }, [rpcUrl, showTrx]);
 
@@ -54,7 +50,8 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
     }, [showTrx,rpcUrl, currentPage]);
 
     const fetchLatestFrame = () => {
-        const startBlock =  Number(currentBlock?.number) - (currentPage - 1) * blocksPerPage
+        blocks
+        const startBlock =  Number(blocks[0].number) - (currentPage - 1) * blocksPerPage
         dispatch(fetchBlocksInFrame({
             rpcUrl,
             startBlock: startBlock.toString(),
@@ -67,7 +64,6 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
 
         const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
         wsRef.current = ws;
-        dispatch(setCurrentBlockLoading(true));
         ws.onopen = () => {
             console.log('WebSocket connected');
             ws.send(JSON.stringify({ type: 'INIT', rpcUrl }));
@@ -88,12 +84,11 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
                 dispatch(setBlocksInFramesLoading(false));
                 setTimeout(() => setLatestBlockHash(null), 300);
             } catch (error) {
-                dispatch(setCurrentBlockError('Failed to parse new block data'));
             }
         };
 
         ws.onerror = () => {
-            dispatch(setCurrentBlockError('WebSocket encountered an error'));
+            console.log('WebSocket error');
         };
 
         ws.onclose = () => {
@@ -115,12 +110,12 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
             stopWebSocket();
         }
     
-        if (!currentBlock?.number) {
+        if (!blocks[0]?.number) {
             console.warn("Current block not available yet.");
             return;
         }
     
-        const latestBlockNumber = Number(currentBlock.number);
+        const latestBlockNumber = Number(blocks[0]?.number);
     
         const startBlock = latestBlockNumber - ((newPage - 1) * blocksPerPage);
     

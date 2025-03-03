@@ -4,9 +4,7 @@ import contractsSlice from "./slices/BackendSlices/Blockchain/AllContractsSlice"
 import explorerStatsInfo from "./slices/BackendSlices/Explorer/ExplorerStatsSlice"
 import singleContract from "./slices/BackendSlices/Blockchain/ContractSlice"
 import deployedContracts from "./slices/BackendSlices/Blockchain/MyContractSlice"
-import explorerSlice from "./slices/BackendSlices/Explorer/ExplorerResultSlice"
 import recentBlocksStateInFrames from "./slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice"
-import currentBlockState from "./slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockSlice"
 import transactionsState from "./slices/BackendSlices/Explorer/Transactions/AllTrxSlice"
 import addressInfoState from "./slices/BackendSlices/Explorer/Address/AddressInfoSlice"
 import { useDispatch } from 'react-redux'
@@ -18,8 +16,6 @@ const store = configureStore({
     explorerStatsInfo: explorerStatsInfo,
     singleContract:singleContract,
     deployedContracts: deployedContracts,
-    explorerSearchResult:explorerSlice,
-    currentBlockState: currentBlockState,
     transactionsState: transactionsState,
     addressInfo: addressInfoState,
     recentBlocksStateInFrames: recentBlocksStateInFrames

@@ -20,9 +20,10 @@ interface SingleBlockInfoProps {
     loading?: boolean;
     isNew?: boolean; // New prop for animation
     showTrx?: boolean
+    isSingleBlock?: boolean
 }
 
-const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loading }) => {
+const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loading ,isSingleBlock}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { networkName, rpcUrl } = useRpc();
@@ -92,8 +93,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         border: '1px solid',
                         transition: 'background-color 0.5s ease-in-out',
                         width: '100%',
-                        position: 'sticky',
-                        top: '5px',
                         zIndex: 1000,
                     }}
                 >
@@ -222,7 +221,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                 }
             </Box>
             {/* Decorative Line */}
-            <Box
+            { !isSingleBlock && <Box
                 sx={{
                     width: '40px',
                     height: '8px',
@@ -230,8 +229,9 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                     position: 'relative',
                     top: 80,
                 }}
-            />
+            />}
         </Box>
+        
     );
 };
 
