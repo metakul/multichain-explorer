@@ -11,7 +11,7 @@ import SingleBlockInfo from './SingleBlockCard';
 import { navigateToAllBlock } from '../../helpers/navigationHelpers';
 import { useNavigate } from 'react-router-dom';
 import "./SingleBlock.css";
-import { addNewBlock, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, selectHomePageBlocks, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { addNewBlock, resetState, selectBlocksForCurrentPage, selectBlocksLoadingInFrames, selectBlocksPerPage, selectCurrentPage, selectHomePageBlocks, setBlocksInFramesLoading, setCurrentPage, setNewTrxCount } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import { Block } from '../../interfaces/interface';
 import { fetchCurrentBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/CurrentBlock/CurrentBlockApi';
 
@@ -37,18 +37,11 @@ const AllBlock: React.FC<AllBlockProps> = ({ showTrx }) => {
 
     const wsRef = useRef<WebSocket | null>(null);
 
-    // --- Fetch blocks for first page if `showTrx` is true (for transactions view) ---
     useEffect(() => {
-        if (showTrx) {
-            dispatch(fetchCurrentBlock(rpcUrl))
-            fetchLatestFrame();
-        }
-    }, [showTrx, blocks.length]);
-    useEffect(() => {
-        if (showTrx) {
-            fetchLatestFrame();
-        }
-    }, [currentBlock]);
+            dispatch(fetchCurrentBlock(rpcUrl)); // Fetch current block for the new RPC
+            fetchLatestFrame(); // Fetch blocks for the current page
+            dispatch(resetState());
+    }, [rpcUrl, showTrx]);
 
     // --- WebSocket setup (only if not showing transactions view) ---
     useEffect(() => {

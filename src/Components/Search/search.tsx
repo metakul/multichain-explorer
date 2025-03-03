@@ -5,6 +5,8 @@ import TextField from "../UI/TextField";
 import Box from "../UI/Box";
 import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../../helpers/navigationHelpers";
 import { useNavigate } from "react-router-dom";
+import { getColors } from "../../layout/Theme/themes";
+import Text from "../UI/Text";
 
 export default function Search() {
 
@@ -20,11 +22,11 @@ export default function Search() {
     function detectInputType(input: string): "transaction" | "address" | "smart-contract" | "block" | "unknown" {
         if (/^0x[a-fA-F0-9]{64}$/.test(input)) {
             return "transaction";
-        } 
+        }
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             // Could be address or smart contract - you'd need an on-chain check to see if it's a contract.
             return "address";
-        } 
+        }
         if (/^\d+$/.test(input)) {
             return "block";
         }
@@ -34,37 +36,37 @@ export default function Search() {
 
     const handleSearch = async () => {
         const type = detectInputType(searchInput);
-    
+
         if (type === "unknown") {
             alert("Please enter a valid transaction hash, address, or block number.");
             return;
         }
-    
+
         if (type === "transaction") {
             navigateToTransaction(navigate, searchInput, networkName);
             return;  // No need to dispatch or showResult
         }
-    
+
         if (type === "block") {
             const blockNumber = parseInt(searchInput, 10);
             navigateToBlock(navigate, blockNumber, networkName)
             return;
         }
-    
+
         if (type === "address") {
 
             navigateToAddress(navigate, searchInput, networkName);
             return;
         }
     };
-    
+
 
     return (
         <div >
             <Box sx={{
                 display: "flex",
-                px:4,
-                mb:2
+                px: 4,
+                mb: 2
             }}>
                 <TextField
                     type="text"
@@ -80,8 +82,18 @@ export default function Search() {
 
                 {/* Replaced Button with LoadingButton */}
                 <SubmitButton onClick={handleSearch} variant="surface" buttonText="Search">
-                   Search
+                    Search
                 </SubmitButton>
+                <Box sx={{
+                    width: "100px",
+                    background: getColors().redAccent[800],
+                    borderRadius: "8px",
+                    ml:2
+                }}>
+                    <Text>
+                        This is a test for ads
+                    </Text>
+                </Box>
             </Box>
         </div>
     );

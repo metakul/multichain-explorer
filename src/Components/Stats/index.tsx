@@ -10,12 +10,9 @@ import Text from '../UI/Text';
 import { useMediaQuery } from '@mui/material';
 import ChartGrid from './ChartGrid';
 import StatsGrid from './StatsGrid';
-import { getColors } from '../../layout/Theme/themes';
-
-interface GasPricePoint {
-    time: string;
-    price: number;
-}
+import { TrxChartInfo } from '../Charts/TotalTrxChart';
+import { GasPricePoint } from '../Charts/GasPriceChart';
+// import { getColors } from '../../layout/Theme/themes';
 
 function ExplorerStats() {
     const dispatch = useDispatch<AppDispatch>();
@@ -25,15 +22,26 @@ function ExplorerStats() {
     const stats = useSelector(selectStatsInfo);
     const loading = useSelector(selectStatsLoading);
     const [gasPriceData, setGasPriceData] = useState<GasPricePoint[]>([]);
+    const [totalTrx, setTotalTrxData] = useState<TrxChartInfo[]>([]);
 
     const updateGasPriceChart = (stats: any) => {
+        console.log(stats);
+
         const latestGas = stats?.gasPrices?.average;
+        const dailyTotalTrx = stats?.transactionsToday;
         if (latestGas) {
             const newPoint: GasPricePoint = {
                 time: new Date().toLocaleTimeString(),
                 price: latestGas
             };
-            setGasPriceData((prev) => [...prev, newPoint].slice(-20)); // Keep only last 20 entries
+            setGasPriceData((prev) => [...prev, newPoint]); // Keep only last 20 entries
+        }
+        if (dailyTotalTrx) {
+            const newPoint: TrxChartInfo = {
+                time: new Date().toLocaleTimeString(),
+                trxCount: dailyTotalTrx
+            };
+            setTotalTrxData((prev) => [...prev, newPoint]); // Keep only last 20 entries
         }
     };
 
@@ -73,27 +81,27 @@ function ExplorerStats() {
     }, [dispatch, rpcUrl]);
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: isNonMobile ? "row" : "column",
-                justifyContent: "center",
-                padding: isNonMobile ? "20px" : "8px"
-
-            }}
-        >
-            <Box>
+        <Box>
             <Text
                 sx={{
                     fontSize: { xs: "16px", sm: "20px", md: "24px" },
                     fontWeight: "bold",
-                    marginBottom: "16px",
+                    mt: "16px",
                     textAlign: "center"
                 }}
-                >
+            >
                 Explorer Stats Info
             </Text>
-            <Box sx={{
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: isNonMobile ? "row" : "column",
+                    justifyContent: "center",
+                    // padding: isNonMobile ? "20px" : "8px"
+
+                }}
+            >
+                {/* <Box sx={{
             width:"100%",
             height:"80px",
             mt:4,
@@ -102,14 +110,15 @@ function ExplorerStats() {
            <Text>
                 This is a test for ads
            </Text>
-        </Box>
-                </Box>
-            {/* Stats Section */}
+        </Box> */}
+                {/* Stats Section */}
 
-            <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />
+                <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />
 
-            {/* Charts Section */}
-            <ChartGrid gasPriceData={gasPriceData} />
+                {/* Charts Section */}
+                <ChartGrid gasPriceData={gasPriceData} dailyTrxData={totalTrx} />
+            </Box>
+
         </Box>
     );
 }

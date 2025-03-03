@@ -13,6 +13,7 @@ import SingleBlock from "./pages/Projects/Explorer/Block";
 import AddressInfo from "./pages/Projects/Explorer/Address";
 import AllBLocks from "./pages/Projects/Explorer/AllBlocks";
 import SwaggerDocumentation from "./pages/Projects/Swagger";
+import TransactionPage from "./pages/Projects/Explorer/Transaction";
 
 interface RouterProps {
   networkName: string;
@@ -72,6 +73,10 @@ const Router: React.FC<RouterProps> = () => {
         {
           path: `${Pages.BLOCKS}/:networkName`,
           element: <AllBLocks />,
+        },
+        {
+          path: `${Pages.TRANSACTIONS}/:networkName`,
+          element: <TransactionPage />,
         },
         {
           path: `${Pages.API}`,

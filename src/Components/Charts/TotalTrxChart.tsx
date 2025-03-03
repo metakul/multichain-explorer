@@ -5,24 +5,26 @@ import Text from '../UI/Text';
 import { getColors } from '../../layout/Theme/themes';
 import Box from '../UI/Box';
 
-export interface GasPricePoint {
+
+export interface TrxChartInfo {
     time: string;
-    price: number;
+    trxCount: number;
 }
 
 interface Props {
-    gasPriceData: GasPricePoint[];
+    dailyTrxData: TrxChartInfo[];
 }
 
-const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
+const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
     const isNonMobile = useMediaQuery("(min-width: 768px)");
-
+    console.log(dailyTrxData,"dailyTrxData");
+    
     const chartWidth = isNonMobile ? 350 : 230;
     const chartHeight = isNonMobile ? 300 : 250;
 
     return (
         <Box sx={{ width: chartWidth, height: chartHeight }}>
-            {gasPriceData.length === 0 ? (
+            {dailyTrxData.length === 0 ? (
                 <Box
                     sx={{
                         width: '98%',
@@ -41,7 +43,7 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                             animation: 'pulse 1.5s infinite ease-in-out'
                         }}
                     >
-                        Loading Gas Price Charts
+                        Loading Daily Trx Count
                     </Text>
 
                     {/* Optional: Add CSS animation for pulse effect */}
@@ -58,10 +60,10 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
-                        data={gasPriceData}
+                        data={dailyTrxData}
                         margin={{ top: 20, right: 4, left: 0, bottom: 2 }}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
+                        <CartesianGrid strokeDasharray="2 2" />
                         <XAxis dataKey="time" />
                         <YAxis />
                         <Tooltip contentStyle={{
@@ -70,7 +72,7 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                         <Legend />
                         <Line
                             type="monotone"
-                            dataKey="price"
+                            dataKey="trxCount"
                             stroke={getColors().blueAccent[100]}
                         />
                     </LineChart>
@@ -80,4 +82,4 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
     );
 };
 
-export default GasPriceChart;
+export default TotalTrxChart;

@@ -4,7 +4,7 @@ import { ApiError, ContractData, ApiSuccess } from '../../../../interfaces/inter
 import { ApiEndpoint } from '../../../../DataTypes/enums';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { setCurrentContract } from './ContractSlice';
-import { setAllContracts } from './AllContractsSlice';
+import { setAllContracts, setContractsLoading } from './AllContractsSlice';
 import { addNewDeployedContract, setMyContract } from './MyContractSlice';
 import Request from '../../../../Backend/axiosCall/apiCall';
 
@@ -43,6 +43,8 @@ export const fetchAllContracts = createAsyncThunk(
     "contracts/getAllContracts",
     async (_, { rejectWithValue, dispatch }) => {
         try {
+            dispatch(setContractsLoading());
+            
             const response = await Request({
                 url: "getAllContracts",
                 method: ApiEndpoint.getAllContracts.method,

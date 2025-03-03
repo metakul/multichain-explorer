@@ -1,12 +1,14 @@
 import { Typography } from '@mui/material';
-import GasPriceChart from '../Charts/GasPriceChart';
+import GasPriceChart, { GasPricePoint } from '../Charts/GasPriceChart';
+import TotalTrxChart, { TrxChartInfo } from '../Charts/TotalTrxChart';
 import Box from '../UI/Box';
 
 interface ChartGridProps {
-    gasPriceData: { time: string; price: number }[];
+    gasPriceData:GasPricePoint[];
+    dailyTrxData:TrxChartInfo[]
 }
 
-function ChartGrid({ gasPriceData }: ChartGridProps) {
+function ChartGrid({ gasPriceData,dailyTrxData }: ChartGridProps) {
     return (
         <Box sx={{
             display:"flex",
@@ -16,7 +18,6 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
             px: 1,
             mt: 2,
             width: "100%",
-            maxWidth: "768px",
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         }}>
@@ -29,7 +30,7 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
                 <GasPriceChart gasPriceData={gasPriceData} />
                 {/* <GasPriceChart gasPriceData={gasPriceData} /> */}
                 {/* <GasPriceChart gasPriceData={gasPriceData} /> */}
-                <GasPriceChart gasPriceData={gasPriceData} />
+                <TotalTrxChart dailyTrxData={dailyTrxData} />
             </Box>
             <Typography variant='h6' sx={{
                  textDecoration: "underline",

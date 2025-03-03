@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllContracts, selectContractsLoading, setContractsLoading } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice";
+import { selectAllContracts, selectContractsLoading } from "../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
 import { fetchAllContracts } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { AppDispatch } from "../../../../redux/store";
@@ -18,12 +18,15 @@ const ContractsGrid: React.FC = () => {
     const contractsByCategory = useSelector(selectAllContracts);
     const isLoading = useSelector(selectContractsLoading);
     const navigate = useNavigate();
-    const { networkName } = useRpc();
+    const { networkName,rpcUrl } = useRpc();
 
     useEffect(() => {
-        (dispatch as AppDispatch)(setContractsLoading());
-        (dispatch as AppDispatch)(fetchAllContracts());
-    }, []);
+        // Check if contractsByCategory is already populated
+        if (Object.keys(contractsByCategory).length === 0) {
+            // Only fetch contracts if they haven't been fetched yet
+            (dispatch as AppDispatch)(fetchAllContracts());
+        }
+    }, [rpcUrl, contractsByCategory, dispatch]);
 
     const navigateUser = (contract: { contractName: string }) => {
         const path = `${PROJECTS.SINGLE_CONTRACT.replace(':contractName', contract.contractName)}/${networkName}`;

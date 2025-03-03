@@ -1,6 +1,7 @@
 import { useTheme } from '@mui/material/styles';
 import Search from '../../Search/search';
 import Box from '../../UI/Box';
+import { getColors } from '../../../layout/Theme/themes';
 
 export default function TopCard() {
     const theme = useTheme();
@@ -14,7 +15,7 @@ export default function TopCard() {
                 gap: "16px",
                 py: "2px",
                 borderRadius: "16px",
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                boxShadow: `0 8px 24px ${getColors().grey[800]}`,
                 width: "100%",
                 margin: "0 auto",
                 position: "relative",

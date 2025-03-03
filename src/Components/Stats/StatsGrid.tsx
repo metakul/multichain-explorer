@@ -1,5 +1,5 @@
 import StatCard from '../Cards/StatsCard';
-import { Grid2, Typography, useMediaQuery } from '@mui/material';
+import { Grid2, Typography } from '@mui/material';
 import Box from '../UI/Box';
 import { getColors } from '../../layout/Theme/themes';
 
@@ -10,7 +10,7 @@ interface StatsGridProps {
 }
 
 function StatsGrid({ stats, loading }: StatsGridProps) {
-    const showCard = useMediaQuery("(min-width: 1600px)");
+    // const showCard = useMediaQuery("(min-width: 1600px)");
 
     return (
         <Box sx={{
@@ -43,18 +43,23 @@ function StatsGrid({ stats, loading }: StatsGridProps) {
             </Grid2>
         </Grid2>
 
-        {showCard && 
+        {/* {showCard &&  */}
+        <Box sx={{
+            px:4
+        }}>
+
         <Box sx={{
             width:"100%",
             height:"80px",
-            mt:4,
+            mt:2,
             background:getColors().redAccent[800]
         }}>
            <Typography>
                 This is a test for ads
            </Typography>
         </Box>
-        }
+        {/* } */}
+        </Box>
         </Box>
 
 

@@ -47,11 +47,7 @@ const blocksSlice = createSlice({
     name: 'blocks',
     initialState,
     reducers: {
-        setBlocks: (state, action: PayloadAction<Block[]>) => {
-            state.loading = false;
-            state.blocks = action.payload;
-            state.error = null;
-        },
+  
         addNewBlock: (state, action: PayloadAction<Block>) => {
             const newBlock = action.payload;
             // Check if a block with the same hash or number already exists
@@ -130,12 +126,19 @@ const blocksSlice = createSlice({
                 error,
             };
         },
+        resetState: (state) => {
+            state.blocks = initialState.blocks;
+            state.currentPage = initialState.currentPage;
+            state.totalNewTrxCount = initialState.totalNewTrxCount;
+            state.loading = initialState.loading;
+            state.error = initialState.error;
+        },
     },
 });
 
-export const { setBlocks,addNewBlock,setNewTrxCount, clearTrxCount,setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
+export const { addNewBlock,setNewTrxCount, clearTrxCount,setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
     setTransactionsSuccess,
-    setTransactionsError, } = blocksSlice.actions;
+    setTransactionsError,resetState, } = blocksSlice.actions;
 
 export default blocksSlice.reducer;
 

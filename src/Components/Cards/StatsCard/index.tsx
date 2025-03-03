@@ -9,8 +9,14 @@ const StatCard = ({ label, value, loading }: { label: string; value: string | nu
     <Card sx={{
         backgroundColor: getColors().primary[900],
         borderColor: getColors().primary[100],
-        width: "140px",
-        height:"60px",
+        width:{
+            xs: "120px",
+            md: "160px",
+        },
+        height:{
+            xs: "60px",
+            md: "60px",
+        },
         m:0.5
     }}> 
         <Flex>
