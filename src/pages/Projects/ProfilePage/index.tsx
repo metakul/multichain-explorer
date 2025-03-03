@@ -1,10 +1,10 @@
 import MyContracts from "./MyContracts";
-import ConnectWalletButton from "../../../../Components/Buttons/ConnectWalletButton";
-import { useRpc } from "../../../../contexts/RpcProviderContext";
-import Text from "../../../../Components/UI/Text";
-import Box from "../../../../Components/UI/Box";
-import Container from "../../../../Components/UI/Container";
-import { useWalletBalance } from "../../../../contexts/UseWalletBalance";
+import ConnectWalletButton from "../../../Components/Buttons/ConnectWalletButton";
+import { useRpc } from "../../../contexts/RpcProviderContext";
+import Text from "../../../Components/UI/Text";
+import Box from "../../../Components/UI/Box";
+import Container from "../../../Components/UI/Container";
+import { useWalletBalance } from "../../../contexts/UseWalletBalance";
 
 function Web3ProfilePage() {
 

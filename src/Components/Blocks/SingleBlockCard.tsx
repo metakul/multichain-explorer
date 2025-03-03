@@ -37,8 +37,8 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
 
     // Trigger animation when the block is new
     useEffect(() => {
-        setIsVisible(true);
         if (showTrx && block?.number) {
+            setIsVisible(true);
             dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
         }
     }, []);
@@ -120,7 +120,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                     {/* Total Transactions */}
                     <InfoCard
                         label="Total Trx"
-                        value={block && block.number && block?.transactionsCount || block &&  block.number && transactions?.length }
+                        value={block && block.number && block?.transactionsCount || block &&  block.number && transactions?.length || "0" }
                         loading={loading}
                         navigateTo={naviagteToBlockWithTrx}
                         icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}

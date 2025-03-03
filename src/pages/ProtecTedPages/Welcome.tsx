@@ -7,7 +7,7 @@ import { /*selectUser,*/ selectUserType } from '../../redux/slices/authSlice';
 import CustomHeading from '../../Components/UI/Typogrpahy/Text/Heading'
 import { Link } from 'react-router-dom'
 import { Pages } from '../../DataTypes/enums'
-import VerificationData from '../Projects/Blockchain/ProfilePage/MyContracts'
+import VerificationData from '../Projects/ProfilePage/MyContracts'
 import Container from '../../Components/UI/Container'
 import Button from '../../Components/UI/Button'
 const ProtectedPage: React.FC<ProtectedPageProps> = (props) => {

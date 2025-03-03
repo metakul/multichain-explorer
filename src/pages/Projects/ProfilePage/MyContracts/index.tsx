@@ -1,25 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
-import { VerificationProps } from '../../../../../interfaces/CompInterfaces';
-import CustomHeading from '../../../../../Components/UI/Typogrpahy/Text/Heading';
-import Grid from '../../../../../Components/UI/Grid';
+import { VerificationProps } from '../../../../interfaces/CompInterfaces';
+import CustomHeading from '../../../../Components/UI/Typogrpahy/Text/Heading';
+import Grid from '../../../../Components/UI/Grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContractsLoading, selectMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
-import { AppDispatch } from '../../../../../redux/store';
-import { getMyContracts } from '../../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
-import ContractInfoCard from '../../../../../Components/Cards/ContractCard/ContractInfoCard';
+import { selectMyContracts } from '../../../../redux/slices/BackendSlices/Blockchain/MyContractSlice';
+import { AppDispatch } from '../../../../redux/store';
+import { getMyContracts } from '../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice';
+import ContractInfoCard from '../../../../Components/Cards/ContractCard/ContractInfoCard';
 import { useNavigate } from 'react-router-dom';
-import { ContractType, PROJECTS } from '../../../../../DataTypes/enums';
-import { useRpc } from '../../../../../contexts/RpcProviderContext';
-import Container from '../../../../../Components/UI/Container';
-import Box from '../../../../../Components/UI/Box';
-import Text from '../../../../../Components/UI/Text';
+import { ContractType, PROJECTS } from '../../../../DataTypes/enums';
+import { useRpc } from '../../../../contexts/RpcProviderContext';
+import Container from '../../../../Components/UI/Container';
+import Box from '../../../../Components/UI/Box';
+import Text from '../../../../Components/UI/Text';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
 
   const myContracts = useSelector(selectMyContracts)
-  const myContractsLoading = useSelector(selectContractsLoading)
-  console.log(myContractsLoading);
+  // const myContractsLoading = useSelector(selectContractsLoading)
   
   const dispatch = useDispatch()
   const navigate = useNavigate();

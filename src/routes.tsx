@@ -4,7 +4,7 @@ import { useRoutes } from "react-router-dom";
 import { ContractType, EXPLORER_PAGE, Pages, PROJECTS } from "./DataTypes/enums";
 import DashboardOutlet from "./layout/layout";
 import SingleContractPage from "./pages/Projects/Blockchain/[contracts]/SingleContractInfo";
-import Web3ProfilePage from "./pages/Projects/Blockchain/ProfilePage";
+import Web3ProfilePage from "./pages/Projects/ProfilePage";
 import ContractHomePage from "./pages/Projects/Blockchain/HomePage/HomePage";
 import Dashboard from "./pages/Dashbaord";
 import Explorer from "./pages/Projects/Explorer";
