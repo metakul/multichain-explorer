@@ -37,11 +37,11 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
 
     // Trigger animation when the block is new
     useEffect(() => {
+        setIsVisible(true);
         if (showTrx && block?.number) {
-            setIsVisible(true);
             dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
         }
-    }, []);
+    }, [dispatch,block]);
 
     /**
      * Calculates the gas usage percentage.
