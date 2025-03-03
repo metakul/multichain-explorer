@@ -108,7 +108,7 @@ export const getMyContracts = createAsyncThunk(
 export const saveNewContract = createAsyncThunk(
     'contracts/saveNew',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async ({ contractName, deployedAddress, walletAddress }:any, { rejectWithValue, dispatch }) => {
+    async ({ contractName, deployedAddress, walletAddress,networkName }:any, { rejectWithValue, dispatch }) => {
         try {
 
             console.log(contractName, deployedAddress, walletAddress);
@@ -120,7 +120,8 @@ export const saveNewContract = createAsyncThunk(
                 data:{
                     contractName,
                     deployedAddress,
-                    walletAddress
+                    walletAddress,
+                    networkName
                 },
                 headers: ApiEndpoint.saveContract.headers,
             });

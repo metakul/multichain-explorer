@@ -28,7 +28,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   // const contractError = useSelector(selectSingleContractError);
   const isNonMobile = useMediaQuery("(min-width: 766px)");
 
-  const { walletAddress } = useRpc();
+  const { walletAddress,networkName } = useRpc();
 
   // Fetch the single contract when the component mounts
   useEffect(() => {
@@ -75,7 +75,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
         // Wait for the deployment to finish and get the address
         await deployedContract.getAddress().then((deployedAddress) => {
           // Dispatch the action with the resolved contract address
-          dispatch(saveNewContract({ contractName, deployedAddress, walletAddress }));
+          dispatch(saveNewContract({ contractName, deployedAddress, walletAddress, networkName }));
         })
       }
     } catch (error) {
