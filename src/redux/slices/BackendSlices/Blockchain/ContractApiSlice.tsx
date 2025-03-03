@@ -74,12 +74,12 @@ export const fetchAllContracts = createAsyncThunk(
 
 export const getMyContracts = createAsyncThunk(
     'contracts/getMyContracts',
-    async (walletAddress:any, { rejectWithValue, dispatch }) => {
+    async ({walletAddress,networkName}:any, { rejectWithValue, dispatch }) => {
         try {
           
             const response = await Request({
                 url: `getMyContracts`,
-                slug: `?walletAddress=${walletAddress}`,
+                slug: `?walletAddress=${walletAddress}&networkName=${networkName}`,
                 method: ApiEndpoint.getMyContracts.method,
                 headers: ApiEndpoint.getMyContracts.headers,
                 data: {walletAddress},

@@ -26,7 +26,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const { walletAddress, rpcUrl, networkName } = useRpc()
 
   useEffect(() => {
-    walletAddress && (dispatch as AppDispatch)(getMyContracts(walletAddress));
+    walletAddress && (dispatch as AppDispatch)(getMyContracts({walletAddress,networkName}));
   }, [dispatch, rpcUrl, walletAddress]);
 
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
@@ -61,7 +61,7 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />
+              {contract && contract.contractName && <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />}
             </Box>
           ))
         ) : (
