@@ -10,6 +10,7 @@ import Text from '../UI/Text';
 import { useMediaQuery } from '@mui/material';
 import ChartGrid from './ChartGrid';
 import StatsGrid from './StatsGrid';
+import { getColors } from '../../layout/Theme/themes';
 
 interface GasPricePoint {
     time: string;
@@ -81,6 +82,7 @@ function ExplorerStats() {
 
             }}
         >
+            <Box>
             <Text
                 sx={{
                     fontSize: { xs: "16px", sm: "20px", md: "24px" },
@@ -88,9 +90,20 @@ function ExplorerStats() {
                     marginBottom: "16px",
                     textAlign: "center"
                 }}
-            >
+                >
                 Explorer Stats Info
             </Text>
+            <Box sx={{
+            width:"100%",
+            height:"80px",
+            mt:4,
+            background:getColors().redAccent[800]
+        }}>
+           <Text>
+                This is a test for ads
+           </Text>
+        </Box>
+                </Box>
             {/* Stats Section */}
 
             <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />

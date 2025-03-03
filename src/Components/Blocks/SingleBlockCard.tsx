@@ -10,7 +10,7 @@ import InfoCard from '../Cards/BlockInfoCard';
 import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTransactionsErrorForBlock, selectTransactionsForBlock, selectTransactionsLoadingForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { selectTransactionsForBlock, selectTransactionsLoadingForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import Text from '../UI/Text';
 import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
@@ -31,8 +31,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
     const loadMoreTransactions = () => {
         setVisibleTransactions((prev) => prev + 5);
     };
-    const error = block && useSelector(selectTransactionsErrorForBlock(block.number));
-
     const transactions = block && useSelector(selectTransactionsForBlock(block.number));
     const selectLoadingForBlock = block && useSelector(selectTransactionsLoadingForBlock(block.number));
 
@@ -108,7 +106,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         fontSize="16px"
                         fontWeight="bold"
                         navigateTo={naviagteToBlock}
-                        error={error}
                     />
 
                     {/* Gas Used with Progress Bar */}
@@ -119,7 +116,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         icon={<ContentPasteGoSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
                         progressValue={calculateGasUsagePercentage(block?.gasUsed, block?.gasLimit)}
                         showProgressBar
-                        error={error}
                     />
 
                     {/* Total Transactions */}
@@ -129,7 +125,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         loading={loading}
                         navigateTo={naviagteToBlockWithTrx}
                         icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}
-                        error={error}
                     />
 
                     {/* Miner */}
@@ -139,7 +134,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         loading={loading}
                         navigateTo={navigateToMiner}
                         icon={<MinorCrashRounded width={16} height={16} fill={getColors().blueAccent[400]} />}
-                        error={error}
                     />
 
                     {/* Timestamp */}
@@ -148,8 +142,6 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                         value={block?.timestamp ? getRelativeTime(block.timestamp) : 'N/A'}
                         loading={loading}
                         icon={<PunchClock width={16} height={16} fill={getColors().blueAccent[400]} />}
-                        error={error}
-
                     />
                 </Box>
                 {showTrx &&
