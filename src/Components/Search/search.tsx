@@ -54,7 +54,8 @@ export default function Search() {
         }
 
         if (type === "address") {
-
+            //todo getContractsName by address
+            // navigateToContract(navigate,searchInput,"ERC20",networkName)
             navigateToAddress(navigate, searchInput, networkName);
             return;
         }

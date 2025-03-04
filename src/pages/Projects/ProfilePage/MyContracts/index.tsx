@@ -13,9 +13,12 @@ import { useRpc } from '../../../../contexts/RpcProviderContext';
 import Container from '../../../../Components/UI/Container';
 import Box from '../../../../Components/UI/Box';
 import Text from '../../../../Components/UI/Text';
+import { selectContractsLoading } from '../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice';
+import Skeleton from '@mui/material/Skeleton';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
   const myContracts = useSelector(selectMyContracts);
+  const isContractsLoading = useSelector(selectContractsLoading);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { walletAddress, rpcUrl, networkName } = useRpc();
@@ -29,12 +32,11 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
     const path = PROJECTS.DEPLOYED_CONTRACT
       .replace(':contractName', contract.contractName)
-      .replace(':deployedAddress', contract.deployedAddress); // Include deployedAddress in the URL
+      .replace(':deployedAddress', contract.deployedAddress);
 
-    navigate(`${path}/${networkName}`);
+      navigate(`${path}/${networkName}`);
   };
 
-  // Filter contracts based on the networkName
   const filteredContracts = myContracts.filter(
     (contract: any) => contract.networkName === networkName
   );
@@ -46,14 +48,15 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
         container
         spacing={3}
         sx={{
-          gridTemplateColumns: 'repeat(3, 1fr)', 
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gridTemplateRows: 'repeat(3, 164px)',
           width: 'auto',
           gap: '16px',
         }}
       >
-        {filteredContracts && filteredContracts.length > 0 ? (
-          filteredContracts.map((contract: any, index: any) => (
+        {isContractsLoading ? (
+          // Show skeletons while loading
+          Array.from({ length: 6 }).map((_, index) => (
             <Box
               key={index}
               style={{
@@ -62,19 +65,41 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              {contract && contract.contractName && (
-                <ContractInfoCard
-                  contractType={ContractType.Deploy}
-                  buttonText="Inspect"
-                  handleButtonClick={() => navigateUser(contract)}
-                  contractInfo={contract}
-                  cardType={"multiple"}
-                />
-              )}
+              <Skeleton width="40%" height={20} sx={{ mt: 3 }} />
+              <Skeleton variant="rectangular" width="80px" height={40} sx={{
+                borderRadius: "4px",
+                marginTop: "16px",
+              }} />
             </Box>
           ))
         ) : (
-          <Text>No contracts available.</Text>
+          // Show actual contracts
+          <>
+            {filteredContracts && filteredContracts.length > 0 ? (
+              filteredContracts.map((contract: any, index: number) => (
+                <Box
+                  key={index}
+                  style={{
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    padding: "16px",
+                  }}
+                >
+                  {contract?.contractName && (
+                    <ContractInfoCard
+                      contractType={ContractType.Deploy}
+                      buttonText="Inspect"
+                      handleButtonClick={() => navigateUser(contract)}
+                      contractInfo={contract}
+                      cardType="multiple"
+                    />
+                  )}
+                </Box>
+              ))
+            ) : (
+              <Text>No contracts available.</Text>
+            )}
+          </>
         )}
       </Grid>
     </Container>

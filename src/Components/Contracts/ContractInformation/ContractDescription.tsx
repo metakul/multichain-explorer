@@ -15,7 +15,7 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName,
   const [description, setDescription] = useState<string | null>(null);
 
   useEffect(() => {
-    setDescription(descriptions[contractName] || "No description available.");
+    setDescription(descriptions[contractName]);
   }, [contractName]);
 
   return (

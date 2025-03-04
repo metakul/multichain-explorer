@@ -19,7 +19,7 @@ import ContractFunctions from "../../../../Components/Contracts/ContractInformat
 import { useMediaQuery } from "@mui/material";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
-  const { contractName, deployedAddress } = useParams<{ contractName: string, deployedAddress?: string }>();
+  const { contractName, deployedAddress } = useParams<{ deployedAddress: string, contractName?: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const contract = useSelector(selectContractDetails);
   // const contractLoading = useSelector(selectSingleContractLoading);
@@ -119,7 +119,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
             />
             <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
           </>
-        )},
+        )}
       </>,
       label: "Explorer",
     },

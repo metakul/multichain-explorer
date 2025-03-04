@@ -25,6 +25,9 @@ const contractsSlice = createSlice({
             state.contracts = action.payload;
             state.error = null;
         },
+        setMyContractsLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
         addNewDeployedContract: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.contracts.push(action.payload);
@@ -33,7 +36,7 @@ const contractsSlice = createSlice({
     },
 });
 
-export const { setMyContract, addNewDeployedContract } = contractsSlice.actions;
+export const { setMyContract, addNewDeployedContract, setMyContractsLoading } = contractsSlice.actions;
 
 export default contractsSlice.reducer;
 

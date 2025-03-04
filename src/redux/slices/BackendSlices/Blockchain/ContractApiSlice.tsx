@@ -5,7 +5,7 @@ import { ApiEndpoint } from '../../../../DataTypes/enums';
 import { ErrorType } from '../../../../DataTypes/errors';
 import { setCurrentContract } from './ContractSlice';
 import { setAllContracts, setContractsLoading } from './AllContractsSlice';
-import { addNewDeployedContract, setMyContract } from './MyContractSlice';
+import { addNewDeployedContract, setMyContract, setMyContractsLoading } from './MyContractSlice';
 import Request from '../../../../Backend/axiosCall/apiCall';
 
 // Async thunk to fetch contract by name
@@ -77,6 +77,8 @@ export const getMyContracts = createAsyncThunk(
     async ({walletAddress,networkName}:any, { rejectWithValue, dispatch }) => {
         try {
           
+            dispatch(setMyContractsLoading(true))
+
             const response = await Request({
                 url: `getMyContracts`,
                 slug: `?walletAddress=${walletAddress}&networkName=${networkName}`,
@@ -94,10 +96,12 @@ export const getMyContracts = createAsyncThunk(
             };
 
             dispatch(setMyContract(contractList))
-            
+            dispatch(setMyContractsLoading(false))
 
             return apiSuccess.data; // Returning contract list data
         } catch (error) {
+            dispatch(setMyContractsLoading(false))
+
             const castedError = error as ApiError;
             return rejectWithValue(castedError?.error === "string" ? castedError?.error : ErrorType.UNKNOWN_ERROR);
         }

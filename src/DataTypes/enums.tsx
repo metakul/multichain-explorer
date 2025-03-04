@@ -22,7 +22,7 @@ export enum PROJECTS {
   CONTRACTS_HOME = '/web3/contracts',
   SINGLE_CONTRACT = '/web3/contract/:contractName',
   WEB3_PROFILE = '/web3/profile',
-  DEPLOYED_CONTRACT = '/web3/contract/:contractName/:deployedAddress',
+  DEPLOYED_CONTRACT = '/web3/contract/:deployedAddress/:contractName',
 }
 
 export enum EXPLORER_PAGE {
