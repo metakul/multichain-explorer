@@ -1,5 +1,5 @@
 {
-    "MyToken": "The Token contract is suited for creating a digital currency and is compliant with the ERC20 standard. It can be purchased and traded between users on an exchange, utilized to buy and sell NFTs in a marketplace, etc. Unlike the Token Drop contract, the Token contract does not allow users to claim tokens under the criteria of claim conditions",
+    "ERC20": "The Token contract is suited for creating a digital currency and is compliant with the ERC20 standard. It can be purchased and traded between users on an exchange, utilized to buy and sell NFTs in a marketplace, etc. Unlike the Token Drop contract, the Token contract does not allow users to claim tokens under the criteria of claim conditions",
     "StakingContract": "This contract handles ERC20 Staking .",
     "Governance": "A smart contract that manages voting and governance proposals."
   }

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Request from "../../../../../../Backend/axiosCall/apiCall";
 import { ApiError, Block } from "../../../../../../interfaces/interface";
 import { ApiEndpoint } from "../../../../../../DataTypes/enums";
-import { addNewBlock, setBlocksInFrames, setBlocksInFramesLoading, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
+import { addNewBlock, setBlocksInFrames, setBlocksInFramesLoading, setBlockTrxCount, setTransactionsError, setTransactionsLoading, setTransactionsSuccess } from "./BlocksWithFrameSlice";
 
 
 export const fetchBlockInfo = createAsyncThunk(
@@ -81,6 +81,34 @@ export const getBlockWithTrx = createAsyncThunk(
             const transactions = Object.values(response);
             // Dispatch success action with the fetched transactions
             dispatch(setTransactionsSuccess({ blockNo, transactions }));
+        } catch (error) {
+            const castedError = error as ApiError;
+            // Dispatch error state for the specific block
+            dispatch(setTransactionsError({ blockNo, error: castedError.error || "Failed to fetch transactions" }));
+            return rejectWithValue(castedError.error || "Failed to fetch transactions");
+        }
+    }
+);
+export const getTransactionCountInBlock = createAsyncThunk(
+    'blocks/getBlockWithTrx',
+    async ({ blockNo, rpcUrl }: { blockNo: string; rpcUrl: string }, { dispatch, rejectWithValue }) => {
+        try {
+            // Dispatch loading state for the specific block
+            dispatch(setTransactionsLoading(blockNo));
+
+            // Make the API call to fetch transactions
+            const response = await Request({
+                url: "getTransactionCountInBlock",
+                method: ApiEndpoint.getBlockWithTrx.method,
+                data: {
+                    rpcUrl: rpcUrl
+                },
+                slug: `/${blockNo}`
+            });
+            
+            const transactionsCount = response.transactionCount
+            // Dispatch success action with the fetched transactions
+            dispatch(setBlockTrxCount({ blockNo, transactionsCount }));
         } catch (error) {
             const castedError = error as ApiError;
             // Dispatch error state for the specific block

@@ -8,9 +8,19 @@ import { useWalletBalance } from "../../../contexts/UseWalletBalance";
 
 function Web3ProfilePage() {
 
-  const { connected } = useRpc();
+  const { connected, networkName } = useRpc();
   const {userBalance,isLoading}=useWalletBalance() 
   const { walletAddress } = useRpc()
+  const formatWalletAddress = (address: string): string => {
+    if (!address || address.length < 10) return address;  // In case address is too short to format
+    return `${address.slice(0, 5)}...${address.slice(-5)}`;
+  };
+  
+  const formatedBalance = (balance: string): string => {
+    if (!balance || balance.length < 10) return balance;  // In case address is too short to format
+    return `${balance.slice(0, 6)}`;
+  };
+  
   return (
     <Container sx={{
       mt:8
@@ -28,34 +38,23 @@ function Web3ProfilePage() {
             <Box sx={{
               border: "1px solid black",
               borderRadius: "8px",
-              p:4,
-              width: "80%",
+              p:2,
             }}>
               <Text sx={{
                 textAlign: "center",
-                fontSize: "1.3rem"
+                fontSize: "1.1rem"
               }}>
-                Welcome<br/>{walletAddress}
+                Welcome: {walletAddress && formatWalletAddress(walletAddress)}
               </Text>
-            </Box>
-            <Box sx={{
-              border: "1px solid black",
-              borderRadius: "8px",
-              width: "80%",
-              position: "relative",
-              bottom:24,
-              py:4,
+            <Text sx={{
+              textAlign: "center",
             }}>
-              <Text sx={{
-                textAlign: "center",
-                fontSize: "1.3rem"
-              }}>
-                {/* // todo get balance based on wallet address and chainId */}
-                  Total Balance: {isLoading ? "Loading Balance" : userBalance} 
-              </Text>
+              {/* // todo get balance based on wallet address and chainId */}
+                Total Balance: {isLoading ? "Loading Balance" : userBalance && formatedBalance(userBalance)} {networkName}
+            </Text>
             </Box>
           </Box>
-          <MyContracts pageTitle="" userType="Owner" />
+          <MyContracts pageTitle="My Contracts" userType="Owner" />
         </div>
       )}
     </Container>

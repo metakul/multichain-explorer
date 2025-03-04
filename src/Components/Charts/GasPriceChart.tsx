@@ -1,13 +1,15 @@
 import { useMediaQuery } from '@mui/material';
 import React from 'react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Text from '../UI/Text';
 import { getColors } from '../../layout/Theme/themes';
 import Box from '../UI/Box';
 
 export interface GasPricePoint {
     time: string;
-    price: number;
+    slowGasPrice: number;
+    averageGasPrice: number;
+    fastGasPrice: number;
 }
 
 interface Props {
@@ -57,7 +59,7 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                 </Box>
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
+                    <AreaChart
                         data={gasPriceData}
                         margin={{ top: 20, right: 4, left: 0, bottom: 2 }}
                     >
@@ -65,15 +67,31 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                         <XAxis dataKey="time" />
                         <YAxis />
                         <Tooltip contentStyle={{
-                            background:getColors().primary[900]
+                            background: getColors().primary[900]
                         }} />
                         <Legend />
-                        <Line
+                        <Area
                             type="monotone"
-                            dataKey="price"
+                            dataKey="slowGasPrice"
+                            stackId="1"
                             stroke={getColors().blueAccent[100]}
+                            fill={getColors().blueAccent[100]}
                         />
-                    </LineChart>
+                        <Area
+                            type="monotone"
+                            dataKey="averageGasPrice"
+                            stackId="1"
+                            stroke={getColors().greenAccent[100]}
+                            fill={getColors().greenAccent[100]}
+                        />
+                        <Area
+                            type="monotone"
+                            dataKey="fastGasPrice"
+                            stackId="1"
+                            stroke={getColors().redAccent[100]}
+                            fill={getColors().redAccent[100]}
+                        />
+                    </AreaChart>
                 </ResponsiveContainer>
             )}
         </Box>

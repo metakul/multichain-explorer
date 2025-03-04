@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { VerificationProps } from '../../../../interfaces/CompInterfaces';
 import CustomHeading from '../../../../Components/UI/Typogrpahy/Text/Heading';
@@ -16,42 +15,45 @@ import Box from '../../../../Components/UI/Box';
 import Text from '../../../../Components/UI/Text';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
-
-  const myContracts = useSelector(selectMyContracts)
-  // const myContractsLoading = useSelector(selectContractsLoading)
-  
-  const dispatch = useDispatch()
+  const myContracts = useSelector(selectMyContracts);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { walletAddress, rpcUrl, networkName } = useRpc()
+  const { walletAddress, rpcUrl, networkName } = useRpc();
 
   useEffect(() => {
-    walletAddress && (dispatch as AppDispatch)(getMyContracts({walletAddress,networkName}));
-  }, [dispatch, rpcUrl, walletAddress]);
+    if (walletAddress) {
+      dispatch(getMyContracts({ walletAddress, networkName }));
+    }
+  }, [dispatch, rpcUrl, walletAddress, networkName]);
 
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
-    // Replace :contractName in the path with the actual contract name
     const path = PROJECTS.DEPLOYED_CONTRACT
       .replace(':contractName', contract.contractName)
       .replace(':deployedAddress', contract.deployedAddress); // Include deployedAddress in the URL
 
     navigate(`${path}/${networkName}`);
   };
+
+  // Filter contracts based on the networkName
+  const filteredContracts = myContracts.filter(
+    (contract: any) => contract.networkName === networkName
+  );
+
   return (
-    <Container style={{
-    }}>
+    <Container>
       <CustomHeading placeholder={props.pageTitle} />
       <Grid
         container
-        spacing={3}  // Spacing between items (MUI uses a spacing scale)
+        spacing={3}
         sx={{
-          gridTemplateColumns: 'repeat(3, 1fr)',  // Custom columns (3 columns)
-          gridTemplateRows: 'repeat(3, 164px)',  // Custom rows (3 rows, each 164px)
-          width: 'auto',  // Auto width
-          gap: '16px',  // Custom gap between items
+          gridTemplateColumns: 'repeat(3, 1fr)', 
+          gridTemplateRows: 'repeat(3, 164px)',
+          width: 'auto',
+          gap: '16px',
         }}
       >
-        {myContracts && myContracts.length > 0 ? (
-          myContracts.map((contract: any, index: any) => (
+        {filteredContracts && filteredContracts.length > 0 ? (
+          filteredContracts.map((contract: any, index: any) => (
             <Box
               key={index}
               style={{
@@ -60,7 +62,15 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
                 padding: "16px",
               }}
             >
-              {contract && contract.contractName && <ContractInfoCard contractType={ContractType.Deploy} buttonText="Inspect" handleButtonClick={() => navigateUser(contract)} contractInfo={contract} cardType={"multiple"} />}
+              {contract && contract.contractName && (
+                <ContractInfoCard
+                  contractType={ContractType.Deploy}
+                  buttonText="Inspect"
+                  handleButtonClick={() => navigateUser(contract)}
+                  contractInfo={contract}
+                  cardType={"multiple"}
+                />
+              )}
             </Box>
           ))
         ) : (

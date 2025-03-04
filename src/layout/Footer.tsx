@@ -67,10 +67,10 @@ const Footer = () => {
             <Box sx={{ mb: 4 }}>
               <Box
                 component="img"
-                src="logo.svg"
+                src="/logo.svg"
                 alt="logo ran away"
                 sx={{
-                  height: 80,
+                  height: 60,
                   mb: 2
                 }}
               />

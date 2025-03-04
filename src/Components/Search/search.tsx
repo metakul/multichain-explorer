@@ -88,7 +88,11 @@ export default function Search() {
                     width: "100px",
                     background: getColors().redAccent[800],
                     borderRadius: "8px",
-                    ml:2
+                    ml:2,
+                    display:{
+                        xs:"none",
+                        md:"block"
+                    }
                 }}>
                     <Text>
                         This is a test for ads

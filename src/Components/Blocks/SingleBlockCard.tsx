@@ -10,9 +10,9 @@ import InfoCard from '../Cards/BlockInfoCard';
 import { ContentPasteGoSharp, ImportContacts, MinorCrashRounded, PunchClock, TableRestaurantSharp } from '@mui/icons-material';
 import { BlockDetailsTab, EXPLORER_PAGE } from '../../DataTypes/enums';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTransactionsForBlock, selectTransactionsLoadingForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import { selectTransactionsForBlock, selectTransactionsLoadingForBlock, selectTrxCountForBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
 import Text from '../UI/Text';
-import { getBlockWithTrx } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { getBlockWithTrx, getTransactionCountInBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
 
 interface SingleBlockInfoProps {
@@ -34,12 +34,15 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
     };
     const transactions = block && useSelector(selectTransactionsForBlock(block.number));
     const selectLoadingForBlock = block && useSelector(selectTransactionsLoadingForBlock(block.number));
-
+    const transactionCount = block && useSelector(selectTrxCountForBlock(block.number));
     // Trigger animation when the block is new
     useEffect(() => {
         setIsVisible(true);
         if (showTrx && block?.number) {
             dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
+        }
+        if( block?.number){
+            dispatch(getTransactionCountInBlock({ blockNo: block?.number, rpcUrl }));
         }
     }, [dispatch,block]);
 
@@ -120,7 +123,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                     {/* Total Transactions */}
                     <InfoCard
                         label="Total Trx"
-                        value={block && block.number && block?.transactionsCount || block &&  block.number && transactions?.length || "0" }
+                        value={transactionCount}
                         loading={loading}
                         navigateTo={naviagteToBlockWithTrx}
                         icon={<TableRestaurantSharp width={16} height={16} fill={getColors().blueAccent[400]} />}

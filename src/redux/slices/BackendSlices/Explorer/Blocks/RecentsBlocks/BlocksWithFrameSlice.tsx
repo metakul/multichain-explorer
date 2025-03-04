@@ -29,7 +29,7 @@ const initialState: BlocksState = {
     ],
     transactionsByBlock: {
         "": {
-            transactions: ["","",""],
+            transactions: [],
             loading: false,
             error: null
         },
@@ -80,6 +80,15 @@ const blocksSlice = createSlice({
             state.blocks = [...uniqueBlocks, ...state.blocks];
             state.error = null;
             state.loading = false;
+        },
+        setBlockTrxCount: (state, action: PayloadAction<{ blockNo: string; transactionsCount: number }>) => {
+            const { blockNo, transactionsCount } = action.payload;
+
+            // Find the block and update its transactionsCount
+            const block = state.blocks.find(block => block.number === blockNo);
+            if (block) {
+                block.transactionsCount = transactionsCount;
+            }
         },
         setBlocksInFramesLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
@@ -138,7 +147,7 @@ const blocksSlice = createSlice({
 
 export const { addNewBlock,setNewTrxCount, clearTrxCount,setBlocksInFrames, setBlocksInFramesLoading, setCurrentPage, setBlocksPerPage, setTransactionsLoading,
     setTransactionsSuccess,
-    setTransactionsError,resetState, } = blocksSlice.actions;
+    setTransactionsError,resetState,setBlockTrxCount } = blocksSlice.actions;
 
 export default blocksSlice.reducer;
 
@@ -173,3 +182,10 @@ export const selectTransactionsErrorForBlock = (blockNo: string) => (state: { re
 // Selector to fetch a specific block by its number
 export const selectBlockByNumber = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) =>
     state.recentBlocksStateInFrames.blocks.find(block => block.number === blockNo);
+
+
+// Selector to fetch trxCount for a specific block by block number
+export const selectTrxCountForBlock = (blockNo: string) => (state: { recentBlocksStateInFrames: BlocksState }) => {
+    const block = state.recentBlocksStateInFrames.blocks.find(block => block.number === blockNo);
+    return block?.transactionsCount ?? 0; // Default to 0 if not found
+};

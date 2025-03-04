@@ -27,12 +27,14 @@ function ExplorerStats() {
     const updateGasPriceChart = (stats: any) => {
         console.log(stats);
 
-        const latestGas = stats?.gasPrices?.average;
+        const latestGas = stats?.gasPrices;
         const dailyTotalTrx = stats?.transactionsToday;
         if (latestGas) {
             const newPoint: GasPricePoint = {
                 time: new Date().toLocaleTimeString(),
-                price: latestGas
+                slowGasPrice: latestGas.slow,
+                averageGasPrice: latestGas.average,
+                fastGasPrice: latestGas.fast
             };
             setGasPriceData((prev) => [...prev, newPoint]); // Keep only last 20 entries
         }
