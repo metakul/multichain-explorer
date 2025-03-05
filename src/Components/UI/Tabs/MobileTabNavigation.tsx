@@ -32,7 +32,7 @@ const MobileTabNavigation: React.FC<MobileTabNavigationProps> = ({ tabs, positio
 
   return (
     <Box   sx={{ display: orientation=="vertical" ? 'flex' : 'block',
-      height:orientation=="vertical" ? "100vh" : "",
+      minHeight:orientation=="vertical" ? "60vh" : "",
      }}
     >
       <Tabs

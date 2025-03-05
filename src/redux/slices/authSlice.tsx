@@ -46,7 +46,6 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('userType');
     },
-    // TODO: Add syncAuthState with autContext
   },
 });
 

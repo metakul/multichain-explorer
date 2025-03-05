@@ -15,6 +15,7 @@ import Box from '../../../../Components/UI/Box';
 import Text from '../../../../Components/UI/Text';
 import { selectContractsLoading } from '../../../../redux/slices/BackendSlices/Blockchain/AllContractsSlice';
 import Skeleton from '@mui/material/Skeleton';
+import { getAddressTransactions } from '../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi';
 
 const MyContracts: React.FC<VerificationProps> = (props) => {
   const myContracts = useSelector(selectMyContracts);
@@ -26,8 +27,9 @@ const MyContracts: React.FC<VerificationProps> = (props) => {
   useEffect(() => {
     if (walletAddress) {
       dispatch(getMyContracts({ walletAddress, networkName }));
+      dispatch(getAddressTransactions({networkName, rpcUrl,address:walletAddress }));
     }
-  }, [dispatch, rpcUrl, walletAddress, networkName]);
+  }, [rpcUrl, walletAddress]);
 
   const navigateUser = (contract: { contractName: string, deployedAddress: string }) => {
     const path = PROJECTS.DEPLOYED_CONTRACT

@@ -5,6 +5,7 @@ import Text from "../../../Components/UI/Text";
 import Box from "../../../Components/UI/Box";
 import Container from "../../../Components/UI/Container";
 import { useWalletBalance } from "../../../contexts/UseWalletBalance";
+import AddressTrx from "../Explorer/Address/AddressTrx";
 
 function Web3ProfilePage() {
 
@@ -49,7 +50,6 @@ function Web3ProfilePage() {
             <Text sx={{
               textAlign: "center",
             }}>
-              {/* // todo get balance based on wallet address and chainId */}
                 Total Balance: {isLoading ? "Loading Balance" : userBalance && formatedBalance(userBalance)} {networkName}
             </Text>
             </Box>
@@ -57,6 +57,8 @@ function Web3ProfilePage() {
           <MyContracts pageTitle="My Contracts" userType="Owner" />
         </div>
       )}
+        <AddressTrx address={walletAddress} /> 
+
     </Container>
   )
 }

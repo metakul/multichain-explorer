@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { getAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
 import { useEffect } from "react";
-import { selectAddressInfoError, selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
+import { selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
 import Text from "../../../../Components/UI/Text";
+import AddressTrx from "./AddressTrx";
 
 function AddressInfoPage() {
     const { address } = useParams<{ address: string }>(); // Retrieve the address parameter
@@ -15,7 +16,6 @@ function AddressInfoPage() {
 
     const addressInfo = useSelector(selectedAddressInfo);
     const loading = useSelector(selectAddressInfoLoading);
-    const error = useSelector(selectAddressInfoError);
 
     useEffect(() => {
         if (address) {
@@ -32,18 +32,7 @@ function AddressInfoPage() {
                 <Text>Balance: {addressInfo?.balance} ethers</Text>
             )}
 
-            <h2>Transactions</h2>
-            <ul>
-                {!error && addressInfo?.transactions && addressInfo.transactions.length > 0 ? (
-                    addressInfo.transactions.map((trx, index) => (
-                        <li key={index}>
-                            Transaction {index + 1}: {trx}
-                        </li>
-                    ))
-                ) : (
-                    <Text>No transactions found</Text>
-                )}
-            </ul>
+            <AddressTrx address={address} /> 
         </div>
     );
 }

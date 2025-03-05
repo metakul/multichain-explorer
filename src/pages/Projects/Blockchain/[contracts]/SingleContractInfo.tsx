@@ -17,6 +17,7 @@ import MobileTabNavigation from "../../../../Components/UI/Tabs/MobileTabNavigat
 import ContractDescription from "../../../../Components/Contracts/ContractInformation/ContractDescription";
 import ContractFunctions from "../../../../Components/Contracts/ContractInformation/ContractFunctions";
 import { useMediaQuery } from "@mui/material";
+import { getAddressTransactions } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
 
 const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   const { contractName, deployedAddress } = useParams<{ deployedAddress: string, contractName?: string }>();
@@ -27,26 +28,27 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
   // const contractError = useSelector(selectSingleContractError);
   const isNonMobile = useMediaQuery("(min-width: 766px)");
 
-  const { walletAddress,networkName } = useRpc();
+  const { walletAddress,networkName,rpcUrl } = useRpc();
 
   // Fetch the single contract when the component mounts
   useEffect(() => {
     if (contractName) {
       dispatch(fetchContractByName(contractName));
+      deployedAddress && dispatch(getAddressTransactions({ networkName,rpcUrl,address:deployedAddress }));
     }
   }, [contractName, dispatch]);
 
-  const renderSolidityCode = (abi: any[]) => {
-    if (!abi) return "No ABI available.";
+  // const renderSolidityCode = (abi: any[]) => {
+  //   if (!abi) return "No ABI available.";
   
-    return abi
-      .filter((item) => item.type === "function")
-      .map(
-        (fn) =>
-          `function ${fn.name}(${fn.inputs.map((i: { type: any; name: any; }) => `${i.type} ${i.name}`).join(", ")}) external ${fn.stateMutability !== "nonpayable" ? fn.stateMutability : ""};`
-      )
-      .join("\n");
-  };
+  //   return abi
+  //     .filter((item) => item.type === "function")
+  //     .map(
+  //       (fn) =>
+  //         `function ${fn.name}(${fn.inputs.map((i: { type: any; name: any; }) => `${i.type} ${i.name}`).join(", ")}) external ${fn.stateMutability !== "nonpayable" ? fn.stateMutability : ""};`
+  //     )
+  //     .join("\n");
+  // };
   
   // Handle loading or error cases
   if (!contract) {
@@ -97,7 +99,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     },
     {
       value: (
-        props.contractType == ContractType.Deploy ? "Deploy" : "Explorer"
+        props.contractType == ContractType.Deploy ? "Deploy" : "Interact"
       ),
       content: <>
         {props.contractType == ContractType.Deploy ? (
@@ -121,7 +123,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
           </>
         )}
       </>,
-      label: "Explorer",
+      label: "Interact",
     },
     {
       value: (
@@ -131,33 +133,33 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
       ,
       label: "OverView",
     },
-    {
-      value: "Interface",
-      content: (
-        <Box sx={{
-          maxWidth:"80vw"
-        }}>
-          <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
-            {renderSolidityCode(contract.abi)}
-          </Text>
-        </Box>
-      ),
-      label: "Interface",
-    },
-    {
-      value: "Transactions",
-      content: (
-        <Box
-        sx={{
-          maxWidth:"80vw"
-        }}>
-          <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
-            {renderSolidityCode(contract.abi)}
-          </Text>
-        </Box>
-      ),
-      label: "Interface",
-    },
+    // {
+    //   value: "Interface",
+    //   content: (
+    //     <Box sx={{
+    //       maxWidth:"80vw"
+    //     }}>
+    //       <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
+    //         {renderSolidityCode(contract.abi)}
+    //       </Text>
+    //     </Box>
+    //   ),
+    //   label: "Interface",
+    // },
+    // {
+    //   value: "Transactions",
+    //   content: (
+    //     <Box
+    //     sx={{
+    //       maxWidth:"80vw"
+    //     }}>
+    //       <Text style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}>
+    //         {renderSolidityCode(contract.abi)}
+    //       </Text>
+    //     </Box>
+    //   ),
+    //   label: "Interface",
+    // },
   ];
   
   return (

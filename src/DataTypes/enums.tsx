@@ -70,6 +70,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   fetchSingleTrx: { url: `${backendUrl}/transaction`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
   
   getAddressInfo: { url: `${backendUrl}/address`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  getAddressTransactions: { url: `${backendUrl}/getAddressTransactions`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
   
   fetchBlockInfo: { url: `${backendUrl}/block`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
   

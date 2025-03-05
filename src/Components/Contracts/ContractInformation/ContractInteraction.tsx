@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { getColors } from "../../../layout/Theme/themes";
 
 interface ContractInteractionProps {
     selectedFunction: any;
@@ -9,13 +10,19 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
     if (!selectedFunction) return null;
 
     return (
-        <Box flex={1} p={3} border={1} borderRadius={2}>
+        <Box flex={1} p={3} border={1} borderRadius={2} sx={{
+            background:getColors().secondary[900],
+        }}>
             <Typography variant="h6" mb={2}>{selectedFunction.name} ({selectedFunction.stateMutability})</Typography>
             
             {selectedFunction?.inputs.length > 0 && (
-                <>
+                <Box sx={{
+                    background:getColors().secondary[900],
+                }}>
                     <Typography variant="body1" mt={2}>Inputs</Typography>
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{
+            background:getColors().blueAccent[900],
+        }}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -33,13 +40,15 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </>
+                </Box>
             )}
 
             {selectedFunction?.outputs.length > 0 && (
                 <>
                     <Typography variant="body1" mt={2}>Return Types</Typography>
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{
+            background:getColors().blueAccent[900],
+        }}>
                         <Table>
                             <TableHead>
                                 <TableRow>

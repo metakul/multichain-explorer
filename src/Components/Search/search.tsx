@@ -71,7 +71,7 @@ export default function Search() {
             }}>
                 <TextField
                     type="text"
-                    placeholder="Search by  Txn Hash" // todo add search by block, address,ens
+                    placeholder="Search by  Txn Hash" // todo add search by ens
                     required
                     value={searchInput}
                     onChange={changeHandler}
