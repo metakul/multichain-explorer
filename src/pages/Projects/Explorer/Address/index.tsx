@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import { getAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
 import { useEffect } from "react";
-import { selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
+import { selectAddressInfoError, selectAddressInfoLoading, selectedAddressInfo } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoSlice";
 import Text from "../../../../Components/UI/Text";
 import AddressTrx from "./AddressTrx";
 
@@ -16,6 +16,7 @@ function AddressInfoPage() {
 
     const addressInfo = useSelector(selectedAddressInfo);
     const loading = useSelector(selectAddressInfoLoading);
+    const error = useSelector(selectAddressInfoError);
 
     useEffect(() => {
         if (address) {
@@ -29,7 +30,7 @@ function AddressInfoPage() {
             {loading ? (
                 <Text>Loading Balance</Text>
             ) : (
-                <Text>Balance: {addressInfo?.balance} ethers</Text>
+                <Text>Balance: {error ? "Error Loading Balance" : addressInfo?.balance} ethers</Text>
             )}
 
             <AddressTrx address={address} /> 
