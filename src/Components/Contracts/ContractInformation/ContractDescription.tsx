@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import contractDescriptions from "../../../Data/ContractInformation.json"
 import Box from "../../UI/Box";
 import Text from "../../UI/Text";
+import Button from "../../UI/Button";
 
 interface ContractDescriptionProps {
   contractName: string;
@@ -17,7 +18,10 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName,
   useEffect(() => {
     setDescription(descriptions[contractName]);
   }, [contractName]);
-
+  
+  const viewOnExplorer = async () => {
+    console.log("Opening Explorer for contract", deployedAddress);
+  }
   return (
     <Box sx={{
       py: 2,
@@ -27,7 +31,11 @@ const ContractDescription: React.FC<ContractDescriptionProps> = ({ contractName,
         Contract Address: {deployedAddress}
       </Text>
       }
-      {description}
+                         {deployedAddress &&   <Button onClick={viewOnExplorer}>View On Explorer</Button> }
+        <Text>
+
+            {description}
+        </Text>
     </Box>
 
   )

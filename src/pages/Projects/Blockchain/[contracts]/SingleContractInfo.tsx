@@ -9,7 +9,6 @@ import ContractInfoCard from "../../../../Components/Cards/ContractCard/Contract
 import { ethers } from "ethers";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
 import { ContractType } from "../../../../DataTypes/enums";
-import ContractFunctionsForm from "../../../../Components/Contracts/InteractWithContract";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
 import Text from "../../../../Components/UI/Text";
 import Box from "../../../../Components/UI/Box";
@@ -19,7 +18,7 @@ import ContractFunctions from "../../../../Components/Contracts/ContractInformat
 import { useMediaQuery } from "@mui/material";
 import { getAddressTransactions } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
 
-const SingleContractPage: React.FC<SingleContractProps> = (props) => {
+const SingleContractPage: React.FC<SingleContractProps> = () => {
   const { contractName, deployedAddress } = useParams<{ deployedAddress: string, contractName?: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const contract = useSelector(selectContractDetails);
@@ -84,9 +83,7 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     }
   };
 
-  const viewOnExplorer = async () => {
-    console.log("Opening Explorer for contract", deployedAddress);
-  }
+
 
   const tabs = [
     {
@@ -99,37 +96,20 @@ const SingleContractPage: React.FC<SingleContractProps> = (props) => {
     },
     {
       value: (
-        props.contractType == ContractType.Deploy ? "Deploy" : "Interact"
+        "Functions"
       ),
-      content: <>
-        {props.contractType == ContractType.Deploy ? (
-          <ContractInfoCard
+      content: contractName && <>
+      <ContractFunctions abi={contract.abi} deployedAddress={deployedAddress} />
+      {!deployedAddress && <ContractInfoCard
             contractType={ContractType.Deploy}
             contractInfo={contract}
             cardType="single"
             buttonText={ContractType.Deploy}
             handleButtonClick={deployContract} // Pass deploy function
           />
-        ) : (
-          <>
-            <ContractInfoCard
-              contractType={ContractType.Interact}
-              contractInfo={contract}
-              cardType="single"
-              buttonText="View On Explorer"
-              handleButtonClick={viewOnExplorer} // Pass deploy function
-            />
-            <ContractFunctionsForm abi={contract.abi} deployedAddress={deployedAddress as string} />
-          </>
-        )}
-      </>,
-      label: "Interact",
-    },
-    {
-      value: (
-        "Functions"
-      ),
-      content: contractName && <ContractFunctions abi={contract.abi} />
+      }
+      </> 
+
       ,
       label: "OverView",
     },

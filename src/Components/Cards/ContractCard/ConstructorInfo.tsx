@@ -2,6 +2,7 @@
 import React from "react";
 import CustomTextField from "../../UI/Typogrpahy/Text/TextFeild";
 import Label from "../../UI/Label";
+import Text from "../../UI/Text";
 
 interface ConstructorInputFormProps {
     constructorParams:any;
@@ -18,17 +19,19 @@ const ConstructorInputForm: React.FC<ConstructorInputFormProps> = ({
 }) => {
     // If no constructor parameters are available
     if (!constructorParams || constructorParams.length === 0) {
-        return <p>No constructor parameters Required To deploy.</p>;
+        return <p>No constructor Needed To deploy.</p>;
     }
 
     return (
         <div>
-            <span>Constructor Parameters:</span>
+            <Text variant="h4" fontWeight={"bold"} textAlign={'center'}>Deploy Now</Text>
             <ul>
                 {constructorParams.map((param:any, index:number) => (
                     <li key={index}>
                         <Label htmlFor={`param-${index}`}>
-                            Param {index + 1}: {param.name} ({param.type})
+                            {/* Param {index + 1}: */}
+                            {param.name.toUpperCase()}
+                             {/* ({param.type}) */}
                         </Label>
                         <CustomTextField
                             id={`param-${index}`}

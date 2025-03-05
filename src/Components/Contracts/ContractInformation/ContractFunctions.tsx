@@ -5,9 +5,10 @@ import ContractInteraction from "./ContractInteraction";
 
 interface ContractFunctionProps {
     abi: any;
+    deployedAddress?: string;
 }
 
-const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi }) => {
+const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi,deployedAddress }) => {
     const [selectedFunction, setSelectedFunction] = useState<any>(null);
     
     const readFunctions = abi.filter((item: any) => item.type === "function" && item.stateMutability === "view");
@@ -37,7 +38,7 @@ const ContractFunctions: React.FC<ContractFunctionProps> = ({ abi }) => {
                     ]}
                 />
             {selectedFunction && (
-                      <ContractInteraction selectedFunction={selectedFunction} />
+                      <ContractInteraction abi={abi} selectedFunction={selectedFunction} deployedAddress={deployedAddress} />
             )}
         </Box>
     );

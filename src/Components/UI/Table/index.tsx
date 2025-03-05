@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableHead,  TableRow, TableCell, TableProps, TableContainer, Paper } from "@mui/material";
+import { Table, TableHead,  TableRow, TableCell, TableProps, TableContainer, Paper, TableBody } from "@mui/material";
 import { getColors } from "../../../layout/Theme/themes";
 
 interface CustomTableProps extends TableProps {
@@ -23,6 +23,13 @@ export const CustomTableHeader: React.FC<{ children: React.ReactNode }> = ({ chi
         <TableHead>
             <TableRow>{children}</TableRow>
         </TableHead>
+    );
+};
+export const CustomTableBody: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    return (
+        <TableBody>
+            <TableRow>{children}</TableRow>
+        </TableBody>
     );
 };
 

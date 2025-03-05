@@ -28,7 +28,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     buttonText,
     handleButtonClick,
 }) => {
-    const { contractName, constructor } = contractInfo;
+    const {  constructor } = contractInfo;
     const { connected, networkName, connectToRpc, rpcUrl } = useRpc();
 
     const [constructorInputs, setConstructorInputs] = useState<string[]>([]);
@@ -78,7 +78,7 @@ const ContractInfoCard: React.FC<ContractInfoProps> = ({
     return (
         <div>
         
-             <h4>{contractName}</h4>
+             {/* <h4>{contractName}</h4> */}
                     {cardType === "single" && contractType === ContractType.Deploy && (
                         <>
                             <ConstructorInputForm
