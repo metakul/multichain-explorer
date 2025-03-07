@@ -2,13 +2,53 @@ import { Typography } from '@mui/material';
 import GasPriceChart, { GasPricePoint } from '../Charts/GasPriceChart';
 import TotalTrxChart, { TrxChartInfo } from '../Charts/TotalTrxChart';
 import Box from '../UI/Box';
+import { useRpc } from '../../contexts/RpcProviderContext';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { AppDispatch } from '../../redux/store';
 
 interface ChartGridProps {
     gasPriceData:GasPricePoint[];
-    dailyTrxData:TrxChartInfo[]
 }
 
-function ChartGrid({ gasPriceData,dailyTrxData }: ChartGridProps) {
+function ChartGrid({ gasPriceData }: ChartGridProps) {
+    const dispatch = useDispatch<AppDispatch>();
+    const { rpcUrl } = useRpc();
+    const [totalTrx, setTotalTrxData] = useState<TrxChartInfo[]>([]);
+
+
+        useEffect(() => {
+    
+            const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
+    
+            ws.onopen = () => {
+                console.log('WebSocket for stats connected');
+                ws.send(JSON.stringify({ type: 'DAILY_TRX_INIT', rpcUrl }));
+            };
+    
+            ws.onmessage = (event) => {
+                try {
+                    const updatedStats = JSON.parse(event.data);
+                    if (updatedStats.type === 'DAILY_TRX_UPDATE') {
+                        console.log("updatedStats",updatedStats);
+                        setTotalTrxData(updatedStats.data)
+                        // updateGasPriceChart(updatedStats.stats);
+                    }
+                } catch (error) {
+                    console.error('Failed to parse stats update:', error);
+                }
+            };
+    
+            ws.onerror = (error) => {
+                console.error('WebSocket error for stats:', error);
+            };
+    
+            ws.onclose = () => {
+                console.log('WebSocket for stats closed');
+            };
+         
+        }, [dispatch, rpcUrl]);
+
     return (
         <Box sx={{
             display:"flex",
@@ -30,7 +70,7 @@ function ChartGrid({ gasPriceData,dailyTrxData }: ChartGridProps) {
                 <GasPriceChart gasPriceData={gasPriceData} />
                 {/* <GasPriceChart gasPriceData={gasPriceData} /> */}
                 {/* <GasPriceChart gasPriceData={gasPriceData} /> */}
-                <TotalTrxChart dailyTrxData={dailyTrxData} />
+                <TotalTrxChart dailyTrxData={totalTrx} />
             </Box>
             <Typography variant='h6' sx={{
                  textDecoration: "underline",

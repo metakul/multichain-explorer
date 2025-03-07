@@ -10,7 +10,6 @@ import Text from '../UI/Text';
 import { useMediaQuery } from '@mui/material';
 import ChartGrid from './ChartGrid';
 import StatsGrid from './StatsGrid';
-import { TrxChartInfo } from '../Charts/TotalTrxChart';
 import { GasPricePoint } from '../Charts/GasPriceChart';
 // import { getColors } from '../../layout/Theme/themes';
 
@@ -22,13 +21,11 @@ function ExplorerStats() {
     const stats = useSelector(selectStatsInfo);
     const loading = useSelector(selectStatsLoading);
     const [gasPriceData, setGasPriceData] = useState<GasPricePoint[]>([]);
-    const [totalTrx, setTotalTrxData] = useState<TrxChartInfo[]>([]);
 
     const updateGasPriceChart = (stats: any) => {
         console.log(stats);
 
         const latestGas = stats?.gasPrices;
-        const dailyTotalTrx = stats?.transactionsToday;
         if (latestGas) {
             const newPoint: GasPricePoint = {
                 time: new Date().toLocaleTimeString(),
@@ -38,13 +35,7 @@ function ExplorerStats() {
             };
             setGasPriceData((prev) => [...prev, newPoint]); // Keep only last 20 entries
         }
-        if (dailyTotalTrx) {
-            const newPoint: TrxChartInfo = {
-                time: new Date().toLocaleTimeString(),
-                trxCount: dailyTotalTrx
-            };
-            setTotalTrxData((prev) => [...prev, newPoint]); // Keep only last 20 entries
-        }
+     
     };
 
     useEffect(() => {
@@ -115,7 +106,7 @@ function ExplorerStats() {
                 <StatsGrid stats={stats} loading={loading} isNonMobile={isNonMobile} />
 
                 {/* Charts Section */}
-                <ChartGrid gasPriceData={gasPriceData} dailyTrxData={totalTrx} />
+                <ChartGrid gasPriceData={gasPriceData} />
             </Box>
 
         </Box>

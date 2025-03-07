@@ -1,14 +1,14 @@
 import { useMediaQuery } from '@mui/material';
 import React from 'react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } from 'recharts';
 import Text from '../UI/Text';
 import { getColors } from '../../layout/Theme/themes';
 import Box from '../UI/Box';
 
 
 export interface TrxChartInfo {
-    time: string;
-    trxCount: number;
+    date: string;
+    transactionsCount: number;
 }
 
 interface Props {
@@ -58,23 +58,24 @@ const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
                 </Box>
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
+                    <AreaChart
                         data={dailyTrxData}
                         margin={{ top: 20, right: 4, left: 0, bottom: 2 }}
                     >
                         <CartesianGrid strokeDasharray="2 2" />
-                        <XAxis dataKey="time" />
+                        <XAxis dataKey="date" />
                         <YAxis />
                         <Tooltip contentStyle={{
                             background:getColors().primary[900]
                         }} />
                         <Legend />
-                        <Line
+                        <Area
                             type="monotone"
-                            dataKey="trxCount"
-                            stroke={getColors().blueAccent[100]}
+                            dataKey="transactionsCount"
+                            fill='green'
+                            stroke={getColors().blueAccent[800]}
                         />
-                    </LineChart>
+                    </AreaChart>
                 </ResponsiveContainer>
             )}
         </Box>

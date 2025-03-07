@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getColors } from "../../../layout/Theme/themes";
 import Box from "../../UI/Box";
 import Text from "../../UI/Text";
@@ -26,13 +26,22 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
         setInputValues(updatedInputs);
     };
 
+    useEffect(() => {
+        setInputValues(Array(selectedFunction?.inputs?.length).fill(""));
+    }, [selectedFunction]);
+    
+
     const handleExecute = () => {
         if (deployedAddress) {
-            console.log(selectedFunction);
-            
-            executeContractFunction(deployedAddress, abi, selectedFunction.name, inputValues);
+    
+            // Convert object to array of values only
+            const valuesOnly = Object.values(inputValues);
+    
+            // Call the function with only values
+            executeContractFunction(deployedAddress, abi, selectedFunction.name, valuesOnly);
         }
     };
+    
 
 
     return (
@@ -67,29 +76,29 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
                                                 size="small"
                                                 variant="outlined"
                                                 sx={{ background: getColors().secondary[800] }}
-                                                value={inputValues[input.name] || ""}
-                                                onChange={(e) => handleInputChange(input.name, e.target.value)}
+                                                value={inputValues[index] || ""}
+                                                onChange={(e) => handleInputChange(index, e.target.value)}
                                             />
                                         </CustomTableCell>
                                     </CustomTableRow>
                                 ))}
                             </CustomTableBody>
                         </Table>
-                        {deployedAddress && (
-                            <Box sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                mt: 2,
-                            }}>
-                                <Button onClick={handleExecute}>
-                                    Execute
-                                </Button>
-                            </Box>
-                        )}
                     </TableContainer>
                 </Box>
             )}
 
+            {deployedAddress && (
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                }}>
+                    <Button onClick={handleExecute}>
+                        Execute
+                    </Button>
+                </Box>
+            )}
             {selectedFunction?.outputs.length > 0 && (
                 <>
                     <Text variant="body1" mt={2}>Return Types</Text>
