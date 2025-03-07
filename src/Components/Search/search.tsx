@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from "react";
-import SubmitButton from "../Buttons/SubmitButton";
 import { useRpc } from "../../contexts/RpcProviderContext";
 import TextField from "../UI/TextField";
 import Box from "../UI/Box";
@@ -7,6 +6,7 @@ import { navigateToAddress, navigateToBlock, navigateToTransaction } from "../..
 import { useNavigate } from "react-router-dom";
 import { getColors } from "../../layout/Theme/themes";
 import Text from "../UI/Text";
+import { Button } from "@mui/material";
 
 export default function Search() {
 
@@ -82,9 +82,9 @@ export default function Search() {
                 />
 
                 {/* Replaced Button with LoadingButton */}
-                <SubmitButton onClick={handleSearch} variant="surface" buttonText="Search">
+                <Button onClick={handleSearch}>
                     Search
-                </SubmitButton>
+                </Button>
                 <Box sx={{
                     width: "100px",
                     background: getColors().redAccent[800],

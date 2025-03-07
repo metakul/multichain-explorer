@@ -1,34 +1,34 @@
-import { useState } from "react";
-import Button from "../UI/Button";
+import React from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function SubmitButton({ style,buttonText, className = "", onClick, ...props }: any) {
-    const [loading, setLoading] = useState(false);
+type LoadingButtonProps = {
+    loading: boolean;
+    onClick: () => Promise<void>;  // Handles async calls
+    children: React.ReactNode;
+    className?: string;
+};
 
+const SubmitTransactionButton: React.FC<LoadingButtonProps> = ({ loading, onClick, children, className }) => {
     const handleClick = async () => {
-        setLoading(true);
-        try {
-            if (onClick) {
-                await onClick();
-            }
-        } catch (error) {
-            console.error("Error during operation", error);
-        } finally {
-            setLoading(false); 
-        }
+        if (loading) return;
+        await onClick();
     };
 
     return (
-        <Button
-            className={`${className}`}
+        <button
+            className={`px-4 py-2 rounded ${loading ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
             onClick={handleClick}
-            style={style}
-            disabled={loading} // Disable button when loading
-            {...props}
+            disabled={loading}
         >
-            {loading ? "Loading..." : buttonText}
-        </Button>
+            {loading ? (
+                <div className="flex items-center gap-2">
+                    <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
+                    Loading...
+                </div>
+            ) : (
+                children
+            )}
+        </button>
     );
-}
+};
 
-export default SubmitButton;
+export default SubmitTransactionButton;

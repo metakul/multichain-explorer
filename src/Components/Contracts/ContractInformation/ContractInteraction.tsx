@@ -4,8 +4,8 @@ import Box from "../../UI/Box";
 import Text from "../../UI/Text";
 import { Paper, Table, TableBody, TableContainer, TextField } from "@mui/material";
 import { CustomTableBody, CustomTableCell, CustomTableHeader, CustomTableRow } from "../../UI/Table";
-import Button from "../../UI/Button";
 import { useContractExecutor } from "../../../contexts/ContractExecutor";
+import SubmitTransactionButton from "../../Buttons/SubmitButton";
 
 interface ContractInteractionProps {
     abi:any
@@ -14,7 +14,7 @@ interface ContractInteractionProps {
 }
 
 const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunction, deployedAddress ,abi}) => {
-    const { executeContract } = useContractExecutor();
+    const { executeContract, loading, error } = useContractExecutor();
 
     const [inputValues, setInputValues] = useState<string[]>([]);
 
@@ -31,14 +31,16 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
     }, [selectedFunction]);
     
 
-    const handleExecute = () => {
+    const handleExecute = async() => {
         if (deployedAddress) {
     
             // Convert object to array of values only
             const valuesOnly = Object.values(inputValues);
     
             // Call the function with only values
-            executeContract({operation:"read", contractAddress:deployedAddress, abi, functionName:selectedFunction.name,inputs: valuesOnly});
+            const result=await executeContract({operation:"read", contractAddress:deployedAddress, abi, functionName:selectedFunction.name,inputs: valuesOnly});
+            console.log(result);
+            
         }
     };
     
@@ -93,9 +95,9 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
                     justifyContent: "center",
                     mt: 2,
                 }}>
-                    <Button onClick={handleExecute}>
+                    <SubmitTransactionButton loading={loading}  onClick={handleExecute}>
                         Execute
-                    </Button>
+                    </SubmitTransactionButton>
                 </Box>
             )}
             {selectedFunction?.outputs.length > 0 && (
