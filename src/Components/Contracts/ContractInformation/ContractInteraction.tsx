@@ -14,7 +14,7 @@ interface ContractInteractionProps {
 }
 
 const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunction, deployedAddress ,abi}) => {
-    const { executeContractFunction } = useContractExecutor();
+    const { executeContract } = useContractExecutor();
 
     const [inputValues, setInputValues] = useState<string[]>([]);
 
@@ -38,7 +38,7 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
             const valuesOnly = Object.values(inputValues);
     
             // Call the function with only values
-            executeContractFunction(deployedAddress, abi, selectedFunction.name, valuesOnly);
+            executeContract({operation:"read", contractAddress:deployedAddress, abi, functionName:selectedFunction.name,inputs: valuesOnly});
         }
     };
     
@@ -87,7 +87,6 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
                     </TableContainer>
                 </Box>
             )}
-
             {deployedAddress && (
                 <Box sx={{
                     display: "flex",

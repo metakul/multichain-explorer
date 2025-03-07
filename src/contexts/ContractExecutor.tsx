@@ -1,63 +1,60 @@
-import { ethers } from "ethers";
-import { useRpc } from "./RpcProviderContext";  // Update with your actual path
+import { useRpc } from "./RpcProviderContext";
+import { useReadContract } from "./Contracts/useReadContract";
+import { useContractWrite } from "./Contracts/useContractWrite";
+import { useDeployContract } from "./Contracts/useDeployContract";
 
 export const useContractExecutor = () => {
     const { provider } = useRpc();
 
-    const executeContractFunction = async (
-        contractAddress: string,
-        abi: any,
-        functionName: string,
-        inputs: any[],
-        isWrite: boolean = false // ✅ Default to false for read calls like balanceOf
-    ) => {
-        if (!provider) {
-            console.error("No provider available");
-            return;
+    const executeContract = async (params: {
+        operation: "read" | "write" | "deploy";
+        contractAddress?: string;
+        abi?: any;
+        bytecode?: string;
+        functionName?: string;
+        inputs?: any[];
+    }) => {
+        if (!provider) throw new Error("No provider available");
+
+        const {
+            operation,
+            contractAddress,
+            abi,
+            bytecode,
+            functionName,
+            inputs = [],
+        } = params;
+
+        if (operation === "deploy" && (!abi || !bytecode)) {
+            throw new Error("ABI and bytecode are required for deployment");
         }
 
-        try {
-            let contract;
+        if ((operation === "read" || operation === "write") && (!contractAddress || !abi || !functionName)) {
+            throw new Error("Contract address, ABI, and function name are required for read/write");
+        }
 
-            if (isWrite) {
-                // Write mode (uses signer for transactions)
-                const signer = await provider.getSigner();
-                if (!signer) {
-                    console.error("No signer found");
-                    return;
-                }
-                contract = new ethers.Contract(contractAddress, abi, signer);
-            } else {
-                // Read mode (uses provider for view functions like balanceOf)
-                contract = new ethers.Contract(contractAddress, abi, provider);
-            }
+        if (operation === "read") {
+            const { readContract } = useReadContract(provider);
+            return await readContract(contractAddress!, abi!, functionName!, inputs);
+        }
+        await window?.ethereum.request({ method: "eth_requestAccounts" });
 
-            if (!contract[functionName]) {
-                console.error(`Function ${functionName} not found in contract`);
-                return;
-            }
+        const signer = await provider.getSigner();
 
+        if (!signer) throw new Error("No signer available");
 
-            if (isWrite) {
-                // Transaction flow
-                const tx = await contract[functionName](...inputs);
-                console.log("Transaction sent:", tx.hash);
+        if (operation === "write") {
+            const { writeContract } = useContractWrite(signer);
+            return await writeContract(contractAddress!, abi!, functionName!, inputs);
+        }
 
-                const receipt = await tx.wait();
-                console.log("Transaction confirmed:", receipt);
-
-                return receipt;
-            } else {
-                // Read call flow (balanceOf, etc.)
-                const result = await contract[functionName](...inputs);
-                console.log(`${functionName} result:`, result);
-
-                return result;
-            }
-        } catch (error) {
-            console.error("Error executing contract function:", error);
+        if (operation === "deploy") {
+            const { deployContract } = useDeployContract(signer);
+            console.log("deploying");
+            
+            return await deployContract(abi!, bytecode!, inputs);
         }
     };
 
-    return { executeContractFunction };
+    return { executeContract };
 };

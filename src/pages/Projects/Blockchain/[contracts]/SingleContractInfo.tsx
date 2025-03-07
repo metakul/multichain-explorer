@@ -6,7 +6,6 @@ import { fetchContractByName, saveNewContract } from "../../../../redux/slices/B
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
-import { ethers } from "ethers";
 import { SingleContractProps } from "../../../../interfaces/CompInterfaces";
 import { ContractType } from "../../../../DataTypes/enums";
 import { useRpc } from "../../../../contexts/RpcProviderContext";
@@ -17,13 +16,15 @@ import ContractDescription from "../../../../Components/Contracts/ContractInform
 import ContractFunctions from "../../../../Components/Contracts/ContractInformation/ContractFunctions";
 import { useMediaQuery } from "@mui/material";
 import { getAddressTransactions } from "../../../../redux/slices/BackendSlices/Explorer/Address/AddressInfoApi";
+import { useContractExecutor } from "../../../../contexts/ContractExecutor";
 
 const SingleContractPage: React.FC<SingleContractProps> = () => {
   const { contractName, deployedAddress } = useParams<{ deployedAddress: string, contractName?: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const contract = useSelector(selectContractDetails);
+  const { executeContract }  = useContractExecutor();
   // const contractLoading = useSelector(selectSingleContractLoading);
-  
+
   // const contractError = useSelector(selectSingleContractError);
   const isNonMobile = useMediaQuery("(min-width: 766px)");
 
@@ -55,29 +56,21 @@ const SingleContractPage: React.FC<SingleContractProps> = () => {
   }
 
   // Function to deploy contract
-  const deployContract = async (constructorParams: any[]) => {
+  const deployMyContract = async (constructorParams: any[]) => {
     try {
       if (!window.ethereum) throw new Error("No Ethereum wallet detected");
+      await executeContract({
+        operation: "deploy",
+        abi: contract.abi,
+        bytecode: contract.bytecode,
+        inputs: constructorParams,
+    }).then((res) => {
+          console.log("Deployed contract:", res);
+          
+           dispatch(saveNewContract({ contractName, deployedAddress:res.address, walletAddress, networkName }));
 
-      // Request wallet connection
-      if (window && window.ethereum && window.ethereum.request) {
-
-        await window?.ethereum.request({ method: "eth_requestAccounts" });
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-
-        // Prepare contract for deployment
-        const factory = new ethers.ContractFactory(contract.abi, contract.bytecode as any, signer);
-
-        // Deploy the contract
-        const deployedContract = await factory.deploy(...constructorParams);
-
-        // Wait for the deployment to finish and get the address
-        await deployedContract.getAddress().then((deployedAddress) => {
-          // Dispatch the action with the resolved contract address
-          dispatch(saveNewContract({ contractName, deployedAddress, walletAddress, networkName }));
-        })
-      }
+         })
+    
     } catch (error) {
       console.error("Deployment error:", error);
     }
@@ -100,14 +93,15 @@ const SingleContractPage: React.FC<SingleContractProps> = () => {
       ),
       content: contractName && <>
       <ContractFunctions abi={contract.abi} deployedAddress={deployedAddress} />
-      {!deployedAddress && <ContractInfoCard
-            contractType={ContractType.Deploy}
-            contractInfo={contract}
-            cardType="single"
-            buttonText={ContractType.Deploy}
-            handleButtonClick={deployContract} // Pass deploy function
-          />
-      }
+        {!deployedAddress && 
+          <ContractInfoCard
+              contractType={ContractType.Deploy}
+              contractInfo={contract}
+              cardType="single"
+              buttonText={ContractType.Deploy}
+              handleButtonClick={deployMyContract} // Pass deploy function
+            />
+        }
       </> 
 
       ,
