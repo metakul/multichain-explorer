@@ -55,7 +55,7 @@ export default function DashboardLayout() {
         <Box
           sx={{
             position: "absolute",
-            top: "30%",
+            top: "350px",
             left: "10px",
             transform: "translateY(-50%)",
             background: "rgba(0, 0, 0, 0.7)",
