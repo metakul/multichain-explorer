@@ -14,6 +14,7 @@ import { selectTransactionsForBlock, selectTransactionsLoadingForBlock, selectTr
 import Text from '../UI/Text';
 import { getBlockWithTrx, getTransactionCountInBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
+import TransactionInfoCard from '../Cards/TrxInfoCard';
 
 interface SingleBlockInfoProps {
     block?: Block;
@@ -23,7 +24,7 @@ interface SingleBlockInfoProps {
     isSingleBlock?: boolean
 }
 
-const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loading ,isSingleBlock}) => {
+const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loading, isSingleBlock }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { networkName, rpcUrl } = useRpc();
@@ -41,10 +42,10 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
         if (showTrx && block?.number) {
             dispatch(getBlockWithTrx({ blockNo: block.number, rpcUrl }));
         }
-        if( block?.number){
+        if (block?.number) {
             dispatch(getTransactionCountInBlock({ blockNo: block?.number, rpcUrl }));
         }
-    }, [dispatch,block]);
+    }, [dispatch, block]);
 
     /**
      * Calculates the gas usage percentage.
@@ -82,9 +83,9 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
             }}
         >
             <Box style={{
-                    display: 'flex', marginTop: '16px',
-                    flexDirection: "column",
-                }}>
+                display: 'flex', marginTop: '16px',
+                flexDirection: "column",
+            }}>
                 {/* Block Card */}
                 <Box
                     key={block?.hash ?? Math.random()}
@@ -168,7 +169,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                                         borderRadius: '4px',
                                     }}
                                 >
-                                    <InfoCard
+                                    <TransactionInfoCard
                                         label="Trx Hash:"
                                         value={trx.hash}
                                         loading={selectLoadingForBlock}
@@ -178,7 +179,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                                         navigateTo={() => navigateToTransaction(navigate, String(trx.hash), networkName)}
 
                                     />
-                                    <InfoCard
+                                    <TransactionInfoCard
                                         label="From"
                                         value={trx.from}
                                         loading={selectLoadingForBlock}
@@ -188,7 +189,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                                         navigateTo={() => navigateToAddress(navigate, String(trx.from), networkName)}
 
                                     />
-                                    <InfoCard
+                                    <TransactionInfoCard
                                         label="To"
                                         value={trx.to}
                                         loading={selectLoadingForBlock}
@@ -197,7 +198,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                                         fontWeight="bold"
                                         navigateTo={() => navigateToAddress(navigate, String(trx.to), networkName)}
                                     />
-                                    <InfoCard
+                                    <TransactionInfoCard
                                         label="Value"
                                         value={trx.value}
                                         loading={selectLoadingForBlock}
@@ -224,7 +225,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                 }
             </Box>
             {/* Decorative Line */}
-            { !isSingleBlock && <Box
+            {!isSingleBlock && <Box
                 sx={{
                     width: '40px',
                     height: '8px',
@@ -234,7 +235,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                 }}
             />}
         </Box>
-        
+
     );
 };
 

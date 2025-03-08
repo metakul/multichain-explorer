@@ -55,17 +55,17 @@ export default function DashboardLayout() {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
+            top: "30%",
             left: "10px",
             transform: "translateY(-50%)",
             background: "rgba(0, 0, 0, 0.7)",
             color: "white",
             padding: "8px 12px",
             borderRadius: "8px",
-            fontSize: "14px",
+            fontSize: "16px",
             fontWeight: "bold",
             opacity: 0.9,
-            animation: "swipeAnimation 1s ease-in-out infinite alternate, fadeOut 3s ease-in-out",
+            animation: "swipeAnimation 1s ease-in-out infinite alternate, fadeOut 4s ease-in-out",
           }}
         >
           👉 Swipe right
