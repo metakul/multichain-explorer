@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, useMediaQuery } from "@mui/material";
+import { useSwipeable } from "react-swipeable";
 
 import Header from "./TopBar";
 
@@ -23,8 +24,21 @@ export default function DashboardLayout() {
   const handleSideBarState = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+    // Detect left-to-right swipe (for opening the sidebar)
+    const swipeHandlers = useSwipeable({
+      onSwipedRight: () => {
+        if (!isNonMobile) setIsSidebarOpen(true); // Open drawer on swipe
+      },
+      onSwipedLeft: () => {
+        if (!isNonMobile) setIsSidebarOpen(false); // Close drawer on swipe left
+      },
+      trackTouch: true,
+      trackMouse: false,
+    });
+
   return (
-    <Box>
+    <Box {...swipeHandlers}>
       <Topbar APP_BAR={APP_BAR}
         isNonMobile={isNonMobile}
         setIsSidebarOpen={handleSideBarState} />
