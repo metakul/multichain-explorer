@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, useMediaQuery } from "@mui/material";
 import { useSwipeable } from "react-swipeable";
 
@@ -20,7 +20,18 @@ export default function DashboardLayout() {
   const isNonMobile = useMediaQuery("(min-width: 768px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [, setShowOutlet] = useState<boolean>(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const APP_BAR = "64px";
+
+  // Show "Swipe Right" hint for 3 seconds on mobile
+  useEffect(() => {
+    if (!isNonMobile) {
+      setTimeout(() => {
+        setShowSwipeHint(false);
+      }, 3000);
+    }
+  }, [isNonMobile]);
+
   const handleSideBarState = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -38,7 +49,29 @@ export default function DashboardLayout() {
     });
 
   return (
-    <Box {...swipeHandlers}>
+    <Box {...swipeHandlers} sx={{ overflow: "hidden", position: "relative" }}>
+      {/* Swipe Right Hint */}
+      {showSwipeHint && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "10px",
+            transform: "translateY(-50%)",
+            background: "rgba(0, 0, 0, 0.7)",
+            color: "white",
+            padding: "8px 12px",
+            borderRadius: "8px",
+            fontSize: "14px",
+            fontWeight: "bold",
+            opacity: 0.9,
+            animation: "swipeAnimation 1s ease-in-out infinite alternate, fadeOut 3s ease-in-out",
+          }}
+        >
+          👉 Swipe right
+        </Box>
+      )}
+
       <Topbar APP_BAR={APP_BAR}
         isNonMobile={isNonMobile}
         setIsSidebarOpen={handleSideBarState} />
@@ -65,6 +98,21 @@ export default function DashboardLayout() {
         <Outlet />
         <Footer />
       </Box>
+           {/* CSS Keyframes for Animation */}
+           <style>
+        {`
+          @keyframes swipeAnimation {
+            0% { transform: translateY(-50%) translateX(0px); }
+            100% { transform: translateY(-50%) translateX(20px); }
+          }
+          
+          @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 0.5; }
+            100% { opacity: 0; }
+          }
+        `}
+      </style>
     </Box>
   );
 }
