@@ -14,7 +14,7 @@ type ExecuteParams = {
 };
 
 export const useContractExecutor = () => {
-    const { provider } = useRpc();
+    const { provider, signer } = useRpc();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -42,9 +42,6 @@ export const useContractExecutor = () => {
             if ((operation === "read" || operation === "write") && (!contractAddress || !abi || !functionName)) {
                 throw new Error("Contract address, ABI, and function name are required for read/write");
             }
-            await window?.ethereum.request({ method: "eth_requestAccounts" });
-            const network = await provider.getNetwork();
-            console.log("Connected to network:", network.name, network.chainId);
             
             if (operation === "read") {
                 const { readContract } = useReadContract(provider);
@@ -55,7 +52,6 @@ export const useContractExecutor = () => {
                 return result;
             }
 
-            const signer = await provider.getSigner();
             if (!signer) throw new Error("No signer available");
 
             if (operation === "write") {

@@ -10,6 +10,7 @@ interface RpcContextType {
     rpcUrl: string;
     provider: ethers.JsonRpcProvider | ethers.BrowserProvider | null;
     walletAddress: string | null;
+    signer: ethers.JsonRpcSigner|  null;
     connectToRpc: (customNetworkName: NetworkType, customRpcUrl?: string) => Promise<void>;
     setRpc: (customNetworkName: NetworkType, customRpcUrl?: string) => void;
     disconnectWallet: () => void;
@@ -21,6 +22,7 @@ const defaultRpcContextValue: RpcContextType = {
     rpcUrl: "",
     provider: null,
     walletAddress: null,
+    signer: null,
     connectToRpc: async () => { },
     setRpc: () => { },
     disconnectWallet: () => { },
@@ -35,6 +37,7 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
     const [networkName, setNetworkName] = useState<any>(initialNetworkType);
     const [provider, setProvider] = useState<ethers.JsonRpcProvider | ethers.BrowserProvider | null>(null);
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
+    const [signer, setSigner] = useState<ethers.JsonRpcSigner | null>(null);
 
     useEffect(() => {
 
@@ -136,6 +139,12 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
             }
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setWalletAddress(accounts[0]);
+
+            // Set the signer
+            if (provider) {
+                const signer = await provider.getSigner();
+                setSigner(signer);
+            }
         } catch (error) {
             setConnected(false);
         }
@@ -146,11 +155,12 @@ export const RpcProvider = ({ children, initialNetworkType, initialRpcUrl }: { c
     const disconnectWallet = () => {
         setWalletAddress(null);
         setConnected(false);
+        setSigner(null);
     };
 
 
     return (
-        <RpcContext.Provider value={{ networkName, connected, rpcUrl, provider, walletAddress, connectToRpc: connectToRpc, setRpc, disconnectWallet }}>
+        <RpcContext.Provider value={{ networkName, connected, rpcUrl, provider, walletAddress, signer, connectToRpc: connectToRpc, setRpc, disconnectWallet }}>
             {children}
         </RpcContext.Provider>
     );

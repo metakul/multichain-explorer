@@ -88,6 +88,7 @@ export enum Network {
   BASE = "BASE",
   Localhost = "Localhost",
   SONEIUM = "SONEIUM",
+  HOLESKY = "HOLESKY",
 }
 
 export type NetworkType = keyof typeof Network;
@@ -114,6 +115,17 @@ export const networks: Record<Network, NetworkConfig> = {
     },
     rpcUrls: ["https://rpc.minato.soneium.org"],
     blockExplorerUrls: []
+  },
+  HOLESKY : {
+    chainId: `0x${Number(17000).toString(16)}`,
+    chainName: "Holesky Minato Testnet",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18
+    },
+    rpcUrls: ["https://1rpc.io/holesky"],
+    blockExplorerUrls: ["https://holesky.etherscan.io/"]
   },
   BASE : {
     chainId: `0x${Number(8453).toString(16)}`,
