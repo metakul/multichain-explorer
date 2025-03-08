@@ -65,7 +65,7 @@ const ContractsGrid: React.FC = () => {
             ) : contractsByCategory && Object.keys(contractsByCategory).length > 0 ? (
                 Object.entries(contractsByCategory).map(([category, contracts]) => (
                     <Box key={category} style={{ marginBottom: "2px" }}>
-                        <Text style={{ marginBottom: "12px" }}>{category}</Text>
+                        <Text style={{ marginBottom: "12px" , fontSize:"18px",fontWeight:"bold"}}>{category}</Text>
                         <Grid>
                             {contracts.map((contract: any, index: number) => (
                                 <Box

@@ -14,15 +14,17 @@ interface ContractInteractionProps {
 }
 
 const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunction, deployedAddress ,abi}) => {
-    const { executeContract, loading, error } = useContractExecutor();
+    const { executeContract, loading,error } = useContractExecutor();
 
     const [inputValues, setInputValues] = useState<string[]>([]);
+    const [lastResult, setLastResult] = useState<any>("");
 
     if (!selectedFunction) return null;
 
     const handleInputChange = (index: number, value: string) => {
         const updatedInputs = [...inputValues];
         updatedInputs[index] = value;
+        setLastResult("")
         setInputValues(updatedInputs);
     };
 
@@ -39,8 +41,9 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
     
             // Call the function with only values
             const result=await executeContract({operation:"read", contractAddress:deployedAddress, abi, functionName:selectedFunction.name,inputs: valuesOnly});
-            console.log(result);
-            
+            console.log(result,"result");
+         // Convert BigInt result to a string if applicable
+         setLastResult(typeof result === "bigint" ? result.toString() : result);
         }
     };
     
@@ -100,6 +103,24 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
                     </SubmitTransactionButton>
                 </Box>
             )}
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                    color:getColors().redAccent[200]
+                }}>
+                  {lastResult}
+                </Box>
+                {error &&
+                   <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                    color:getColors().redAccent[200]
+                }}>
+                  {error}
+                </Box>
+}
             {selectedFunction?.outputs.length > 0 && (
                 <>
                     <Text variant="body1" mt={2}>Return Types</Text>

@@ -29,6 +29,7 @@ export interface CustomDialogProps {
 export interface HomeButtonProps {
   onClick?: () => void; 
   children?: ReactNode;
+  sx?:any
 }
 
 
