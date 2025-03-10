@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchBlockInfo } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi";
-import { useRpc } from "../../../../contexts/RpcProviderContext";
-import { AppDispatch } from "../../../../redux/store";
-import Box from "../../../../Components/UI/Box";
-import Text from "../../../../Components/UI/Text";
+import { fetchBlockInfo } from "../../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi";
+import { useRpc } from "../../../../../contexts/RpcProviderContext";
+import { AppDispatch } from "../../../../../redux/store";
+import Box from "../../../../../Components/UI/Box";
+import Text from "../../../../../Components/UI/Text";
 import { Skeleton } from "@mui/material";
-import { truncateValue } from "../../../../helpers/scripts";
-import { navigateToAddress } from "../../../../helpers/navigationHelpers";
-import { selectBlocksInFrames, selectBlocksLoadingInFrames } from "../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice";
+import { truncateValue } from "../../../../../helpers/scripts";
+import { navigateToAddress } from "../../../../../helpers/navigationHelpers";
+import { selectBlocksInFrames, selectBlocksLoadingInFrames } from "../../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice";
 
 function BlockOverView() {
     const { block } = useParams<{ block: string }>();

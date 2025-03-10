@@ -1,9 +1,9 @@
 // import React from 'react'
 // import { ProtectedPageProps } from '../../../interfaces/CompInterfaces';
-import { BlockDetailsTab } from '../../../../DataTypes/enums'
-import CustomTab from '../../../../Components/UI/Tabs/tabs';
-import UserActivity from '../../../../Components/Profile/Activity';
-import BlockOverView from './BlockOverView';
+import { BlockDetailsTab } from '../../../../../DataTypes/enums.tsx'
+import CustomTab from '../../../../../Components/UI/Tabs/tabs.tsx';
+import UserActivity from '../../../../../Components/Profile/Activity/index.tsx';
+import BlockOverView from './BlockOverView.tsx';
 import TransactionOverView from './TransactionOverViewPage.tsx';
 import { useSearchParams } from 'react-router-dom';
 

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getBlockWithTrx } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
-import { useRpc } from '../../../../contexts/RpcProviderContext';
-import { AppDispatch } from '../../../../redux/store';
-import { selectBlocksForCurrentPage } from '../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
-import SingleBlockInfo from '../../../../Components/Blocks/SingleBlockCard';
+import { getBlockWithTrx } from '../../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
+import { useRpc } from '../../../../../contexts/RpcProviderContext';
+import { AppDispatch } from '../../../../../redux/store';
+import { selectBlocksForCurrentPage } from '../../../../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/BlocksWithFrameSlice';
+import SingleBlockInfo from '../../../../../Components/Blocks/SingleBlockCard';
 function TransactionOverViewPage() {
 
     const { block } = useParams<{ block: string }>();

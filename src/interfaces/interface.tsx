@@ -159,6 +159,7 @@ export interface ITrx {
   transactionIndex: string;         // Index of the transaction within the block
   type: string;                     // Type of transaction (e.g., 0, 1, 2 for EIP-1559)
   nonce: string;                    // Nonce of the transaction
+  gasLimit: string;              
   input: string;                    // Input data for the transaction
   maxFeePerGas?: string;            // Max fee per gas for EIP-1559 transactions
   maxPriorityFeePerGas?: string;    // Max priority fee per gas for EIP-1559 transactions

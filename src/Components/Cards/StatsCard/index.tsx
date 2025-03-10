@@ -9,16 +9,16 @@ const StatCard = ({ label, value, loading }: { label: string; value: string | nu
     <Card sx={{
         backgroundColor: getColors().primary[900],
         borderColor: getColors().primary[100],
-        width:{
+        width: {
             xs: "140px",
             md: "160px",
         },
-        height:{
+        height: {
             xs: "60px",
             md: "60px",
         },
-        m:0.5
-    }}> 
+        m: 0.5
+    }}>
         <Flex>
             <Box sx={{ padding: '8px' }} >
                 <Text sx={{
