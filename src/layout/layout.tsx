@@ -30,23 +30,27 @@ export default function DashboardLayout() {
         setShowSwipeHint(false);
       }, 3000);
     }
+    else{
+      setShowSwipeHint(false);
+      
+    }
   }, [isNonMobile]);
 
   const handleSideBarState = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-    // Detect left-to-right swipe (for opening the sidebar)
-    const swipeHandlers = useSwipeable({
-      onSwipedRight: () => {
-        if (!isNonMobile) setIsSidebarOpen(true); // Open drawer on swipe
-      },
-      onSwipedLeft: () => {
-        if (!isNonMobile) setIsSidebarOpen(false); // Close drawer on swipe left
-      },
-      trackTouch: true,
-      trackMouse: false,
-    });
+  // Detect left-to-right swipe (for opening the sidebar)
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: () => {
+      if (!isNonMobile) setIsSidebarOpen(true); // Open drawer on swipe
+    },
+    onSwipedLeft: () => {
+      if (!isNonMobile) setIsSidebarOpen(false); // Close drawer on swipe left
+    },
+    trackTouch: true,
+    trackMouse: false,
+  });
 
   return (
     <Box {...swipeHandlers} sx={{ overflow: "hidden", position: "relative" }}>
@@ -92,14 +96,14 @@ export default function DashboardLayout() {
         sx={{
           mt: 12,
           pl: isNonMobile ? 6 : 0,
-          mx:isNonMobile ? 4 : 0
+          mx: isNonMobile ? 4 : 0
         }}
       >
         <Outlet />
         <Footer />
       </Box>
-           {/* CSS Keyframes for Animation */}
-           <style>
+      {/* CSS Keyframes for Animation */}
+      <style>
         {`
           @keyframes swipeAnimation {
             0% { transform: translateY(-50%) translateX(0px); }

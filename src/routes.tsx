@@ -14,6 +14,7 @@ import SwaggerDocumentation from "./pages/Projects/Swagger";
 import TransactionPage from "./pages/Projects/Explorer/Transaction";
 import AddressInfoPage from "./pages/Projects/Explorer/Address";
 import AllBlocksPage from "./pages/Projects/Explorer/AllBlocks";
+import SingleTransactionPage from "./pages/Projects/Explorer/Transaction/SingleTransaction";
 
 interface RouterProps {
   networkName: string;
@@ -60,7 +61,7 @@ const Router: React.FC<RouterProps> = () => {
         },
         {
           path: `${EXPLORER_PAGE.SINGLE_TRANSACTIONS}/:hash/:networkName`,
-          element: <Transaction />,
+          element: <SingleTransactionPage />,
         },
         {
           path: `${EXPLORER_PAGE.SINGLE_BLOCK}/:block/:networkName`,

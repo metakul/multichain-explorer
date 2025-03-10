@@ -28,6 +28,9 @@ function Transactions() {
         dispatch(clearTrxCount()); // Dispatch the fetch action on button click
     };
 
+    const mockTransactions = Array(3).fill(null);
+
+
     return (
         <Box >
             <Box style={{
@@ -48,9 +51,15 @@ function Transactions() {
                     {loading ? "" : <ReplayCircleFilledOutlined onClick={handleReload} />}
                 </Box>
             </Box>
-            {transactions &&
-                <TransactionInfo transaction={transactions} loading={loading} error={error} />
-            }
+            {(loading || transactions.length === 0) ? (
+                mockTransactions.map((_, index) => (
+                    <TransactionInfo key={`skeleton-${index}`} transaction={null} loading={true} error={null} />
+                ))
+            ) : (
+                transactions.map((trx, index) => (
+                    <TransactionInfo key={`trx-${index}`} transaction={trx} loading={false} error={error} />
+                ))
+            )}
         </Box>
     );
 }

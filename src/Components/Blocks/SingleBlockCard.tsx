@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '../UI/Box';
-import { navigateToAddress, navigateToBlock, navigateToTransaction } from '../../helpers/navigationHelpers';
-import { Block } from '../../interfaces/interface';
+import { navigateToAddress, navigateToBlock } from '../../helpers/navigationHelpers';
+import { Block, ITrx } from '../../interfaces/interface';
 import { useRpc } from '../../contexts/RpcProviderContext';
 import { getColors } from '../../layout/Theme/themes';
 import { getRelativeTime } from '../../helpers/getRelativeTime';
@@ -14,7 +14,7 @@ import { selectTransactionsForBlock, selectTransactionsLoadingForBlock, selectTr
 import Text from '../UI/Text';
 import { getBlockWithTrx, getTransactionCountInBlock } from '../../redux/slices/BackendSlices/Explorer/Blocks/RecentsBlocks/RecentBlocksApi';
 import { AppDispatch } from '../../redux/store';
-import TransactionInfoCard from '../Cards/TrxInfoCard';
+import TransactionInfo from '../Transactions/TrxTable';
 
 interface SingleBlockInfoProps {
     block?: Block;
@@ -159,7 +159,7 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                             }}
                         />
                         <Box style={{ borderLeft: '1px solid black' }}>
-                            {transactions && transactions.slice(0, visibleTransactions).map((trx) => (
+                            {transactions && transactions.slice(0, visibleTransactions).map((trx:ITrx) => (
                                 <div
                                     key={trx.hash}
                                     style={{
@@ -168,46 +168,11 @@ const SingleBlockInfo: React.FC<SingleBlockInfoProps> = ({ block, showTrx, loadi
                                         border: '1px solid #ddd',
                                         borderRadius: '4px',
                                     }}
-                                >
-                                    <TransactionInfoCard
-                                        label="Trx Hash:"
-                                        value={trx.hash}
-                                        loading={selectLoadingForBlock}
-                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
-                                        fontSize="12px"
-                                        fontWeight="bold"
-                                        navigateTo={() => navigateToTransaction(navigate, String(trx.hash), networkName)}
-
-                                    />
-                                    <TransactionInfoCard
-                                        label="From"
-                                        value={trx.from}
-                                        loading={selectLoadingForBlock}
-                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
-                                        fontSize="12px"
-                                        fontWeight="bold"
-                                        navigateTo={() => navigateToAddress(navigate, String(trx.from), networkName)}
-
-                                    />
-                                    <TransactionInfoCard
-                                        label="To"
-                                        value={trx.to}
-                                        loading={selectLoadingForBlock}
-                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
-                                        fontSize="12px"
-                                        fontWeight="bold"
-                                        navigateTo={() => navigateToAddress(navigate, String(trx.to), networkName)}
-                                    />
-                                    <TransactionInfoCard
-                                        label="Value"
-                                        value={trx.value}
-                                        loading={selectLoadingForBlock}
-                                        icon={<ImportContacts width={20} height={20} fill={getColors().blueAccent[400]} />}
-                                        fontSize="12px"
-                                        fontWeight="bold"
-                                    />
-
-                                    <p><strong>Gas Price:</strong> {trx.gasPrice}</p>
+                                    >
+                                        <TransactionInfo
+                                            transaction={trx}
+                                            loading={selectLoadingForBlock ?? false}
+                                            error={""}/>
                                 </div>
                             ))
                             }

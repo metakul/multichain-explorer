@@ -10,7 +10,7 @@ const StatCard = ({ label, value, loading }: { label: string; value: string | nu
         backgroundColor: getColors().primary[900],
         borderColor: getColors().primary[100],
         width:{
-            xs: "120px",
+            xs: "140px",
             md: "160px",
         },
         height:{
