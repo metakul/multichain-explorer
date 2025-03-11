@@ -2,13 +2,14 @@
 import React from 'react';
 
 import AllBlock from '../../../../Components/Blocks/AllBlock';
+import Box from '../../../../Components/UI/Box';
 
 const AllBlocksPage: React.FC = () => {
     return (
-        <div style={{
+        <Box style={{
         }}>
               <AllBlock showTrx={true}/>
-        </div>
+        </Box>
     );
 };
 

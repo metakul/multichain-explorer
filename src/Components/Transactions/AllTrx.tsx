@@ -19,8 +19,10 @@ function Transactions() {
     const error = useSelector(selectTransactionsError);
 
     useEffect(() => {
-        dispatch(fetchAllTransactions(rpcUrl));
-        dispatch(clearTrxCount()); // Dispatch the fetch action on button click
+        if(transactions.length<10){
+            dispatch(fetchAllTransactions(rpcUrl));
+            dispatch(clearTrxCount()); // Dispatch the fetch action on button click
+        }
     }, [dispatch, rpcUrl]);
 
     const handleReload = () => {

@@ -13,6 +13,12 @@ export const navigateToBlock = (navigate: ReturnType<typeof useNavigate>, blockN
 export const navigateToAllBlock = (navigate: ReturnType<typeof useNavigate>, networkName: NetworkType | "Users_Chain") => {
     navigate(`${Pages.BLOCKS}/${networkName}`);
 };
+export const navigateToContractsPage = (navigate: ReturnType<typeof useNavigate>, networkName: NetworkType | "Users_Chain") => {
+    navigate(`${PROJECTS.CONTRACTS_HOME}/${networkName}`);
+};
+export const navigateToExplorerPage = (navigate: ReturnType<typeof useNavigate>, networkName: NetworkType | "Users_Chain") => {
+    navigate(`${EXPLORER_PAGE.EXPLORER_HOME}/${networkName}`);
+};
 
 export const navigateToAddress = (navigate: ReturnType<typeof useNavigate>, address: string, networkName: NetworkType |  "Users_Chain") => {
     navigate(`${EXPLORER_PAGE.SINGLE_ADDRESS}/${address}/${networkName}`);

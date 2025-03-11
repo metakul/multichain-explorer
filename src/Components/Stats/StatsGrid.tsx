@@ -1,7 +1,6 @@
 import StatCard from '../Cards/StatsCard';
-import { Grid2, Typography } from '@mui/material';
+import { Grid2 } from '@mui/material';
 import Box from '../UI/Box';
-import { getColors } from '../../layout/Theme/themes';
 
 interface StatsGridProps {
     stats: any;
@@ -44,22 +43,7 @@ function StatsGrid({ stats, loading }: StatsGridProps) {
         </Grid2>
 
         {/* {showCard &&  */}
-        <Box sx={{
-            px:4
-        }}>
-
-        <Box sx={{
-            width:"100%",
-            height:"80px",
-            mt:2,
-            background:getColors().redAccent[800]
-        }}>
-           <Typography>
-                This is a test for ads
-           </Typography>
-        </Box>
-        {/* } */}
-        </Box>
+  
         </Box>
 
 

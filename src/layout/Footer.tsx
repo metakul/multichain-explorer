@@ -9,6 +9,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { useNavigate } from 'react-router-dom';
 import { Pages, PROJECTS } from '../DataTypes/enums';
 import { getColors } from './Theme/themes';
+import { navigateToAllBlock, navigateToContractsPage, navigateToExplorerPage } from '../helpers/navigationHelpers';
+import { useRpc } from '../contexts/RpcProviderContext';
 
 // Custom Discord icon since Material UI doesn't include one
 const DiscordIcon = () => (
@@ -48,6 +50,7 @@ const FooterLink = styled(Typography)(({ theme }) => ({
 
 const Footer = () => {
   const navigate = useNavigate();
+  const {networkName}=useRpc()
   const currentYear = new Date().getFullYear();
 
   const navigateTo = (page: Pages | PROJECTS) => {
@@ -59,18 +62,27 @@ const Footer = () => {
       sx={{
         pt: 6,
         pb: 3,
-        pl:4,
+        m:8,
+        ml:{
+          md:16
+        }
       }}
     >
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Box sx={{ mb: 4 }}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Box sx={{ mb: 4,
+                 display:"flex",
+                 justifyContent:"center",
+                 flexDirection:"column",
+               
+             }}>
               <Box
                 component="img"
                 src="/logo.svg"
                 alt="logo ran away"
                 sx={{
                   height: 60,
+                  width:60,
                   mb: 2
                 }}
               />
@@ -100,43 +112,33 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={6} sm={6} md={3}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+          <Grid item xs={6} sm={6} md={4}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: getColors().primary[500]}}>
+
               Quick Links
             </Typography>
             <Box component="nav" sx={{ display: 'flex', flexDirection: 'column' }}>
               <FooterLink onClick={() => navigateTo(Pages.HOME)}>Home</FooterLink>
-              <FooterLink onClick={() => navigateTo(Pages.API)}>APIS</FooterLink>
-              {/* <FooterLink onClick={() => navigateTo(Pages.Staking)}>Stake</FooterLink> */}
-              {/* <FooterLink onClick={() => navigateTo(Pages.Whitepaper)}>Whitepaper</FooterLink> */}
-              <FooterLink
-                onClick={() => {
-                  navigateTo(Pages.HOME);
-                  setTimeout(() => {
-                    window.location.hash = "roadmap";
-                  }, 100);
-                }}
-              >
-                Roadmap
-              </FooterLink>
+              <FooterLink onClick={() =>navigateToExplorerPage(navigate, networkName)}>Explorer</FooterLink>
+              <FooterLink onClick={() => navigateToAllBlock(navigate, networkName)}>All Blocks</FooterLink>
+              <FooterLink onClick={() => navigateToContractsPage(navigate, networkName)}>Our Contracts</FooterLink>
             </Box>
           </Grid>
 
-          {/* <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#FFD700' }}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: getColors().primary[500]}}>
               Resources
             </Typography>
             <Box component="nav" sx={{ display: 'flex', flexDirection: 'column' }}>
-              <FooterLink onClick={() => navigateTo(Pages.Tokenomics)}>Tokenomics</FooterLink>
-              <FooterLink onClick={() => navigateTo(Pages.Team)}>Team</FooterLink>
-              <FooterLink onClick={() => navigateTo(Pages.Partners)}>Partners</FooterLink>
-              <FooterLink onClick={() => navigateTo(Pages.FAQ)}>FAQ</FooterLink>
-              <FooterLink onClick={() => navigateTo(Pages.Blog)}>News</FooterLink>
+              <FooterLink onClick={() => navigateTo(Pages.HOME)}>Team</FooterLink>
+              <FooterLink onClick={() => navigateTo(Pages.HOME)}>Partners</FooterLink>
+              <FooterLink onClick={() => navigateTo(Pages.HOME)}>FAQ</FooterLink>
+              <FooterLink onClick={() => navigateTo(Pages.HOME)}>Blogs</FooterLink>
             </Box>
-          </Grid> */}
+          </Grid>
 
-          <Grid item xs={6} sm={6} md={3}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, }}>
+          <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: getColors().primary[500]}}>
               Legal
             </Typography>
             <Box component="nav" sx={{ display: 'flex', flexDirection: 'column' }}>

@@ -34,7 +34,7 @@ const MiniDrawer: React.FC<MiniDrawerProps> = ({ setIsSidebarOpen, isNonMobile, 
                     sx: {
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
-                      marginTop: "90px",
+                      marginTop: "120px",
                       marginLeft: 0.5,
                       borderRadius: 4,
                       height: "85%",

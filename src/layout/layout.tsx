@@ -14,10 +14,11 @@ import { Outlet } from "react-router-dom";
 
 import Footer from "./Footer";
 import Topbar from "./TopBar";
+import Container from "../Components/UI/Container";
 
 export default function DashboardLayout() {
   const navConfig = useNavConfig()
-  const isNonMobile = useMediaQuery("(min-width: 768px)");
+  const isNonMobile = useMediaQuery("(min-width: 1200px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [, setShowOutlet] = useState<boolean>(false);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
@@ -53,7 +54,7 @@ export default function DashboardLayout() {
   });
 
   return (
-    <Box {...swipeHandlers} sx={{ overflow: "hidden", position: "relative" }}>
+    <Box {...swipeHandlers} sx={{ overflow: "hidden", position: "relative", }}>
       {/* Swipe Right Hint */}
       {showSwipeHint && (
         <Box
@@ -92,16 +93,15 @@ export default function DashboardLayout() {
         setIsSidebarOpen={handleSideBarState}
         navConfig={navConfig}
       />
-      <Box
+      <Container
         sx={{
           mt: 12,
-          pl: isNonMobile ? 6 : 0,
-          mx: isNonMobile ? 4 : 0
+          pl:isNonMobile ? 8 :0, // Apply pl=5 only on md and above
         }}
       >
         <Outlet />
+      </Container>
         <Footer />
-      </Box>
       {/* CSS Keyframes for Animation */}
       <style>
         {`

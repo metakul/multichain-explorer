@@ -6,6 +6,7 @@ import { useRpc } from '../../contexts/RpcProviderContext';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { AppDispatch } from '../../redux/store';
+import { getColors } from '../../layout/Theme/themes';
 
 interface ChartGridProps {
     gasPriceData:GasPricePoint[];
@@ -72,12 +73,23 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
                 {/* <GasPriceChart gasPriceData={gasPriceData} /> */}
                 <TotalTrxChart dailyTrxData={totalTrx} />
             </Box>
-            <Typography variant='h6' sx={{
-                 textDecoration: "underline",
-                 textAlign:"center"
-            }}>
-                Average Gas Price (in Wei)
-            </Typography>
+      
+            <Box sx={{
+            px:8
+        }}>
+
+        <Box sx={{
+            width:"100%",
+            height:"60px",
+            mt:1,
+            background:getColors().redAccent[800]
+        }}>
+           <Typography>
+                This is a test for ads
+           </Typography>
+        </Box>
+        {/* } */}
+        </Box>
         </Box>
     );
 }
