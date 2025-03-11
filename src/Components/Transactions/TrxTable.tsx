@@ -114,27 +114,24 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error, 
                             justifyContent: "center",
                             flexDirection: "column",
                             alignItems: "center",
-                            position: "relative",
-                            right: {
-                                md: 60
-                            }
+                         
                         }}>
                             <Avatar sx={{
 
                                 width: {
-                                    sx: 40,
-                                    md: 80
+                                    sx: 20,
+                                    md: 60
                                 },
                                 height: {
-                                    sx: 40,
-                                    md: 80
+                                    sx: 20,
+                                    md: 60
                                 },
                             }} />
                             <Text
                                 style={{ color: getColors().blueAccent[200], cursor: "pointer" }}
                                 onClick={() => navigateToAddress(navigate, transaction?.from, networkName)}
                             >
-                                {transaction?.from?.slice(0, 6)}...{transaction?.from?.slice(-6)}
+                                {transaction?.from?.slice(0, 5)}...{transaction?.from?.slice(-5)}
                             </Text>
                         </Box>
 
@@ -156,26 +153,23 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error, 
                             justifyContent: "center",
                             flexDirection: "column",
                             alignItems: "center",
-                            position: "relative",
-                            left: {
-                                md: 60,
-                            }
+                          
                         }}>
                             <Avatar sx={{
                                 width: {
-                                    sx: 40,
-                                    md: 80
+                                    sx: 20,
+                                    md: 60
                                 },
                                 height: {
-                                    sx: 40,
-                                    md: 80
+                                    sx: 20,
+                                    md: 60
                                 },
                             }} />
                             <Text
                                 style={{ color: getColors().blueAccent[200], cursor: "pointer" }}
                                 onClick={() => navigateToAddress(navigate, transaction?.to, networkName)}
                             >
-                                {transaction?.to?.slice(0, 6)}...{transaction?.to?.slice(-6)}
+                                {transaction?.to?.slice(0, 5)}...{transaction?.to?.slice(-5)}
                             </Text>
                         </Box>
                     </Box>

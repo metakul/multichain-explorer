@@ -62,9 +62,12 @@ const Footer = () => {
       sx={{
         pt: 6,
         pb: 3,
-        m:8,
-        ml:{
-          md:16
+        mx:{
+          xs:2,
+          sm:4,
+          md:10,
+          lg:12,
+          xl:14
         }
       }}
     >
@@ -125,7 +128,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={6} sm={6} md={4}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: getColors().primary[500]}}>
               Resources
             </Typography>
@@ -137,7 +140,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={6} sm={6} md={4}>
           <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: getColors().primary[500]}}>
               Legal
             </Typography>
