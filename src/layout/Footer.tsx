@@ -8,6 +8,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { useNavigate } from 'react-router-dom';
 import { Pages, PROJECTS } from '../DataTypes/enums';
+import { getColors } from './Theme/themes';
 
 // Custom Discord icon since Material UI doesn't include one
 const DiscordIcon = () => (
@@ -22,12 +23,11 @@ const DiscordIcon = () => (
 );
 
 // const StyledIconButton = styled(IconButton)(({ theme }) => ({
-//   color: '#FFD700',
-//   backgroundColor: 'rgba(0, 0, 0, 0.8)',
+//   color: getColors().yellowAccent[500],
 //   margin: theme.spacing(0.5),
 //   transition: 'all 0.3s ease',
 //   '&:hover': {
-//     backgroundColor: '#FFD700',
+//     backgroundColor:getColors().yellowAccent[600],
 //     color: 'black',
 //     transform: 'translateY(-3px)',
 //   },
@@ -39,7 +39,7 @@ const FooterLink = styled(Typography)(({ theme }) => ({
   transition: 'color 0.3s, transform 0.3s',
   display: 'inline-block',
   '&:hover': {
-    color: '#FFD700',
+    color: getColors().yellowAccent[600],
     transform: 'translateX(5px)',
     textDecoration: 'none',
     cursor: 'pointer',
@@ -100,7 +100,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={6} sm={6} md={3}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
               Quick Links
             </Typography>
@@ -135,7 +135,7 @@ const Footer = () => {
             </Box>
           </Grid> */}
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={6} sm={6} md={3}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, }}>
               Legal
             </Typography>

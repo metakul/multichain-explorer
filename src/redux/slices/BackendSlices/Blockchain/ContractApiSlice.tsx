@@ -108,7 +108,6 @@ export const getMyContracts = createAsyncThunk(
     }
 );
 
-
 export const saveNewContract = createAsyncThunk(
     'contracts/saveNew',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,8 +117,8 @@ export const saveNewContract = createAsyncThunk(
             console.log(contractName, deployedAddress, walletAddress);
             
             const response = await Request({
-                url: "saveContract",
-                method: ApiEndpoint.saveContract.method,
+                url: "saveDeployedContract",
+                method: ApiEndpoint.saveDeployedContract.method,
                 slug:"",
                 data:{
                     contractName,
@@ -127,7 +126,7 @@ export const saveNewContract = createAsyncThunk(
                     walletAddress,
                     networkName
                 },
-                headers: ApiEndpoint.saveContract.headers,
+                headers: ApiEndpoint.saveDeployedContract.headers,
             });
 
             const savedContractInfo: ContractData = response.contracts;

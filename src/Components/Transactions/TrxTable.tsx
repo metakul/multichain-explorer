@@ -148,10 +148,7 @@ const TransactionInfo: React.FC<TrxInfoProps> = ({ transaction, loading, error, 
                             }} />
                             <EastIcon sx={{
                             }} />
-                            <EastIcon sx={{
-                            }} />
-                            <EastIcon sx={{
-                            }} />
+                           
                             <Text>Fee: {(parseFloat(transaction?.gasPrice) / 10 ** 18).toFixed(12)} ETH</Text>
                         </Box>
                         <Box sx={{

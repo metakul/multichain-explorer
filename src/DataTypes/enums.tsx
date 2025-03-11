@@ -60,7 +60,7 @@ export const ApiEndpoint: Record<string, RequestOptions> = {
   getContractByName: { url: `${backendUrl}/getContractByName`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
   getAllContracts: { url: `${backendUrl}/getContracts`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
   getMyContracts: { url: `${backendUrl}/getMyContracts`, method: 'GET', headers: { 'Content-Type': 'application/json' } },
-  saveContract: { url: `${backendUrl}/saveDeployedContract`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  saveDeployedContract: { url: `${backendUrl}/saveDeployedContract`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
 
   // New endpoint for fetching transactions by block number
   getTransactionCountInBlock: { url: `${backendUrl}/block/getTransactionCountInBlock`, method: 'POST', headers: { 'Content-Type': 'application/json' } },
