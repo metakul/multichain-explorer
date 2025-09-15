@@ -23,7 +23,6 @@ function ExplorerStats() {
     const [gasPriceData, setGasPriceData] = useState<GasPricePoint[]>([]);
 
     const updateGasPriceChart = (stats: any) => {
-        console.log(stats);
 
         const latestGas = stats?.gasPrices;
         if (latestGas) {
@@ -44,7 +43,6 @@ function ExplorerStats() {
         const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
 
         ws.onopen = () => {
-            console.log('WebSocket for stats connected');
             ws.send(JSON.stringify({ type: 'STATS_INIT', rpcUrl }));
         };
 
@@ -65,7 +63,6 @@ function ExplorerStats() {
         };
 
         ws.onclose = () => {
-            console.log('WebSocket for stats closed');
         };
      
     }, [dispatch, rpcUrl]);

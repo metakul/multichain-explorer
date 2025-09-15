@@ -53,7 +53,6 @@ export const getAddressTransactions = createAsyncThunk(
                     networkName:networkName
                 },
             });
-            console.log("getAddressTransactions",response);
 
             // Assuming response is formatted as expected with `balance` and `transactions` fields
             // const addressInfo: IAddress = {

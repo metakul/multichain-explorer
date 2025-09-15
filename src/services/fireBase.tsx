@@ -4,7 +4,6 @@ import { getAnalytics } from "firebase/analytics";
 
 import { firebaseConfig } from "../config";
 
-console.log(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 

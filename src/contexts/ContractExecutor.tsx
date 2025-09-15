@@ -45,7 +45,6 @@ export const useContractExecutor = () => {
             
             if (operation === "read") {
                 const { readContract } = useReadContract(provider);
-                console.log("rreading contracty");
                 
                 const result = await readContract(contractAddress!, abi!, functionName!, inputs);
                 setLoading(false);

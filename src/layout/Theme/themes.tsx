@@ -284,10 +284,11 @@ interface ColorModeContextType {
     toggleColorMode: () => void;
 }
 
+
 export const ColorModeContext = createContext<ColorModeContextType | undefined>(undefined);
 
 export const useMode = (): [Theme, ColorModeContextType] => {
-    const [mode, setMode] = useState<PaletteMode>("dark");
+    const [mode, setMode] = useState<PaletteMode>("light");
 
     const colorMode = useMemo(
         () => ({

@@ -93,22 +93,22 @@ const Footer = () => {
                 The Ultimate Multi Chain Explorer Leveraging the power of Thirdweb and Nebula AI.
               </Typography>
               <Stack direction="row" flexWrap="wrap">
-                <IconButton aria-label="Twitter" component="a" href="https://twitter.com/thaicoin" target="_blank">
+                <IconButton aria-label="Twitter" component="a" href="https://twitter.com/skaya_org" target="_blank">
                   <TwitterIcon />
                 </IconButton>
-                <IconButton aria-label="Telegram" component="a" href="https://t.me/thaicoin" target="_blank">
+                {/* <IconButton aria-label="Telegram" component="a" href="https://t.me/thaicoin" target="_blank">
                   <TelegramIcon />
-                </IconButton>
-                <IconButton aria-label="Discord" component="a" href="https://discord.gg/thaicoin" target="_blank">
+                </IconButton> */}
+                <IconButton aria-label="Discord" component="a" href="https://discord.gg/skaya_org" target="_blank">
                   <DiscordIcon />
                 </IconButton>
-                <IconButton aria-label="Reddit" component="a" href="https://reddit.com/r/thaicoin" target="_blank">
+                {/* <IconButton aria-label="Reddit" component="a" href="https://reddit.com/r/thaicoin" target="_blank">
                   <RedditIcon />
-                </IconButton>
-                <IconButton aria-label="GitHub" component="a" href="https://github.com/thaicoin" target="_blank">
+                </IconButton> */}
+                <IconButton aria-label="GitHub" component="a" href="https://github.com/skaya-org" target="_blank">
                   <GitHubIcon />
                 </IconButton>
-                <IconButton aria-label="Instagram" component="a" href="https://instagram.com/thaicoin" target="_blank">
+                <IconButton aria-label="Instagram" component="a" href="https://instagram.com/skaya_org_" target="_blank">
                   <InstagramIcon />
                 </IconButton>
               </Stack>

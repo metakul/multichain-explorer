@@ -20,7 +20,7 @@ const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
     
     const chartWidth = isNonMobile ? 350 : 230;
     const chartHeight = isNonMobile ? 300 : 250;
-
+    const colors = getColors();
     return (
         <Box sx={{ width: chartWidth, height: chartHeight }}>
             {dailyTrxData.length === 0 ? (
@@ -31,7 +31,7 @@ const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: getColors().grey[800],
+                        backgroundColor: colors.grey[800],
                         borderRadius: '8px',
                     }}
                 >
@@ -66,14 +66,14 @@ const TotalTrxChart: React.FC<Props> = ({ dailyTrxData }) => {
                         <XAxis dataKey="date" />
                         <YAxis />
                         <Tooltip contentStyle={{
-                            background:getColors().primary[900]
+                            background:colors.primary[900]
                         }} />
                         <Legend />
                         <Area
                             type="monotone"
                             dataKey="transactionsCount"
                             fill='green'
-                            stroke={getColors().blueAccent[800]}
+                            stroke={colors.blueAccent[800]}
                         />
                     </AreaChart>
                 </ResponsiveContainer>

@@ -21,6 +21,7 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
 
     const chartWidth = isNonMobile ? 350 : 230;
     const chartHeight = isNonMobile ? 300 : 250;
+  const colors = getColors();
 
     return (
         <Box sx={{ width: chartWidth, height: chartHeight }}>
@@ -32,7 +33,7 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: getColors().grey[800],
+                        backgroundColor: colors.grey[800],
                         borderRadius: '8px',
                     }}
                 >
@@ -67,29 +68,29 @@ const GasPriceChart: React.FC<Props> = ({ gasPriceData }) => {
                         <XAxis dataKey="time" />
                         <YAxis />
                         <Tooltip contentStyle={{
-                            background: getColors().primary[900]
+                            background: colors.primary[900]
                         }} />
                         <Legend />
                         <Area
                             type="monotone"
                             dataKey="slowGasPrice"
                             stackId="1"
-                            stroke={getColors().blueAccent[100]}
-                            fill={getColors().blueAccent[100]}
+                            stroke={colors.blueAccent[100]}
+                            fill={colors.blueAccent[100]}
                         />
                         <Area
                             type="monotone"
                             dataKey="averageGasPrice"
                             stackId="1"
-                            stroke={getColors().greenAccent[100]}
-                            fill={getColors().greenAccent[100]}
+                            stroke={colors.greenAccent[100]}
+                            fill={colors.greenAccent[100]}
                         />
                         <Area
                             type="monotone"
                             dataKey="fastGasPrice"
                             stackId="1"
-                            stroke={getColors().redAccent[100]}
-                            fill={getColors().redAccent[100]}
+                            stroke={colors.redAccent[100]}
+                            fill={colors.redAccent[100]}
                         />
                     </AreaChart>
                 </ResponsiveContainer>

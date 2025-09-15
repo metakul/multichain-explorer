@@ -79,7 +79,6 @@ const mockContracts = [
 const GetContractsRequest = async (options) => {
     return new Promise((resolve, reject) => {
         try {
-            console.log('Request made with options:', options);
 
             // Simulate a delay for async behavior
             setTimeout(() => {

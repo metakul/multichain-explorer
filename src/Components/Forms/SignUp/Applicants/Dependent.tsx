@@ -11,7 +11,6 @@ const DependentSignUpForm: React.FC<SignUpFormProps> = (props) => {
   const handleSubmit = (event: React.FormEvent) => {
     // Handle form submission logic here
     event.preventDefault();
-    console.log('Form submitted! UserType:', props.userType);
   };
 
   return (

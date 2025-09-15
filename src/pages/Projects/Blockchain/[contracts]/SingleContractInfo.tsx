@@ -2,7 +2,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchContractByName, saveNewContract } from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
+import {
+  fetchContractByName,
+  saveNewContract,
+} from "../../../../redux/slices/BackendSlices/Blockchain/ContractApiSlice";
 import { selectContractDetails } from "../../../../redux/slices/BackendSlices/Blockchain/ContractSlice";
 import { AppDispatch } from "../../../../redux/store";
 import ContractInfoCard from "../../../../Components/Cards/ContractCard/ContractInfoCard";
@@ -19,28 +22,38 @@ import { getAddressTransactions } from "../../../../redux/slices/BackendSlices/E
 import { useContractExecutor } from "../../../../contexts/ContractExecutor";
 
 const SingleContractPage: React.FC<SingleContractProps> = () => {
-  const { contractName, deployedAddress } = useParams<{ deployedAddress: string, contractName?: string }>();
+  const { contractName, deployedAddress } = useParams<{
+    deployedAddress: string;
+    contractName?: string;
+  }>();
   const dispatch = useDispatch<AppDispatch>();
   const contract = useSelector(selectContractDetails);
-  const { executeContract }  = useContractExecutor();
+  const { executeContract } = useContractExecutor();
   // const contractLoading = useSelector(selectSingleContractLoading);
 
   // const contractError = useSelector(selectSingleContractError);
   const isNonMobile = useMediaQuery("(min-width: 766px)");
 
-  const { walletAddress,networkName,rpcUrl } = useRpc();
+  const { walletAddress, networkName, rpcUrl } = useRpc();
 
   // Fetch the single contract when the component mounts
   useEffect(() => {
     if (contractName) {
       dispatch(fetchContractByName(contractName));
-      deployedAddress && dispatch(getAddressTransactions({ networkName,rpcUrl,address:deployedAddress }));
+      deployedAddress &&
+        dispatch(
+          getAddressTransactions({
+            networkName,
+            rpcUrl,
+            address: deployedAddress,
+          })
+        );
     }
   }, [contractName, dispatch]);
 
   // const renderSolidityCode = (abi: any[]) => {
   //   if (!abi) return "No ABI available.";
-  
+
   //   return abi
   //     .filter((item) => item.type === "function")
   //     .map(
@@ -49,7 +62,7 @@ const SingleContractPage: React.FC<SingleContractProps> = () => {
   //     )
   //     .join("\n");
   // };
-  
+
   // Handle loading or error cases
   if (!contract) {
     return <Text>Loading contract data...</Text>;
@@ -64,47 +77,52 @@ const SingleContractPage: React.FC<SingleContractProps> = () => {
         abi: contract.abi,
         bytecode: contract.bytecode,
         inputs: constructorParams,
-    }).then((res) => {
-          console.log("Deployed contract:", res);
-          
-           dispatch(saveNewContract({ contractName, deployedAddress:res.address, walletAddress, networkName }));
-
-         })
-    
+      }).then((res) => {
+        dispatch(
+          saveNewContract({
+            contractName,
+            deployedAddress: res.address,
+            walletAddress,
+            networkName,
+          })
+        );
+      });
     } catch (error) {
       console.error("Deployment error:", error);
     }
   };
 
-
-
   const tabs = [
     {
-      value: (
-        "OverView"
+      value: "OverView",
+      content: contractName && (
+        <ContractDescription
+          contractName={contractName}
+          deployedAddress={deployedAddress}
+        />
       ),
-      content: contractName && <ContractDescription contractName={contractName} deployedAddress={deployedAddress} />
-      ,
       label: "OverView",
     },
     {
-      value: (
-        "Functions"
-      ),
-      content: contractName && <>
-      <ContractFunctions abi={contract.abi} deployedAddress={deployedAddress} />
-        {!deployedAddress && 
-          <ContractInfoCard
+      value: "Functions",
+      content: contractName && (
+        <>
+          <ContractFunctions
+            abi={contract.abi}
+            deployedAddress={deployedAddress}
+          />
+          {!deployedAddress && (
+            <ContractInfoCard
               contractType={ContractType.Deploy}
               contractInfo={contract}
               cardType="single"
               buttonText={ContractType.Deploy}
               handleButtonClick={deployMyContract} // Pass deploy function
             />
-        }
-      </> 
+          )}
+        </>
+      ),
 
-      ,
       label: "OverView",
     },
     // {
@@ -135,11 +153,14 @@ const SingleContractPage: React.FC<SingleContractProps> = () => {
     //   label: "Interface",
     // },
   ];
-  
+
   return (
     <Box>
       <h4>{contractName}</h4>
-      <MobileTabNavigation tabs={tabs} orientation={isNonMobile ? "vertical" : "horizontal"} />
+      <MobileTabNavigation
+        tabs={tabs}
+        orientation={isNonMobile ? "vertical" : "horizontal"}
+      />
     </Box>
   );
 };

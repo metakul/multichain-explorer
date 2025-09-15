@@ -113,8 +113,6 @@ export const saveNewContract = createAsyncThunk(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async ({ contractName, deployedAddress, walletAddress,networkName }:any, { rejectWithValue, dispatch }) => {
         try {
-
-            console.log(contractName, deployedAddress, walletAddress);
             
             const response = await Request({
                 url: "saveDeployedContract",

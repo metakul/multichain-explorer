@@ -41,7 +41,6 @@ const ContractInteraction: React.FC<ContractInteractionProps> = ({ selectedFunct
     
             // Call the function with only values
             const result=await executeContract({operation:"read", contractAddress:deployedAddress, abi, functionName:selectedFunction.name,inputs: valuesOnly});
-            console.log(result,"result");
          // Convert BigInt result to a string if applicable
          setLastResult(typeof result === "bigint" ? result.toString() : result);
         }

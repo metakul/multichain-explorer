@@ -23,7 +23,6 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
             const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
     
             ws.onopen = () => {
-                console.log('WebSocket for stats connected');
                 ws.send(JSON.stringify({ type: 'DAILY_TRX_INIT', rpcUrl }));
             };
     
@@ -31,7 +30,6 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
                 try {
                     const updatedStats = JSON.parse(event.data);
                     if (updatedStats.type === 'DAILY_TRX_UPDATE') {
-                        console.log("updatedStats",updatedStats);
                         setTotalTrxData(updatedStats.data)
                         // updateGasPriceChart(updatedStats.stats);
                     }
@@ -45,7 +43,6 @@ function ChartGrid({ gasPriceData }: ChartGridProps) {
             };
     
             ws.onclose = () => {
-                console.log('WebSocket for stats closed');
             };
          
         }, [dispatch, rpcUrl]);

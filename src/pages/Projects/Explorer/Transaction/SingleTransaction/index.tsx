@@ -22,10 +22,6 @@ function SingleTransactionPage() {
             dispatch(fetchSingleTrx({ rpcUrl, hash }));
     }, [dispatch, rpcUrl]);
 
-    console.log(trxInfo);
-
-
-
     return (
         <Box style={{ marginTop: "120px" }}>
             <TransactionInfo key={`trx-${1}`} transaction={trxInfo as ITrx} loading={false} error={null} showDetails={true} />
