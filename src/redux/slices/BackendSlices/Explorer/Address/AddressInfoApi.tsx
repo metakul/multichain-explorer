@@ -55,13 +55,13 @@ export const getAddressTransactions = createAsyncThunk(
             });
 
             // Assuming response is formatted as expected with `balance` and `transactions` fields
-            // const addressInfo: IAddress = {
-            //     address: address,
-            //     balance: response.balance,
-            //     transactions: response.transactions || []
-            // };
+            const addressInfo: IAddress = {
+                address: address,
+                balance: response.balance,
+                transactions: response.transactions || []
+            };
 
-            // dispatch(setAddressInfo(addressInfo));
+            dispatch(setAddressInfo(addressInfo));
             dispatch(setTransactionLoading(false)); // Set loading to false once data is fetched
         } catch (error) {
             const castedError = error as ApiError;
